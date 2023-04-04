@@ -1,176 +1,172 @@
-// import 'package:digital_order_system/core/base/base_singleton.dart';
+import 'package:animate_do/animate_do.dart';
+import 'package:digital_order_system/core/extensions/ui_extensions.dart';
+import 'package:digital_order_system/core/utils/navigation_service.dart';
+import 'package:digital_order_system/features/auth/onboard/viewmodel/onboard_view_model.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../../core/base/base_singleton.dart';
+import '../model/onboard_model.dart';
 
-// import '_export_onboard_view.dart';
+class OnboardView extends StatelessWidget with BaseSingleton {
+  final pv = Provider.of<OnboardViewModel>(
+      NavigationService.navigatorKey.currentContext!,
+      listen: false);
+  final BuildContext context = NavigationService.navigatorKey.currentContext!;
+  OnboardView({super.key});
 
-// class OnboardView extends StatelessWidget with BaseSingleton {
-//   final viewModel = Get.put(OnboardViewModel());
-//   OnboardView({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: pages(pv),
+    );
+  }
 
-//   get nextPage {
-//     if (viewModel.pageIndex.value < 2) {
-//       viewModel.pageController.nextPage(
-//         duration: const Duration(milliseconds: 500),
-//         curve: Curves.ease,
-//       );
-//     } else {
-//       viewModel.finishOnboard;
-//     }
-//   }
+  PageView pages(OnboardViewModel pv) {
+    return PageView.builder(
+      controller: pv.pageController,
+      itemCount: OnboardModelExtension.pages.length,
+      onPageChanged: (val) => pv.setPageIndex(val),
+      itemBuilder: (_, index) {
+        OnboardModel page = OnboardModelExtension.pages[index];
+        return pageItem(page);
+      },
+    );
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: pages,
-//     );
-//   }
+  FadeInUp pageItem(OnboardModel page) {
+    return FadeInUp(
+      child: Padding(
+        padding: context.padding2x,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Spacer(),
+            image(page),
+            context.emptySizedHeightBox2x,
+            titleAndSubtitleSection(page),
+            indicators,
+            Expanded(child: buttons)
+          ],
+        ),
+      ),
+    );
+  }
 
-//   PageView get pages {
-//     return PageView.builder(
-//       controller: viewModel.pageController,
-//       itemCount: viewModel.pages.length,
-//       onPageChanged: (val) => viewModel.setPageIndex(val),
-//       itemBuilder: (_, index) {
-//         OnboardModel page = viewModel.pages[index];
-//         return pageItem(page);
-//       },
-//     );
-//   }
+  AspectRatio image(OnboardModel page) {
+    return AspectRatio(
+      aspectRatio: 1.25,
+      child: Image.asset(
+        page.imageUrl,
+      ),
+    );
+  }
 
-//   FadeInUp pageItem(OnboardModel page) {
-//     return FadeInUp(
-//       child: Padding(
-//         padding: padding.p2x,
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             const Spacer(),
-//             image(page),
-//             sizedBox.hBox2x,
-//             titleAndSubtitleSection(page),
-//             indicators,
-//             Expanded(child: buttons)
-//           ],
-//         ),
-//       ),
-//     );
-//   }
+  Padding titleAndSubtitleSection(OnboardModel page) {
+    return Padding(
+      padding: context.padding4x,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          title(page),
+          context.emptySizedHeightBox1x,
+          subtitle(page),
+        ],
+      ),
+    );
+  }
 
-//   AspectRatio image(OnboardModel page) {
-//     return AspectRatio(
-//       aspectRatio: 1.25,
-//       child: Image.asset(
-//         page.imageUrl,
-//       ),
-//     );
-//   }
+  Text title(OnboardModel page) {
+    return Text(
+      page.title,
+      style:
+          context.textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w700),
+      textAlign: TextAlign.start,
+    );
+  }
 
-//   Padding titleAndSubtitleSection(OnboardModel page) {
-//     return Padding(
-//       padding: padding.p2x,
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           title(page),
-//           sizedBox.hBox1x,
-//           subtitle(page),
-//         ],
-//       ),
-//     );
-//   }
+  Text subtitle(OnboardModel page) =>
+      Text(page.subtitle, style: context.textTheme.bodySmall);
 
-//   Text title(OnboardModel page) {
-//     return Text(
-//       page.title,
-//       style: Get.textTheme.headline6!.copyWith(fontWeight: FontWeight.w700),
-//       textAlign: TextAlign.start,
-//     );
-//   }
+  Row get indicators {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        OnboardModelExtension.pages.length,
+        (index) {
+          return indicatorItem(index);
+        },
+      ),
+    );
+  }
 
-//   Text subtitle(OnboardModel page) =>
-//       Text(page.subtitle, style: Get.textTheme.subtitle1);
+  Widget indicatorItem(int index) {
+    return Consumer<OnboardViewModel>(
+      builder: (context, pv, _) {
+        Color containerColor = pv.pageIndex == index ? colors.royalBlue : colors.grey;
+        double height = 8.0;
+        double width = pv.pageIndex == index ? 32.0 : 16.0;
+        return AnimatedContainer(
+          duration: context.durationLow2x,
+          margin: context.padding1x,
+          decoration: BoxDecoration(
+            color: containerColor,
+            borderRadius: context.borderRadius1x,
+          ),
+          height: height,
+          width: width,
+        );
+      },
+    );
+  }
 
-//   Row get indicators {
-//     return Row(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: List.generate(
-//         viewModel.pages.length,
-//         (index) {
-//           return indicatorItem(index);
-//         },
-//       ),
-//     );
-//   }
+  Widget get buttons {
+    return Consumer<OnboardViewModel>(
+      builder: (context, pv, _) {
+        Widget isVisibleSkipBtn =
+            pv.pageIndex < 2 ? skipBtn(pv) : const SizedBox();
+        return Padding(
+          padding: context.padding2x,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              isVisibleSkipBtn,
+              nextOrLetsStartBtn(pv.pageIndex, pv),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
-//   Obx indicatorItem(int index) {
-//     return Obx(
-//       () {
-//         int pageIndex = viewModel.pageIndex.value;
-//         Color containerColor =
-//             pageIndex == index ? colors.royalBlue : colors.gray;
-//         double height = 8.0;
-//         double width = pageIndex == index ? 32.0 : 16.0;
-//         return AnimatedContainer(
-//           duration: duration.dLow2x,
-//           margin: padding.p1x,
-//           decoration: BoxDecoration(
-//             color: containerColor,
-//             borderRadius: borderRadius.br1x,
-//           ),
-//           height: height,
-//           width: width,
-//         );
-//       },
-//     );
-//   }
+  TextButton skipBtn(OnboardViewModel pv) {
+    return TextButton(
+      onPressed: () => pv.finishOnboard,
+      child: Text(
+        "Geç",
+        style: context.textTheme.bodyMedium!.copyWith(
+          fontWeight: FontWeight.w700,
+          color: colors.royalBlue,
+        ),
+      ),
+    );
+  }
 
-//   Obx get buttons {
-//     return Obx(
-//       () {
-//         int pageIndex = viewModel.pageIndex.value;
-//         Widget isVisibleSkipBtn = pageIndex < 2 ? skipBtn : const SizedBox();
-//         return Padding(
-//           padding: padding.p2x,
-//           child: Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               isVisibleSkipBtn,
-//               nextOrLetsStartBtn(pageIndex),
-//             ],
-//           ),
-//         );
-//       },
-//     );
-//   }
-
-//   TextButton get skipBtn {
-//     return TextButton(
-//       onPressed: () => viewModel.finishOnboard,
-//       child: Text(
-//         "skipBtn".tr,
-//         style: Get.textTheme.headline6!.copyWith(
-//           fontWeight: FontWeight.w700,
-//           color: colors.royalBlue,
-//         ),
-//       ),
-//     );
-//   }
-
-//   InkWell nextOrLetsStartBtn(int pageIndex) {
-//     return InkWell(
-//       onTap: () => nextPage,
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         mainAxisSize: MainAxisSize.min,
-//         children: [
-//           Text(
-//             pageIndex < 2 ? "nextBtn".tr : "letsStartBtn".tr,
-//             style:
-//                 Get.textTheme.headline6!.copyWith(fontWeight: FontWeight.w700),
-//           ),
-//           sizedBox.wBox1x,
-//           const Icon(Icons.arrow_forward_outlined),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  InkWell nextOrLetsStartBtn(int pageIndex, OnboardViewModel pv) {
+    return InkWell(
+      onTap: () => pv.nextPage,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            pageIndex < 2 ? "İlerle" : "Hadi Başla!",
+            style: context.textTheme.bodyMedium!
+                .copyWith(fontWeight: FontWeight.w700),
+          ),
+          context.emptySizedWidthBox1x,
+          const Icon(Icons.arrow_forward_outlined),
+        ],
+      ),
+    );
+  }
+}

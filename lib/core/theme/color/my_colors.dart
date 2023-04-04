@@ -1,7 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import '../../base/base_singleton.dart';
-
 
 class MyColors with BaseSingleton {
   static MyColors? _instance;
@@ -16,9 +17,11 @@ class MyColors with BaseSingleton {
 
   MyColors.init();
 
-
   /// Your Colors
   Color get primaryBoxShadowColor => const Color(0x1a208dfe);
+  Color get royalBlue => const Color(0xff4563DB);
+  Color get gray => const Color(0xffd3d3d3);
+  MaterialColor get randomColor => Colors.primaries[Random().nextInt(17)];
 
   /// Flutter Colors [You can use all flutter colors basicly].
   // White
@@ -370,5 +373,4 @@ class MyColors with BaseSingleton {
 
   // Transparent
   Color get transparent => Colors.transparent;
-
 }

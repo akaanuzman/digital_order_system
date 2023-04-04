@@ -21,102 +21,101 @@ class MyTexts {
 
   TextTheme get textTheme => TextTheme(
         //XX
-        headline1: TextStyle(
+        displayLarge: TextStyle(
           color: _textColor,
-          fontSize: 96,
-          fontWeight: FontWeight.w300,
-          fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
-        ),
-        headline2: TextStyle(
-          //XX
-          color: _textColor,
-          fontSize: 60,
-          fontWeight: FontWeight.w300,
-          fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
-        ),
-        headline3: TextStyle(
-          //XX
-          color: _textColor,
-          fontSize: 48,
+          fontSize: 64,
           fontWeight: FontWeight.w400,
           fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
         ),
-        headline4: TextStyle(
+        displayMedium: TextStyle(
           //XX
           color: _textColor,
-          fontSize: 34,
+          fontSize: 52,
           fontWeight: FontWeight.w400,
           fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
         ),
-        headline5: TextStyle(
+        displaySmall: TextStyle(
           //XX
+          color: _textColor,
+          fontSize: 44,
+          fontWeight: FontWeight.w400,
+          fontFamily: _fontFamily,
+        ),
+        headlineLarge: TextStyle(
+          //XX
+          color: _textColor,
+          fontSize: 40,
+          fontWeight: FontWeight.w400,
+          fontFamily: _fontFamily,
+        ),
+        headlineMedium: TextStyle(
+          //XX
+          color: _textColor,
+          fontSize: 36,
+          fontWeight: FontWeight.w400,
+          fontFamily: _fontFamily,
+        ),
+        headlineSmall: TextStyle(
+          //XX
+          color: _textColor,
+          fontSize: 32,
+          fontWeight: FontWeight.w400,
+          fontFamily: _fontFamily,
+        ),
+        titleLarge: TextStyle(
+          color: _textColor,
+          fontSize: 28,
+          fontWeight: FontWeight.w400,
+          fontFamily: _fontFamily,
+        ),
+        titleMedium: TextStyle(
           color: _textColor,
           fontSize: 24,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w500,
           fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
         ),
-        headline6: TextStyle(
-          //XX
+        titleSmall: TextStyle(
           color: _textColor,
           fontSize: 20,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w500,
           fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
         ),
-        subtitle1: TextStyle(
+        labelLarge: TextStyle(
           color: _textColor,
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
           fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
         ),
-        subtitle2: TextStyle(
-          color: _textColor,
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
-          letterSpacing: -0.5
-        ),
-        bodyText1: TextStyle(
-          color: _textColor,
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
-        ),
-        bodyText2: TextStyle(
-          color: _textColor,
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
-        ),
-        button: TextStyle(
+        labelMedium: TextStyle(
           color: _colors.white,
           fontSize: 16,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w500,
           fontFamily: _fontFamily,
           fontStyle: FontStyle.normal,
         ),
-        caption: TextStyle(
+        labelSmall: TextStyle(
           color: _textColor,
           fontSize: 12,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.w500,
           fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
         ),
-        overline: TextStyle(
+        bodyLarge: TextStyle(
           color: _textColor,
-          fontSize: 10,
+          fontSize: 24,
           fontWeight: FontWeight.w400,
           fontFamily: _fontFamily,
-          fontStyle: FontStyle.normal,
+        ),
+        bodyMedium: TextStyle(
+          color: _textColor,
+          fontSize: 20,
+          fontWeight: FontWeight.w400,
+          fontFamily: _fontFamily,
+        ),
+        bodySmall: TextStyle(
+          color: _textColor,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          fontFamily: _fontFamily,
         ),
       );
 }

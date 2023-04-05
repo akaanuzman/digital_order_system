@@ -1,14 +1,16 @@
 // import '_export_onboard_view_model.dart';
 
-import 'package:digital_order_system/core/helpers/storage.dart';
 import 'package:digital_order_system/core/utils/navigation_service.dart';
 import 'package:digital_order_system/features/auth/register/view/register_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 class OnboardViewModel extends ChangeNotifier {
   int pageIndex = 0;
   bool isOld = false;
   final PageController pageController = PageController(initialPage: 0);
+  final box = GetStorage();
+
 
   void setPageIndex(int val) {
     pageIndex = val;
@@ -17,12 +19,7 @@ class OnboardViewModel extends ChangeNotifier {
 
   void get finishOnboard {
     isOld = true;
-    if (isOld) {
-      Storage().saveStorage(
-        token: "isOpen",
-        key: "openOnboard",
-      );
-    }
+    box.write("openOnboard", isOld);
     Navigator.of(NavigationService.navigatorKey.currentContext!).pushAndRemoveUntil(
       MaterialPageRoute(builder: (_) => const RegisterView()),
       (route) => false,

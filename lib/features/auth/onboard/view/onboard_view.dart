@@ -1,4 +1,5 @@
 import 'package:digital_order_system/features/auth/onboard/viewmodel/onboard_view_model.dart';
+import '../../../../core/extensions/on_board_model_extension.dart';
 import '../model/onboard_model.dart';
 import 'package:digital_order_system/_export_ui.dart';
 

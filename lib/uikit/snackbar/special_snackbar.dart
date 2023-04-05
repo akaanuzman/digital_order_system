@@ -14,7 +14,7 @@ class SpecialSnackbar extends SnackBar {
   }) : super(
           content: Text(
             content,
-            style: context.textTheme.bodyText1!.copyWith(
+            style: context.textTheme.labelMedium!.copyWith(
               color: contentColor ?? MyColors.instance.white,
               fontWeight: context.fw700,
             ),

@@ -23,7 +23,7 @@ dependencies:
   intl: ^0.17.0
 
   # Storage Operation
-  flutter_secure_storage: ^8.0.0
+  get_storage: ^2.1.1
 
   # Localizations
   flutter_localizations:

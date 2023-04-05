@@ -1,11 +1,7 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:digital_order_system/core/extensions/ui_extensions.dart';
-import 'package:digital_order_system/core/utils/navigation_service.dart';
 import 'package:digital_order_system/features/auth/onboard/viewmodel/onboard_view_model.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../../../core/base/base_singleton.dart';
+import '../../../../core/extensions/on_board_model_extension.dart';
 import '../model/onboard_model.dart';
+import 'package:digital_order_system/_export_ui.dart';
 
 class OnboardView extends StatelessWidget with BaseSingleton {
   final pv = Provider.of<OnboardViewModel>(

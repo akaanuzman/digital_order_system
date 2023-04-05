@@ -1,8 +1,4 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:flutter/material.dart';
-
-import '../../core/base/base_singleton.dart';
-import '../../core/extensions/ui_extensions.dart';
+import 'package:digital_order_system/_export_ui.dart';
 import '../../core/theme/color/my_colors.dart';
 import '../button/special_button.dart';
 
@@ -124,7 +120,7 @@ class SpecialAlert extends StatelessWidget with BaseSingleton {
   Widget _contentTile(BuildContext context) {
     return Text(
       contentTitle,
-      style: context.textTheme.subtitle1!.copyWith(
+      style: context.textTheme.labelMedium!.copyWith(
         fontWeight: FontWeight.w700,
       ),
     );
@@ -133,7 +129,7 @@ class SpecialAlert extends StatelessWidget with BaseSingleton {
   Widget _contentSubtitle(BuildContext context) {
     return Text(
       contentSubtitle,
-      style: context.textTheme.subtitle2,
+      style: context.textTheme.labelMedium,
       textAlign: TextAlign.center,
     );
   }

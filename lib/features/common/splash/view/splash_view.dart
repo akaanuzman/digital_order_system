@@ -1,12 +1,6 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:digital_order_system/core/base/base_singleton.dart';
-import 'package:digital_order_system/core/extensions/string_extension.dart';
-import 'package:digital_order_system/core/extensions/ui_extensions.dart';
+import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/features/auth/login/view/login_view.dart';
 import 'package:digital_order_system/features/auth/onboard/view/onboard_view.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../viewmodel/splash_view_model.dart';
 
 class SplashView extends StatelessWidget with BaseSingleton {
@@ -23,8 +17,12 @@ class SplashView extends StatelessWidget with BaseSingleton {
             case ConnectionState.waiting:
               return body(context);
             default:
-              if (snapshot.hasData && snapshot.data != null) {
-                return !snapshot.data! ? OnboardView() : const LoginView();
+              if (snapshot.hasData) {
+                return !snapshot.data!
+                    ? OnboardView()
+                    : const LoginView();
+              } else if(!snapshot.hasData){
+                return OnboardView();
               }
               return body(context);
           }

@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-
-import '../../../../core/helpers/storage.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SplashViewModel extends ChangeNotifier {
-  bool _status = false;
-  bool get status => _status;
+  final box = GetStorage();
 
   Future<bool> get initPage async {
-    final result = await Storage().readStorage("openOnboard");
-    if (result != null) {
-      _status = true;
-      return status;
-    } else {
-      return status;
-    }
+    final result = await box.read("openOnboard");
+    return result;
   }
 }

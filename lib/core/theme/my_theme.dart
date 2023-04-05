@@ -18,5 +18,6 @@ class MyTheme extends IMyTheme {
 
   ThemeData get themeData => ThemeData(
         textTheme: MyTexts.instance.textTheme,
+        scaffoldBackgroundColor: colors.grey05,
       );
 }

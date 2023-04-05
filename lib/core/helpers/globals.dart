@@ -1,8 +1,5 @@
-import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../base/base_singleton.dart';
-import '../enums/alert_enum.dart';
 
 class Globals with BaseSingleton {
   static Globals? _instance;

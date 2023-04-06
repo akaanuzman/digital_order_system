@@ -5,15 +5,28 @@ import 'package:digital_order_system/_export_ui.dart';
 
 class OnboardView extends StatelessWidget with BaseSingleton {
   final pv = Provider.of<OnboardViewModel>(
-      NavigationService.navigatorKey.currentContext!,
-      listen: false);
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
   final BuildContext context = NavigationService.navigatorKey.currentContext!;
   OnboardView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages(pv),
+      body: Stack(
+        children: [
+          background,
+          pages(pv),
+        ],
+      ),
+    );
+  }
+
+  Positioned get background {
+    return Positioned(
+      bottom: -70,
+      child: Image.asset("background".toPng),
     );
   }
 
@@ -36,21 +49,27 @@ class OnboardView extends StatelessWidget with BaseSingleton {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            context.emptySizedHeightBox5x,
+            Image.asset("logo".toPng),
+            context.emptySizedHeightBox2x,
             const Spacer(),
             image(page),
             context.emptySizedHeightBox2x,
             titleAndSubtitleSection(page),
             indicators,
-            Expanded(child: buttons)
+            Expanded(
+              flex: 2,
+              child: buttons,
+            )
           ],
         ),
       ),
     );
   }
 
-  AspectRatio image(OnboardModel page) {
+  Widget image(OnboardModel page) {
     return AspectRatio(
-      aspectRatio: 1.25,
+      aspectRatio: 1.5,
       child: Image.asset(
         page.imageUrl,
       ),
@@ -61,7 +80,7 @@ class OnboardView extends StatelessWidget with BaseSingleton {
     return Padding(
       padding: context.padding4x,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           title(page),
           context.emptySizedHeightBox1x,
@@ -74,14 +93,19 @@ class OnboardView extends StatelessWidget with BaseSingleton {
   Text title(OnboardModel page) {
     return Text(
       page.title,
-      style:
-          context.textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.w700),
-      textAlign: TextAlign.start,
+      style: context.textTheme.titleMedium!.copyWith(
+        fontWeight: FontWeight.w700,
+        color: colors.mainColor,
+      ),
+      textAlign: TextAlign.center,
     );
   }
 
-  Text subtitle(OnboardModel page) =>
-      Text(page.subtitle, style: context.textTheme.bodySmall);
+  Text subtitle(OnboardModel page) => Text(
+        page.subtitle,
+        style: context.textTheme.bodySmall,
+        textAlign: TextAlign.center,
+      );
 
   Row get indicators {
     return Row(
@@ -98,12 +122,14 @@ class OnboardView extends StatelessWidget with BaseSingleton {
   Widget indicatorItem(int index) {
     return Consumer<OnboardViewModel>(
       builder: (context, pv, _) {
-        Color containerColor = pv.pageIndex == index ? colors.royalBlue : colors.grey;
+        Color containerColor = pv.pageIndex == index
+            ? colors.selectedIndicatorColor
+            : colors.disableIndicatorColor;
         double height = 8.0;
-        double width = pv.pageIndex == index ? 32.0 : 16.0;
+        double width = pv.pageIndex == index ? 32.0 : 8.0;
         return AnimatedContainer(
           duration: context.durationLow2x,
-          margin: context.padding1x,
+          margin: context.padding1x / 2,
           decoration: BoxDecoration(
             color: containerColor,
             borderRadius: context.borderRadius1x,
@@ -120,15 +146,12 @@ class OnboardView extends StatelessWidget with BaseSingleton {
       builder: (context, pv, _) {
         Widget isVisibleSkipBtn =
             pv.pageIndex < 2 ? skipBtn(pv) : const SizedBox();
-        return Padding(
-          padding: context.padding2x,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              isVisibleSkipBtn,
-              nextOrLetsStartBtn(pv.pageIndex, pv),
-            ],
-          ),
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            isVisibleSkipBtn,
+            nextOrLetsStartBtn(pv.pageIndex, pv),
+          ],
         );
       },
     );
@@ -141,28 +164,41 @@ class OnboardView extends StatelessWidget with BaseSingleton {
         "Geç",
         style: context.textTheme.bodyMedium!.copyWith(
           fontWeight: FontWeight.w700,
-          color: colors.royalBlue,
+          color: colors.selectedIndicatorColor,
         ),
       ),
     );
   }
 
-  InkWell nextOrLetsStartBtn(int pageIndex, OnboardViewModel pv) {
-    return InkWell(
-      onTap: () => pv.nextPage,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            pageIndex < 2 ? "İlerle" : "Hadi Başla!",
-            style: context.textTheme.bodyMedium!
-                .copyWith(fontWeight: FontWeight.w700),
-          ),
-          context.emptySizedWidthBox1x,
-          const Icon(Icons.arrow_forward_outlined),
-        ],
+  Widget nextOrLetsStartBtn(int pageIndex, OnboardViewModel pv) {
+    return Container(
+      margin: context.paddingHorizontal4x,
+      height: 50,
+      child: ElevatedButton.icon(
+        onPressed: () {},
+        label: Text(pageIndex < 2 ? "İlerle" : "Hadi Başla!"),
+        icon: const Icon(Icons.arrow_forward_outlined),
+        style: ElevatedButton.styleFrom(
+            backgroundColor: colors.mainColor,
+            shape:
+                RoundedRectangleBorder(borderRadius: context.borderRadius4x)),
       ),
     );
+    // return InkWell(
+    //   onTap: () => pv.nextPage,
+    //   child: Row(
+    //     mainAxisAlignment: MainAxisAlignment.center,
+    //     mainAxisSize: MainAxisSize.min,
+    //     children: [
+    //       Text(
+    //         pageIndex < 2 ? "İlerle" : "Hadi Başla!",
+    //         style: context.textTheme.bodyMedium!
+    //             .copyWith(fontWeight: FontWeight.w700),
+    //       ),
+    //       context.emptySizedWidthBox1x,
+    //       const Icon(Icons.arrow_forward_outlined),
+    //     ],
+    //   ),
+    // );
   }
 }

@@ -21,6 +21,9 @@ class MyColors with BaseSingleton {
   Color get primaryBoxShadowColor => const Color(0x1a208dfe);
   Color get royalBlue => const Color(0xff4563DB);
   Color get gray => const Color(0xffd3d3d3);
+  Color get mainColor => const Color(0xffF10027);
+  Color get selectedIndicatorColor => const Color(0xffE65037);
+  Color get disableIndicatorColor => const Color(0xffFD8700);
   MaterialColor get randomColor => Colors.primaries[Random().nextInt(17)];
 
   /// Flutter Colors [You can use all flutter colors basicly].

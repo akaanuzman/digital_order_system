@@ -71,7 +71,7 @@ class MyTexts {
         titleMedium: TextStyle(
           color: _textColor,
           fontSize: 24,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w700,
           fontFamily: _fontFamily,
         ),
         titleSmall: TextStyle(
@@ -113,7 +113,7 @@ class MyTexts {
         ),
         bodySmall: TextStyle(
           color: _textColor,
-          fontSize: 16,
+          fontSize: 18,
           fontWeight: FontWeight.w400,
           fontFamily: _fontFamily,
         ),

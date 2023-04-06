@@ -17,7 +17,7 @@ class MyTexts {
 
   MyColors get _colors => MyColors.instance;
   Color get _textColor => _colors.black;
-  String get _fontFamily => 'Roboto';
+  String get _fontFamily => 'Montserrat';
 
   TextTheme get textTheme => TextTheme(
         //XX

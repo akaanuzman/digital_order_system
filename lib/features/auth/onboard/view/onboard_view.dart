@@ -122,9 +122,8 @@ class OnboardView extends StatelessWidget with BaseSingleton {
   Widget indicatorItem(int index) {
     return Consumer<OnboardViewModel>(
       builder: (context, pv, _) {
-        Color containerColor = pv.pageIndex == index
-            ? colors.orangeade
-            : colors.mandarinJelly;
+        Color containerColor =
+            pv.pageIndex == index ? colors.orangeade : colors.mandarinJelly;
         double height = 8.0;
         double width = pv.pageIndex == index ? 32.0 : 8.0;
         return AnimatedContainer(
@@ -179,26 +178,12 @@ class OnboardView extends StatelessWidget with BaseSingleton {
         label: Text(pageIndex < 2 ? "İlerle" : "Hadi Başla!"),
         icon: const Icon(Icons.arrow_forward_outlined),
         style: ElevatedButton.styleFrom(
-            backgroundColor: colors.redSavinaPepper,
-            shape:
-                RoundedRectangleBorder(borderRadius: context.borderRadius4x)),
+          backgroundColor: colors.redSavinaPepper,
+          shape: RoundedRectangleBorder(
+            borderRadius: context.borderRadius4x,
+          ),
+        ),
       ),
     );
-    // return InkWell(
-    //   onTap: () => pv.nextPage,
-    //   child: Row(
-    //     mainAxisAlignment: MainAxisAlignment.center,
-    //     mainAxisSize: MainAxisSize.min,
-    //     children: [
-    //       Text(
-    //         pageIndex < 2 ? "İlerle" : "Hadi Başla!",
-    //         style: context.textTheme.bodyMedium!
-    //             .copyWith(fontWeight: FontWeight.w700),
-    //       ),
-    //       context.emptySizedWidthBox1x,
-    //       const Icon(Icons.arrow_forward_outlined),
-    //     ],
-    //   ),
-    // );
   }
 }

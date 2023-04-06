@@ -10,6 +10,7 @@ class SplashView extends StatelessWidget with BaseSingleton {
   Widget build(BuildContext context) {
     final pv = Provider.of<SplashViewModel>(context, listen: false);
     return Scaffold(
+      backgroundColor: colors.charismaticRed,
       body: FutureBuilder(
         future: pv.initPage,
         builder: (_, snapshot) {
@@ -21,7 +22,7 @@ class SplashView extends StatelessWidget with BaseSingleton {
                 return !snapshot.data!
                     ? OnboardView()
                     : const LoginView();
-              } else if(!snapshot.hasData){
+              } else if (!snapshot.hasData) {
                 return OnboardView();
               }
               return body(context);
@@ -39,12 +40,14 @@ class SplashView extends StatelessWidget with BaseSingleton {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("splash".toPng),
-              context.emptySizedHeightBox2x,
+              Image.asset("splash_logo".toPng),
+              context.emptySizedHeightBox4x,
               Text(
-                "Digital Order System",
-                style: context.textTheme.bodyLarge!
-                    .copyWith(fontWeight: FontWeight.w600),
+                "Tasty Town",
+                style: context.textTheme.headlineSmall!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: colors.notYoCheese,
+                ),
               )
             ],
           ),

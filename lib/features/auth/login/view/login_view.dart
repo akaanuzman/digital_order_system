@@ -5,10 +5,14 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Login"),
-      ),
+    return Scaffold(
+      body: centerMethod(),
+    );
+  }
+
+  Center centerMethod() {
+    return Center(
+      child: Text("Login"),
     );
   }
 }

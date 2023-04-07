@@ -1,3 +1,12 @@
 {
-    "appName": "Digital Order System"
+    "appName": "Tasty Town",
+    "onboardFirstTitle": "Uygulamamıza Hoş geldin!",
+    "onboardFirstSubtitle": "Halihazırda bulunan bir çok zengin içerik ve özellik için devam et!",
+    "onboardSecondTitle": "Haydi sıra sende!",
+    "onboardSecondSubtitle": "Müşteriler ve sizler için tasarladığımız bir çok şeyi keşfet!",
+    "onboardThirdTitle": "Son bir adım!",
+    "onboardThirdSubtitle": "Restoran hesabını oluştur ve sipariş yönetimindeki performansı maksimuma çıkar.",
+    "skipBtn": "Geç",
+    "nextBtn": "İlerle",
+    "letsStartBtn": "Haydi Başla!"
 }

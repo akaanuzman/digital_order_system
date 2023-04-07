@@ -2,7 +2,7 @@ import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/features/auth/login/view/login_view.dart';
 import 'package:digital_order_system/features/auth/onboard/view/onboard_view.dart';
 import '../viewmodel/splash_view_model.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SplashView extends StatelessWidget with BaseSingleton {
   SplashView({super.key});
 
@@ -19,11 +19,9 @@ class SplashView extends StatelessWidget with BaseSingleton {
               return body(context);
             default:
               if (snapshot.hasData) {
-                return !snapshot.data!
-                    ? OnboardView()
-                    : const LoginView();
+                return !snapshot.data! ? const OnboardView() : const LoginView();
               } else if (!snapshot.hasData) {
-                return OnboardView();
+                return const OnboardView();
               }
               return body(context);
           }
@@ -40,10 +38,10 @@ class SplashView extends StatelessWidget with BaseSingleton {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("splash_logo".toPng),
+              Image.asset(imageConstants.splashLogo),
               context.emptySizedHeightBox4x,
               Text(
-                "Tasty Town",
+                AppLocalizations.of(context)!.appName,
                 style: context.textTheme.headlineSmall!.copyWith(
                   fontWeight: FontWeight.w600,
                   color: colors.notYoCheese,

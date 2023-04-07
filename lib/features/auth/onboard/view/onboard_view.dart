@@ -2,17 +2,22 @@ import 'package:digital_order_system/features/auth/onboard/viewmodel/onboard_vie
 import '../../../../core/extensions/on_board_model_extension.dart';
 import '../model/onboard_model.dart';
 import 'package:digital_order_system/_export_ui.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class OnboardView extends StatelessWidget with BaseSingleton {
-  final pv = Provider.of<OnboardViewModel>(
-    NavigationService.navigatorKey.currentContext!,
-    listen: false,
-  );
-  final BuildContext context = NavigationService.navigatorKey.currentContext!;
-  OnboardView({super.key});
+class OnboardView extends StatefulWidget {
+  const OnboardView({super.key});
 
   @override
+  State<OnboardView> createState() => _OnboardViewState();
+}
+
+class _OnboardViewState extends State<OnboardView> with BaseSingleton {
+  @override
   Widget build(BuildContext context) {
+    final pv = Provider.of<OnboardViewModel>(
+      context,
+      listen: false,
+    );
     return Scaffold(
       body: Stack(
         children: [
@@ -26,17 +31,17 @@ class OnboardView extends StatelessWidget with BaseSingleton {
   Positioned get background {
     return Positioned(
       bottom: -70,
-      child: Image.asset("background".toPng),
+      child: Image.asset(imageConstants.background),
     );
   }
 
   PageView pages(OnboardViewModel pv) {
     return PageView.builder(
       controller: pv.pageController,
-      itemCount: OnboardModelExtension.pages.length,
+      itemCount: OnboardModelExtension.pages(context).length,
       onPageChanged: (val) => pv.setPageIndex(val),
       itemBuilder: (_, index) {
-        OnboardModel page = OnboardModelExtension.pages[index];
+        OnboardModel page = OnboardModelExtension.pages(context)[index];
         return pageItem(page);
       },
     );
@@ -50,7 +55,7 @@ class OnboardView extends StatelessWidget with BaseSingleton {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             context.emptySizedHeightBox5x,
-            Image.asset("logo".toPng),
+            Image.asset(imageConstants.logo),
             context.emptySizedHeightBox2x,
             const Spacer(),
             image(page),
@@ -111,7 +116,7 @@ class OnboardView extends StatelessWidget with BaseSingleton {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(
-        OnboardModelExtension.pages.length,
+        OnboardModelExtension.pages(context).length,
         (index) {
           return indicatorItem(index);
         },
@@ -160,7 +165,7 @@ class OnboardView extends StatelessWidget with BaseSingleton {
     return TextButton(
       onPressed: () => pv.finishOnboard,
       child: Text(
-        "Geç",
+        AppLocalizations.of(context)!.skipBtn,
         style: context.textTheme.bodyMedium!.copyWith(
           fontWeight: FontWeight.w700,
           color: colors.orangeade,
@@ -175,7 +180,11 @@ class OnboardView extends StatelessWidget with BaseSingleton {
       height: 50,
       child: ElevatedButton.icon(
         onPressed: () {},
-        label: Text(pageIndex < 2 ? "İlerle" : "Hadi Başla!"),
+        label: Text(
+          pageIndex < 2
+              ? AppLocalizations.of(context)!.nextBtn
+              : AppLocalizations.of(context)!.letsStartBtn,
+        ),
         icon: const Icon(Icons.arrow_forward_outlined),
         style: ElevatedButton.styleFrom(
           backgroundColor: colors.redSavinaPepper,

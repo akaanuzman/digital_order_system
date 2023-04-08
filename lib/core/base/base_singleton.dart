@@ -1,6 +1,6 @@
 
 import '../constants/app_constants.dart';
-import '../constants/icon_constants.dart';
+import '../constants/image_constants.dart';
 
 import '../helpers/globals.dart';
 import '../helpers/ui_globals.dart';
@@ -17,5 +17,5 @@ abstract class BaseSingleton {
   UIGlobals get uiGlobals => UIGlobals.instance;
   AppValidators get validators => AppValidators.instance;
   AppConstants get constants => AppConstants.instance;
-  IconConstants get icons => IconConstants.instance;
+  ImageConstants get imageConstants => ImageConstants.instance;
 }

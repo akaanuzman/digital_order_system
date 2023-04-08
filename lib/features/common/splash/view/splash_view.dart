@@ -2,7 +2,7 @@ import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/features/auth/login/view/login_view.dart';
 import 'package:digital_order_system/features/auth/onboard/view/onboard_view.dart';
 import '../viewmodel/splash_view_model.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class SplashView extends StatelessWidget with BaseSingleton {
   SplashView({super.key});
 
@@ -10,6 +10,7 @@ class SplashView extends StatelessWidget with BaseSingleton {
   Widget build(BuildContext context) {
     final pv = Provider.of<SplashViewModel>(context, listen: false);
     return Scaffold(
+      backgroundColor: colors.charismaticRed,
       body: FutureBuilder(
         future: pv.initPage,
         builder: (_, snapshot) {
@@ -18,11 +19,9 @@ class SplashView extends StatelessWidget with BaseSingleton {
               return body(context);
             default:
               if (snapshot.hasData) {
-                return !snapshot.data!
-                    ? OnboardView()
-                    : const LoginView();
-              } else if(!snapshot.hasData){
-                return OnboardView();
+                return !snapshot.data! ? const OnboardView() : const LoginView();
+              } else if (!snapshot.hasData) {
+                return const OnboardView();
               }
               return body(context);
           }
@@ -39,12 +38,14 @@ class SplashView extends StatelessWidget with BaseSingleton {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("splash".toPng),
-              context.emptySizedHeightBox2x,
+              Image.asset(imageConstants.splashLogo),
+              context.emptySizedHeightBox4x,
               Text(
-                "Digital Order System",
-                style: context.textTheme.bodyLarge!
-                    .copyWith(fontWeight: FontWeight.w600),
+                AppLocalizations.of(context)!.appName,
+                style: context.textTheme.headlineSmall!.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: colors.notYoCheese,
+                ),
               )
             ],
           ),

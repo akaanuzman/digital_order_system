@@ -1,6 +1,5 @@
 // import '_export_onboard_view_model.dart';
 
-import 'package:digital_order_system/core/utils/navigation_service.dart';
 import 'package:digital_order_system/features/auth/register/view/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -17,10 +16,10 @@ class OnboardViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void get finishOnboard {
+  void finishOnboard(BuildContext context) {
     isOld = true;
     box.write("openOnboard", isOld);
-    Navigator.of(NavigationService.navigatorKey.currentContext!).pushAndRemoveUntil(
+    Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (_) => const RegisterView()),
       (route) => false,
     );

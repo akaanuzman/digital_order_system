@@ -1,17 +1,14 @@
+import 'package:digital_order_system/core/utils/navigator_service.dart';
 import 'package:digital_order_system/features/auth/onboard/viewmodel/onboard_view_model.dart';
 import '../../../../core/extensions/on_board_model_extension.dart';
 import '../model/onboard_model.dart';
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class OnboardView extends StatefulWidget {
-  const OnboardView({super.key});
+class OnboardView extends StatelessWidget with BaseSingleton{
+  final BuildContext context = NavigationService.navigatorKey.currentContext!;
+  OnboardView({super.key});
 
-  @override
-  State<OnboardView> createState() => _OnboardViewState();
-}
-
-class _OnboardViewState extends State<OnboardView> with BaseSingleton {
   @override
   Widget build(BuildContext context) {
     final pv = Provider.of<OnboardViewModel>(
@@ -38,10 +35,10 @@ class _OnboardViewState extends State<OnboardView> with BaseSingleton {
   PageView pages(OnboardViewModel pv) {
     return PageView.builder(
       controller: pv.pageController,
-      itemCount: OnboardModelExtension.pages(context).length,
+      itemCount: OnboardModelExtension.pages.length,
       onPageChanged: (val) => pv.setPageIndex(val),
       itemBuilder: (_, index) {
-        OnboardModel page = OnboardModelExtension.pages(context)[index];
+        OnboardModel page = OnboardModelExtension.pages[index];
         return pageItem(page);
       },
     );
@@ -52,7 +49,7 @@ class _OnboardViewState extends State<OnboardView> with BaseSingleton {
       child: Padding(
         padding: context.padding2x,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: context.mainAxisACenter,
           children: [
             context.emptySizedHeightBox5x,
             Image.asset(imageConstants.logo),
@@ -85,7 +82,7 @@ class _OnboardViewState extends State<OnboardView> with BaseSingleton {
     return Padding(
       padding: context.padding4x,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: context.crossAxisACenter,
         children: [
           title(page),
           context.emptySizedHeightBox1x,
@@ -99,24 +96,24 @@ class _OnboardViewState extends State<OnboardView> with BaseSingleton {
     return Text(
       page.title,
       style: context.textTheme.titleMedium!.copyWith(
-        fontWeight: FontWeight.w700,
+        fontWeight: context.fw700,
         color: colors.redSavinaPepper,
       ),
-      textAlign: TextAlign.center,
+      textAlign: context.taCenter,
     );
   }
 
   Text subtitle(OnboardModel page) => Text(
         page.subtitle,
         style: context.textTheme.bodySmall,
-        textAlign: TextAlign.center,
+        textAlign: context.taCenter,
       );
 
   Row get indicators {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: context.mainAxisACenter,
       children: List.generate(
-        OnboardModelExtension.pages(context).length,
+        OnboardModelExtension.pages.length,
         (index) {
           return indicatorItem(index);
         },
@@ -179,7 +176,7 @@ class _OnboardViewState extends State<OnboardView> with BaseSingleton {
       margin: context.paddingHorizontal4x,
       height: 50,
       child: ElevatedButton.icon(
-        onPressed: () {},
+        onPressed: () => pv.nextPage,
         label: Text(
           pageIndex < 2
               ? AppLocalizations.of(context)!.nextBtn

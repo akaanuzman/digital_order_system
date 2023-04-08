@@ -1,8 +1,7 @@
 import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/features/auth/login/view/login_view.dart';
-import 'package:digital_order_system/features/auth/onboard/view/onboard_view.dart';
 import '../viewmodel/splash_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class SplashView extends StatelessWidget with BaseSingleton {
   SplashView({super.key});
 
@@ -13,19 +12,7 @@ class SplashView extends StatelessWidget with BaseSingleton {
       backgroundColor: colors.charismaticRed,
       body: FutureBuilder(
         future: pv.initPage,
-        builder: (_, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return body(context);
-            default:
-              if (snapshot.hasData) {
-                return !snapshot.data! ? const OnboardView() : const LoginView();
-              } else if (!snapshot.hasData) {
-                return const OnboardView();
-              }
-              return body(context);
-          }
-        },
+        builder: (_, snapshot) => pv.screenSelectionByStorage(snapshot),
       ),
     );
   }
@@ -36,20 +23,26 @@ class SplashView extends StatelessWidget with BaseSingleton {
         child: Padding(
           padding: context.padding4x,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: context.mainAxisACenter,
             children: [
-              Image.asset(imageConstants.splashLogo),
+              image,
               context.emptySizedHeightBox4x,
-              Text(
-                AppLocalizations.of(context)!.appName,
-                style: context.textTheme.headlineSmall!.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: colors.notYoCheese,
-                ),
-              )
+              appTitle(context),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Image get image => Image.asset(imageConstants.splashLogo);
+
+  Text appTitle(BuildContext context) {
+    return Text(
+      AppLocalizations.of(context)!.appName,
+      style: context.textTheme.headlineSmall!.copyWith(
+        fontWeight: FontWeight.w600,
+        color: colors.notYoCheese,
       ),
     );
   }

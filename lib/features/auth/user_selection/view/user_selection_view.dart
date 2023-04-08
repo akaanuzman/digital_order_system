@@ -1,9 +1,7 @@
 import 'package:digital_order_system/_export_ui.dart';
-import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
 
-class HomePageView extends StatelessWidget {
-  const HomePageView({super.key});
+class UserSelectionView extends StatelessWidget {
+  const UserSelectionView({super.key});
 
   @override
   Widget build(BuildContext context) {

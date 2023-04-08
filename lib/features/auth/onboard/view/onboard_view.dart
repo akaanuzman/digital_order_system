@@ -183,7 +183,6 @@ class OnboardView extends StatelessWidget with BaseSingleton {
         ),
         icon: const Icon(Icons.arrow_forward_outlined),
         style: ElevatedButton.styleFrom(
-          backgroundColor: colors.redSavinaPepper,
           shape: RoundedRectangleBorder(
             borderRadius: context.borderRadius4x,
           ),

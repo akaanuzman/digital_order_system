@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'IMyTheme.dart';
+import 'ITheme.dart';
 import 'text/my_texts.dart';
 
-class MyTheme extends IMyTheme {
+class MyTheme extends ITheme {
   static MyTheme? _instance;
   static MyTheme get instance {
     if (_instance != null) {
@@ -17,6 +17,8 @@ class MyTheme extends IMyTheme {
   MyTheme.init();
 
   ThemeData get themeData => ThemeData(
+        // colorSchemeSeed: colors.redSavinaPepper,
+        // useMaterial3: true,
         textTheme: MyTexts.instance.textTheme,
         scaffoldBackgroundColor: colors.grey05,
       );

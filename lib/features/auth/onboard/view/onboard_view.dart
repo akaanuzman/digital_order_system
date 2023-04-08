@@ -5,7 +5,7 @@ import '../model/onboard_model.dart';
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class OnboardView extends StatelessWidget with BaseSingleton{
+class OnboardView extends StatelessWidget with BaseSingleton {
   final BuildContext context = NavigationService.navigatorKey.currentContext!;
   OnboardView({super.key});
 
@@ -95,8 +95,7 @@ class OnboardView extends StatelessWidget with BaseSingleton{
   Text title(OnboardModel page) {
     return Text(
       page.title,
-      style: context.textTheme.titleMedium!.copyWith(
-        fontWeight: context.fw700,
+      style: context.textTheme.displaySmall!.copyWith(
         color: colors.redSavinaPepper,
       ),
       textAlign: context.taCenter,
@@ -105,7 +104,8 @@ class OnboardView extends StatelessWidget with BaseSingleton{
 
   Text subtitle(OnboardModel page) => Text(
         page.subtitle,
-        style: context.textTheme.bodySmall,
+        style: context.textTheme.headlineMedium!
+            .copyWith(fontWeight: context.fw400),
         textAlign: context.taCenter,
       );
 
@@ -163,9 +163,8 @@ class OnboardView extends StatelessWidget with BaseSingleton{
       onPressed: () => pv.finishOnboard,
       child: Text(
         AppLocalizations.of(context)!.skipBtn,
-        style: context.textTheme.bodyMedium!.copyWith(
-          fontWeight: FontWeight.w700,
-          color: colors.orangeade,
+        style: context.textTheme.headlineSmall!.copyWith(
+          color: colors.gray,
         ),
       ),
     );

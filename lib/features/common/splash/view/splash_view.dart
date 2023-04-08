@@ -40,10 +40,7 @@ class SplashView extends StatelessWidget with BaseSingleton {
   Text appTitle(BuildContext context) {
     return Text(
       AppLocalizations.of(context)!.appName,
-      style: context.textTheme.headlineSmall!.copyWith(
-        fontWeight: FontWeight.w600,
-        color: colors.notYoCheese,
-      ),
+      style: context.textTheme.displayLarge,
     );
   }
 }

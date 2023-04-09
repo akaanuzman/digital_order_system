@@ -30,7 +30,8 @@ class RegisterView extends StatelessWidget {
             context.emptySizedHeightBox2x,
             verySpecialButton(context, "Sign In"),
             context.emptySizedWidthBox2x,
-            Row(//TODO: companent yap
+            Row(
+              //TODO: companent yap
               mainAxisAlignment: context.mainAxisACenter,
               children: [
                 Text(
@@ -43,7 +44,6 @@ class RegisterView extends StatelessWidget {
                   onPressed: () {},
                   child: const Text(
                     "Sign In",
-                    style: TextStyle(color: Colors.red),
                   ),
                 )
               ],

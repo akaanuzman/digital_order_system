@@ -36,7 +36,8 @@ class LoginView extends StatelessWidget {
             context.emptySizedHeightBox2x,
             verySpecialButton(context, "Sign In"),
             context.emptySizedHeightBox2x,
-            Row( //TODO: companent haline getir
+            Row(
+              //TODO: companent haline getir
               mainAxisAlignment: context.mainAxisACenter,
               children: [
                 Text(
@@ -49,7 +50,6 @@ class LoginView extends StatelessWidget {
                   onPressed: () {},
                   child: const Text(
                     "Sign Up",
-                    style: TextStyle(color: Colors.red),
                   ),
                 )
               ],

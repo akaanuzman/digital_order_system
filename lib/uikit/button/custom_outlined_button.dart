@@ -3,49 +3,44 @@ import 'package:digital_order_system/core/extensions/ui_extensions.dart';
 import 'package:digital_order_system/core/theme/color/my_colors.dart';
 import 'package:flutter/material.dart';
 
-class CustomButton extends Container {
+class CustomOutlinedButton extends Container {
   final BuildContext context;
   final CustomButtonEnum buttonType;
   final String label;
   final VoidCallback? onTap;
-  final EdgeInsets? padding;
 
-  CustomButton({
+  CustomOutlinedButton({
     super.key,
     required this.context,
     required this.buttonType,
     required this.label,
     this.onTap,
-    this.padding,
   }) : super(
           height: _height(buttonType, context),
           width: context.maxFinite,
-          padding: padding,
           decoration: _decoration(buttonType, context),
-          child: ElevatedButton(
+          child: OutlinedButton(
             onPressed: onTap ?? () {},
             style: _buttonStyle(context, buttonType),
             child: Text(label),
           ),
         );
 
-  CustomButton.icon({
+  CustomOutlinedButton.icon({
     super.key,
     required this.context,
     required this.buttonType,
     required this.label,
     required IconData icon,
     this.onTap,
-    this.padding,
   }) : super(
           height: _height(buttonType, context),
           decoration: _decoration(buttonType, context),
-          padding: padding,
-          child: ElevatedButton(
+          child: OutlinedButton(
             onPressed: onTap ?? () {},
             style: _buttonStyle(context, buttonType),
             child: Padding(
-              padding: padding ?? context.padding1x,
+              padding: context.padding1x,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -70,6 +65,10 @@ class CustomButton extends Container {
         )
       ],
       borderRadius: _borderRadius(buttonType, context),
+      border: Border.all(
+        color: MyColors.instance.redSavinaPepper,
+        width: 1.35,
+      ),
     );
   }
 

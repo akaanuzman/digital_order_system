@@ -22,6 +22,7 @@ class MyTheme extends ITheme {
         colorScheme: colorScheme,
         textTheme: texts.textTheme,
         elevatedButtonTheme: elevatedButton,
+        outlinedButtonTheme: outlinedButton,
         textButtonTheme: textButton,
         appBarTheme: appBarTheme,
       );
@@ -35,7 +36,15 @@ class MyTheme extends ITheme {
   ElevatedButtonThemeData get elevatedButton {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: colors.redSavinaPepper,
+        textStyle: texts.textTheme.headlineSmall,
+      ),
+    );
+  }
+
+  OutlinedButtonThemeData get outlinedButton {
+    return OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        backgroundColor: colors.white,
         textStyle: texts.textTheme.headlineSmall,
       ),
     );

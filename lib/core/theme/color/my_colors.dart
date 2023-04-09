@@ -26,6 +26,7 @@ class MyColors with BaseSingleton {
   Color get orangeade => const Color(0xffE65037);
   Color get mandarinJelly => const Color(0xffFD8700);
   Color get gray => const Color(0xff979797);
+  Color get darkBlue => const Color(0x331b39ff);
   MaterialColor get randomColor => Colors.primaries[Random().nextInt(17)];
 
   /// Flutter Colors [You can use all flutter colors basicly].

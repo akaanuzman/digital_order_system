@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  device_preview: ^1.1.0
+
   # Visual Elements
   cupertino_icons: ^1.0.2
   animate_do: ^3.0.2

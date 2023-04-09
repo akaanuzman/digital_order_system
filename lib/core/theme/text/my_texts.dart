@@ -16,104 +16,128 @@ class MyTexts {
   MyTexts.init();
 
   MyColors get _colors => MyColors.instance;
-  Color get _textColor => _colors.black;
+  Color get _textColor => _colors.textColor;
   String get _fontFamily => 'Montserrat';
 
   TextTheme get textTheme => TextTheme(
-        //XX
+
+        // 35 - semibold ** Splash Screen
         displayLarge: TextStyle(
-          color: _textColor,
-          fontSize: 64,
-          fontWeight: FontWeight.w400,
+          color: _colors.notYoCheese,
+          fontSize: 35,
+          fontWeight: FontWeight.w600,
           fontFamily: _fontFamily,
         ),
+        
+        // 28 - bold  ** Sign in, Sign up
         displayMedium: TextStyle(
-          //XX
-          color: _textColor,
-          fontSize: 52,
-          fontWeight: FontWeight.w400,
-          fontFamily: _fontFamily,
-        ),
-        displaySmall: TextStyle(
-          //XX
-          color: _textColor,
-          fontSize: 44,
-          fontWeight: FontWeight.w400,
-          fontFamily: _fontFamily,
-        ),
-        headlineLarge: TextStyle(
-          //XX
-          color: _textColor,
-          fontSize: 40,
-          fontWeight: FontWeight.w400,
-          fontFamily: _fontFamily,
-        ),
-        headlineMedium: TextStyle(
-          //XX
-          color: _textColor,
-          fontSize: 36,
-          fontWeight: FontWeight.w400,
-          fontFamily: _fontFamily,
-        ),
-        headlineSmall: TextStyle(
-          //XX
-          color: _textColor,
-          fontSize: 32,
-          fontWeight: FontWeight.w400,
-          fontFamily: _fontFamily,
-        ),
-        titleLarge: TextStyle(
-          color: _textColor,
+          color: _colors.redSavinaPepper,
           fontSize: 28,
-          fontWeight: FontWeight.w400,
+          fontWeight: FontWeight.bold,
           fontFamily: _fontFamily,
         ),
-        titleMedium: TextStyle(
+
+        // 24 - bold ** Splash and others
+        displaySmall: TextStyle(
           color: _textColor,
           fontSize: 24,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.bold,
           fontFamily: _fontFamily,
         ),
+
+        // 20 - bold ** Appbar Title
+        headlineLarge: TextStyle(
+          color: _textColor,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          fontFamily: _fontFamily,
+        ),
+
+        // 18 - medium
+        headlineMedium: TextStyle(
+          color: _textColor,
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+          fontFamily: _fontFamily,
+        ),
+
+        // 16 - bold  ** For buttons
+        headlineSmall: TextStyle(
+          color: _textColor,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          fontFamily: _fontFamily,
+        ),
+
+        // 16 - regular
+        titleLarge: TextStyle(
+          color: _textColor,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          fontFamily: _fontFamily,
+        ),
+
+        // 14 - regular
+        titleMedium: TextStyle(
+          color: _textColor,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          fontFamily: _fontFamily,
+        ),
+
+        // 12 - regular
         titleSmall: TextStyle(
           color: _textColor,
-          fontSize: 20,
-          fontWeight: FontWeight.w500,
+          fontSize: 12,
+          fontWeight: FontWeight.w400,
           fontFamily: _fontFamily,
         ),
+
+        // 16 - medium
         labelLarge: TextStyle(
           color: _textColor,
-          fontSize: 20,
+          fontSize: 16,
           fontWeight: FontWeight.w500,
           fontFamily: _fontFamily,
         ),
+
+        // 14 - medium
         labelMedium: TextStyle(
-          color: _colors.white,
-          fontSize: 16,
+          color: _textColor,
+          fontSize: 14,
           fontWeight: FontWeight.w500,
           fontFamily: _fontFamily,
           fontStyle: FontStyle.normal,
         ),
+
+        // 12 - medium
         labelSmall: TextStyle(
           color: _textColor,
           fontSize: 12,
           fontWeight: FontWeight.w500,
           fontFamily: _fontFamily,
         ),
+
+        // 16 - semibold
         bodyLarge: TextStyle(
           color: _textColor,
-          fontSize: 24,
-          fontWeight: FontWeight.w400,
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
           fontFamily: _fontFamily,
         ),
+
+        // 15 - semibold
         bodyMedium: TextStyle(
           color: _textColor,
-          fontSize: 20,
-          fontWeight: FontWeight.w400,
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
           fontFamily: _fontFamily,
         ),
+
+        // 10 - regular
         bodySmall: TextStyle(
           color: _textColor,
-          fontSize: 18,
+          fontSize: 10,
           fontWeight: FontWeight.w400,
           fontFamily: _fontFamily,
         ),

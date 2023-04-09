@@ -134,6 +134,8 @@ class LoginView extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: context.borderRadius3x,
           ),
+
+          
           labelText: labelText,
           suffixIcon: icon,
         ),

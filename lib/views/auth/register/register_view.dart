@@ -1,12 +1,27 @@
 import 'package:digital_order_system/_export_ui.dart';
+import 'package:digital_order_system/products/components/text/display_medium_text.dart';
 import 'package:digital_order_system/products/enums/custom_button_enum.dart';
 import 'package:digital_order_system/products/components/button/custom_button.dart';
 import 'package:digital_order_system/products/components/row/special_row_button.dart';
+import 'package:digital_order_system/views/auth/login/login_view.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../../products/components/text_field/special_text_field.dart';
 
-import '../../../products/components/text/special_text.dart';
+class RegisterView extends StatelessWidget with BaseSingleton {
+  final bool isUser;
+  const RegisterView({
+    super.key,
+    required this.isUser,
+  });
 
-class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
+  void goToRegisterView(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginView(isUser: isUser),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,70 +31,67 @@ class RegisterView extends StatelessWidget {
           padding: context.padding3x,
           children: [
             context.emptySizedHeightBox4x,
-            SizedBox(
-              child: Image.asset("signup".toPng),
-            ),
+            image(),
             context.emptySizedHeightBox2x,
-            const SpecialText(
-              textLabel: "Sign Up",
-            ),
+            title(context),
             context.emptySizedHeightBox2x,
-            specialTextField(
-              context,
-              "Email",
-              const Icon(Icons.done),
-            ),
+            emailField(context),
             context.emptySizedHeightBox2x,
-            specialTextField(
-              context,
-              "Password",
-              const Icon(Icons.visibility_off),
-            ),
+            passwordField(context),
             context.emptySizedHeightBox2x,
-            Padding(
-              padding: context.paddingHorizontal9x,
-              child: CustomButton(
-                  context: context,
-                  buttonType: CustomButtonEnum.medium,
-                  label: "Sign Up"),
-            ),
-            // veryAlertButton(context, "Sign In"),
+            registerBtn(context),
             context.emptySizedWidthBox2x,
-            const SpecialRowButton(
-              firstText: "Already have an account?",
-              buttonText: "Sign In",
-            )
+            alreadyHaveAnAcoountSection(context)
           ],
         ),
       ),
     );
   }
 
-  Widget specialText(BuildContext context, String textLabel) {
-    return Center(
-      child: Text(
-        textLabel,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.red,
-          fontSize: context.val4x,
-        ),
+  Widget image() {
+    return Image.asset(imageConstants.signup);
+  }
+
+  DisplayMediumText title(BuildContext context) {
+    return DisplayMediumText(
+      textLabel: isUser
+          ? AppLocalizations.of(context)!.registerWithUser
+          : AppLocalizations.of(context)!.registerWithRestaurant,
+    );
+  }
+
+  DisplayMediumTextField emailField(BuildContext context) {
+    return DisplayMediumTextField(
+      labelText: AppLocalizations.of(context)!.emailLabelText,
+      suffixIcon: const Icon(Icons.email),
+      hintText: stringConstants.loginEmailHintText,
+    );
+  }
+
+  DisplayMediumTextField passwordField(BuildContext context) {
+    return DisplayMediumTextField(
+      labelText: AppLocalizations.of(context)!.passwordLabelText,
+      suffixIcon: const Icon(Icons.visibility_off),
+      hintText: stringConstants.loginPasswordHintText,
+    );
+  }
+
+  Padding registerBtn(BuildContext context) {
+    return Padding(
+      padding: context.paddingHorizontal9x,
+      child: CustomButton(
+        context: context,
+        buttonType: CustomButtonEnum.medium,
+        label: AppLocalizations.of(context)!.registerBtn,
       ),
     );
   }
 
-  Widget specialTextField(BuildContext context, String labelText, Icon icon) {
-    return Container(
-      padding: context.paddingHorizontal2x,
-      child: TextField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: context.borderRadius3x,
-          ),
-          labelText: labelText,
-          suffixIcon: icon,
-        ),
-      ),
+  SpecialRowButton alreadyHaveAnAcoountSection(BuildContext context) {
+    return SpecialRowButton(
+      firstText: AppLocalizations.of(context)!.alreadyHaveAnAcoount,
+      buttonText: AppLocalizations.of(context)!.loginBtn,
+      onPressed: () => goToRegisterView(context),
     );
   }
 }

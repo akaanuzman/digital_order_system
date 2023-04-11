@@ -45,7 +45,7 @@ class AppTheme extends ITheme {
   OutlinedButtonThemeData get outlinedButton {
     return OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        backgroundColor: colors.white,
+        backgroundColor: Colors.white,
         textStyle: texts.textTheme.headlineSmall,
       ),
     );
@@ -72,8 +72,8 @@ class AppTheme extends ITheme {
         color: colors.notYoCheese,
         size: 30,
       ),
-      unselectedIconTheme:IconThemeData(
-        color: colors.white,
+      unselectedIconTheme: const IconThemeData(
+        color: Colors.white,
         size: 22,
       ),
     );

@@ -9,9 +9,21 @@ class NavbarViewModel extends ChangeNotifier {
   List<NavbarModel> get items => _items;
 
   final List<Widget> _views = [
-    const Scaffold(),
-    const Scaffold(),
-    const Scaffold(),
+    const Scaffold(
+      body: Center(
+        child: Text("Home Screen"),
+      ),
+    ),
+    const Scaffold(
+      body: Center(
+        child: Text("Fav Screen"),
+      ),
+    ),
+    const Scaffold(
+      body: Center(
+        child: Text("Profile Screen"),
+      ),
+    ),
   ];
 
   List<Widget> get views => _views;

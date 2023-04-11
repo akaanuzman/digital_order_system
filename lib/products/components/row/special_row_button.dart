@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 class SpecialRowButton extends StatelessWidget {
   final String firstText;
   final String buttonText;
+  final VoidCallback? onPressed;
   const SpecialRowButton({
     super.key,
     required this.firstText,
     required this.buttonText,
+    this.onPressed,
   });
 
   @override
@@ -20,7 +22,7 @@ class SpecialRowButton extends StatelessWidget {
           style: context.textTheme.titleMedium,
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: onPressed ?? () {},
           child: Text(
             buttonText,
           ),

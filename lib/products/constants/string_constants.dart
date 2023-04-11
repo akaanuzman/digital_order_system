@@ -11,5 +11,6 @@ class StringConstants {
 
   StringConstants.init();
 
-  
+  final loginEmailHintText = "example@gmail.com";
+  final loginPasswordHintText = "******";
 }

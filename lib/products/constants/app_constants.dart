@@ -1,4 +1,5 @@
 import 'package:digital_order_system/products/view_models/splash_view_model.dart';
+import 'package:digital_order_system/products/view_models/user_selection_view_model.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/single_child_widget.dart';
@@ -19,7 +20,7 @@ class AppConstants {
 
   AppConstants.init();
 
-  String get appTitle => "Digital Order System";
+  String get appTitle => "Tasty Town";
   bool get debugShowCheckedModeBanner => false;
   get localizationsDelegates => AppLocalizations.localizationsDelegates;
   get supportedLocales => AppLocalizations.supportedLocales;
@@ -30,6 +31,9 @@ class AppConstants {
     ),
     ChangeNotifierProvider(
       create: (_) => OnboardViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => UserSelectionViewModel(),
     ),
     ChangeNotifierProvider(
       create: (_) => NavbarViewModel(),

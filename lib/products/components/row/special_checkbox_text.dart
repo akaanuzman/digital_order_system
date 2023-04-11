@@ -23,13 +23,13 @@ class SpecialRow extends StatelessWidget {
             ),
             Text(
               leftText,
-              style: context.textTheme.titleSmall,
+              style: context.textTheme.titleMedium,
             ),
           ],
         ),
         Text(
           rightText,
-          style: context.textTheme.titleSmall,
+          style: context.textTheme.titleMedium,
         ),
       ],
     );

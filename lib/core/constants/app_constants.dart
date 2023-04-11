@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/single_child_widget.dart';
 
+import '../../features/common/navbar/viewmodel/navbar_view_model.dart';
+
 class AppConstants {
   static AppConstants? _instance;
   static AppConstants get instance {
@@ -28,6 +30,9 @@ class AppConstants {
     ),
     ChangeNotifierProvider(
       create: (_) => OnboardViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => NavbarViewModel(),
     ),
   ];
 

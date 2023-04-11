@@ -3,6 +3,7 @@ import 'package:digital_order_system/core/base/base_singleton.dart';
 import 'package:digital_order_system/core/constants/app_constants.dart';
 import 'package:digital_order_system/core/utils/navigator_service.dart';
 import 'package:digital_order_system/features/auth/login/view/login_view.dart';
+import 'package:digital_order_system/features/auth/register/view/register_view.dart';
 import 'package:digital_order_system/features/common/splash/view/splash_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

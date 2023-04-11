@@ -19,4 +19,7 @@ class ImageConstants {
   final String onboardThird = "onboarding2".toPng;
   final String logo = "logo".toPng;
   final String background = "background".toPng;
+  final String pana = "pana".toPng;
+  final String restaurant = "restaurant".toPng;
+  final String signUp = "signup".toPng;
 }

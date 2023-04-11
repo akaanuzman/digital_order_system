@@ -1,4 +1,9 @@
 import 'package:digital_order_system/_export_ui.dart';
+import 'package:digital_order_system/core/enums/custom_button_enum.dart';
+import 'package:digital_order_system/uikit/button/custom_button.dart';
+import 'package:digital_order_system/uikit/special_row/special_row_button.dart';
+
+import '../../../../uikit/text/special_text.dart';
 
 class RegisterView extends StatelessWidget {
   const RegisterView({super.key});
@@ -8,14 +13,17 @@ class RegisterView extends StatelessWidget {
     return Scaffold(
       body: FadeInUp(
         child: ListView(
-          padding: context.paddingVertical8x,
+          padding: context.padding3x,
           children: [
+            context.emptySizedHeightBox4x,
             SizedBox(
               child: Image.asset("signup".toPng),
             ),
-            context.emptySizedHeightBox3x,
-            specialText(context, "Sign Up"),
-            context.emptySizedHeightBox4x,
+            context.emptySizedHeightBox2x,
+            const SpecialText(
+              textLabel: "Sign Up",
+            ),
+            context.emptySizedHeightBox2x,
             specialTextField(
               context,
               "Email",
@@ -28,54 +36,19 @@ class RegisterView extends StatelessWidget {
               const Icon(Icons.visibility_off),
             ),
             context.emptySizedHeightBox2x,
-            verySpecialButton(context, "Sign In"),
+            Padding(
+              padding: context.paddingHorizontal9x,
+              child: CustomButton(
+                  context: context,
+                  buttonType: CustomButtonEnum.medium,
+                  label: "Sign Up"),
+            ),
+            // verySpecialButton(context, "Sign In"),
             context.emptySizedWidthBox2x,
-            Row(
-              //TODO: companent yap
-              mainAxisAlignment: context.mainAxisACenter,
-              children: [
-                Text(
-                  "Already have an account?", //sign in textbutton.
-                  style: TextStyle(
-                    fontSize: context.val2x,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Sign In",
-                  ),
-                )
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget verySpecialButton(BuildContext context, String buttonLabel) {
-    return Container(
-      padding: context.paddingHorizontal2x,
-      height: context.val8x,
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: context.borderRadius7x,
-          ),
-          backgroundColor: Colors.red,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              buttonLabel,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            SpecialRowButton(
+              firstText: "Already have an account?",
+              buttonText: "Sign In",
+            )
           ],
         ),
       ),

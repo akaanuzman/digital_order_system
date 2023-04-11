@@ -1,6 +1,13 @@
 import 'package:digital_order_system/_export_ui.dart';
+import 'package:digital_order_system/core/enums/custom_button_enum.dart';
+import 'package:digital_order_system/uikit/button/custom_button.dart';
+import 'package:digital_order_system/uikit/special_row/special_row.dart';
+import 'package:digital_order_system/uikit/special_row/special_row_button.dart';
 
-class LoginView extends StatelessWidget {
+import '../../../../uikit/text/special_text.dart';
+import '../../../../uikit/text_field/special_text_field.dart';
+
+class LoginView extends StatelessWidget with BaseSingleton {
   const LoginView({super.key});
 
   @override
@@ -8,51 +15,47 @@ class LoginView extends StatelessWidget {
     return Scaffold(
       body: FadeInUp(
         child: ListView(
-          padding: context.paddingVertical8x,
+          padding: context.padding3x,
           children: [
+            context.emptySizedHeightBox6x,
             AspectRatio(
               aspectRatio: 1.5,
-              child: Image.asset("pana".toPng),
+              child: Image.asset(imageConstants.pana),
+            ),
+            context.emptySizedHeightBox2x,
+            const SpecialText(
+              textLabel: "Sign In",
+            ),
+            context.emptySizedHeightBox3x,
+            const SpecialTextField(
+              labelText: "Email",
+              suffixIcon: Icon(
+                Icons.done,
+              ),
+              hintText: "example@gmail.com",
+            ),
+            context.emptySizedHeightBox2x,
+            const SpecialTextField(
+              labelText: "Password",
+              suffixIcon: Icon(Icons.visibility_off),
+              hintText: "*********",
+            ),
+            const SpecialRow(
+              leftText: "Remember me",
+              rightText: "Forgot password?",
+            ),
+            context.emptySizedHeightBox1x,
+            Padding(
+              padding: context.paddingHorizontal8x,
+              child: CustomButton(
+                  context: context,
+                  buttonType: CustomButtonEnum.medium,
+                  label: "Sign In"),
             ),
             // context.emptySizedHeightBox1x,
-            specialText(context, "Sign In"),
-            context.emptySizedHeightBox4x,
-            specialTextField(
-              context,
-              "Email",
-              const Icon(Icons.done),
-            ),
-            context.emptySizedHeightBox2x,
-            specialTextField(
-              context,
-              "Password",
-              const Icon(Icons.visibility_off),
-            ),
-            speacialRF(
-              context,
-              "Remember me",
-              "Forgot password?",
-            ),
-            context.emptySizedHeightBox2x,
-            verySpecialButton(context, "Sign In"),
-            context.emptySizedHeightBox2x,
-            Row(
-              //TODO: companent haline getir
-              mainAxisAlignment: context.mainAxisACenter,
-              children: [
-                Text(
-                  "Don't have an account?", //sign in textbutton.
-                  style: TextStyle(
-                    fontSize: context.val2x,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "Sign Up",
-                  ),
-                )
-              ],
+            const SpecialRowButton(
+              firstText: "Don't have an account",
+              buttonText: "Sign Up",
             ),
           ],
         ),
@@ -62,84 +65,26 @@ class LoginView extends StatelessWidget {
 
   //TODO: buttonları ui kit tarafına al. Comapanent haline getir.
 
-  Widget verySpecialButton(BuildContext context, String buttonLabel) {
-    return Container(
-      padding: context.paddingHorizontal2x,
-      height: context.val8x,
-      child: ElevatedButton(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: context.borderRadius7x,
-          ),
-          backgroundColor: Colors.red,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              buttonLabel,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget speacialRF(BuildContext context, String textOne, String textTwo) {
-    return Padding(
-      padding: context.padding2x,
-      child: Row(
-        mainAxisAlignment: context.mainAxisASpaceBetween,
-        children: [
-          Text(
-            textOne,
-            style: TextStyle(
-              fontSize: context.val2x,
-            ),
-          ),
-          Text(
-            textTwo,
-            style: TextStyle(
-              fontSize: context.val2x,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget specialText(BuildContext context, String textLabel) {
-    return Center(
-      child: Text(
-        textLabel,
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.red,
-          fontSize: context.val4x,
-        ),
-      ),
-    );
-  }
-
-  Widget specialTextField(BuildContext context, String labelText, Icon icon) {
-    return Container(
-      padding: context.paddingHorizontal2x,
-      child: TextField(
-        decoration: InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: context.borderRadius3x,
-          ),
-
-          
-          labelText: labelText,
-          suffixIcon: icon,
-        ),
-      ),
-    );
-  }
+  // Widget speacialRF(BuildContext context, String textOne, String textTwo) {
+  //   return Padding(
+  //     padding: context.padding2x,
+  //     child: Row(
+  //       mainAxisAlignment: context.mainAxisASpaceBetween,
+  //       children: [
+  //         Text(
+  //           textOne,
+  //           style: TextStyle(
+  //             fontSize: context.val2x,
+  //           ),
+  //         ),
+  //         Text(
+  //           textTwo,
+  //           style: TextStyle(
+  //             fontSize: context.val2x,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

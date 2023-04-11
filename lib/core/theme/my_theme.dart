@@ -25,6 +25,7 @@ class MyTheme extends ITheme {
         outlinedButtonTheme: outlinedButton,
         textButtonTheme: textButton,
         appBarTheme: appBarTheme,
+        bottomNavigationBarTheme: bottomNavbarTheme,
       );
 
   ColorScheme get colorScheme {
@@ -61,6 +62,20 @@ class MyTheme extends ITheme {
   AppBarTheme get appBarTheme {
     return AppBarTheme(
       titleTextStyle: texts.textTheme.headlineLarge,
+    );
+  }
+
+  BottomNavigationBarThemeData get bottomNavbarTheme {
+    return BottomNavigationBarThemeData(
+      backgroundColor: colors.redSavinaPepper,
+      selectedIconTheme: IconThemeData(
+        color: colors.notYoCheese,
+        size: 30,
+      ),
+      unselectedIconTheme:IconThemeData(
+        color: colors.white,
+        size: 22,
+      ),
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:digital_order_system/core/base/base_singleton.dart';
-import 'package:digital_order_system/core/constants/app_constants.dart';
+import 'package:digital_order_system/products/base/base_singleton.dart';
+import 'package:digital_order_system/products/constants/app_constants.dart';
 import 'package:digital_order_system/core/utils/navigator_service.dart';
-import 'package:digital_order_system/features/common/navbar/view/navbar_view.dart';
-import 'package:digital_order_system/features/common/splash/view/splash_view.dart';
+import 'package:digital_order_system/views/auth/register/register_view.dart';
+import 'package:digital_order_system/views/common/splash/splash_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget with BaseSingleton {
       title: constants.appTitle,
       theme: theme.themeData,
       navigatorKey: NavigationService.navigatorKey,
-      home: NavbarView(),
+      home: SplashView(),
     );
   }
 }

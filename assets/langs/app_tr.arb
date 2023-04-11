@@ -8,5 +8,7 @@
     "onboardThirdSubtitle": "Restoran hesabını oluştur ve sipariş yönetimindeki performansı maksimuma çıkar.",
     "skipBtn": "Geç",
     "nextBtn": "İlerle",
-    "letsStartBtn": "Haydi Başla!"
+    "letsStartBtn": "Haydi Başla!",
+    "loginWithRestaurant": "Restoran için giriş yap!",
+    "loginWithUser": "Müşteri için giriş yap!"
 }

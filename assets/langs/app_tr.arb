@@ -8,5 +8,19 @@
     "onboardThirdSubtitle": "Restoran hesabını oluştur ve sipariş yönetimindeki performansı maksimuma çıkar.",
     "skipBtn": "Geç",
     "nextBtn": "İlerle",
-    "letsStartBtn": "Haydi Başla!"
+    "letsStartBtn": "Haydi Başla!",
+    "loginWithRestaurantBtn": "Restoran için giriş yap!",
+    "loginWithUserBtn": "Müşteri için giriş yap!",
+    "loginWithRestaurant": "Restoran girişi",
+    "loginWithUser": "Müşteri girişi",
+    "registerWithRestaurant": "Restoran hesabı oluştur",
+    "registerWithUser": "Müşteri hesabı oluştur",
+    "emailLabelText": "E-posta",
+    "passwordLabelText": "Şifre",
+    "rememberMe": "Beni hatırla",
+    "forgotPassword": "Şifremi unuttum?",
+    "loginBtn": "Giriş yap",
+    "dontHaveAnAccount": "Henüz hesabın yok mu?",
+    "alreadyHaveAnAcoount": "Zaten bir hesabın var mı?",
+    "registerBtn": "Kayıt ol"
 }

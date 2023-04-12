@@ -21,13 +21,13 @@ class LoginView extends StatelessWidget with BaseSingleton {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const NavbarView(),
+        builder: (context) => NavbarView(isUser: isUser),
       ),
     );
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const NavbarView(),
+        builder: (context) => NavbarView(isUser: isUser),
       ),
     );
   }

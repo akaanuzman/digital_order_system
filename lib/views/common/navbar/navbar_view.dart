@@ -2,7 +2,8 @@ import '../../../_export_ui.dart';
 import '../../../products/view_models/navbar_view_model.dart';
 
 class NavbarView extends StatelessWidget with BaseSingleton {
-  const NavbarView({super.key});
+  final bool isUser;
+  const NavbarView({super.key, required this.isUser,});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class NavbarView extends StatelessWidget with BaseSingleton {
           topLeft: context.radius6x,
         ),
         child: BottomNavigationBar(
-          items: provider.items,
+          items: provider.items(isUser),
           currentIndex: provider.currentIndex,
           onTap: (index) => provider.onItemTapped(index),
         ),

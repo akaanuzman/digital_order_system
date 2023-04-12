@@ -19,4 +19,10 @@ extension NavbarModelExtension on NavbarModel {
     NavbarModel(icon: CupertinoIcons.heart),
     NavbarModel(icon: CupertinoIcons.person),
   ];
+
+  static List<NavbarModel> restaurantNavbar = [
+    NavbarModel(icon: CupertinoIcons.home),
+    NavbarModel(icon: CupertinoIcons.shopping_cart),
+    NavbarModel(icon: CupertinoIcons.person),
+  ];
 }

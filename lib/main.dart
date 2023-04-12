@@ -2,7 +2,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:digital_order_system/products/base/base_singleton.dart';
 import 'package:digital_order_system/products/constants/app_constants.dart';
 import 'package:digital_order_system/core/utils/navigator_service.dart';
-import 'package:digital_order_system/views/auth/register/register_view.dart';
 import 'package:digital_order_system/views/common/splash/splash_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

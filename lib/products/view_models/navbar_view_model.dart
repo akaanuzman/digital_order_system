@@ -4,9 +4,9 @@ import '../models/local/navbar_model.dart';
 class NavbarViewModel extends ChangeNotifier {
   int currentIndex = 0;
 
-  final List<NavbarModel> _items = NavbarModelExtension.userNavbar;
-
-  List<NavbarModel> get items => _items;
+  List<NavbarModel> items(bool isUser) => isUser
+      ? NavbarModelExtension.userNavbar
+      : NavbarModelExtension.restaurantNavbar;
 
   final List<Widget> _views = [
     const Scaffold(

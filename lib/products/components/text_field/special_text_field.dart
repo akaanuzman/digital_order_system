@@ -4,8 +4,13 @@ import 'package:flutter/material.dart';
 class DisplayMediumTextField extends StatelessWidget {
   final String labelText;
   final Widget suffixIcon;
-  final String hintText;
-  const DisplayMediumTextField({super.key, required this.labelText, required this.suffixIcon, required this.hintText});
+  final String? hintText;
+  const DisplayMediumTextField({
+    super.key,
+    required this.labelText,
+    required this.suffixIcon,
+    this.hintText,
+  });
 
   @override
   Widget build(BuildContext context) {

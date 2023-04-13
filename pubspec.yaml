@@ -18,6 +18,12 @@ dependencies:
   animate_do: ^3.0.2
   shimmer_animation: ^2.1.0+1
 
+  # Firebase
+  firebase_core: ^2.9.0
+  firebase_auth: ^4.4.0
+  firebase_storage: ^11.1.0
+  cloud_firestore: ^4.5.0
+
   # State Management
   provider: ^6.0.5
 

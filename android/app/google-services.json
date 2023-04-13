@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "602059747078",
+    "project_id": "digital-order-system-8bb17",
+    "storage_bucket": "digital-order-system-8bb17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:602059747078:android:de58a4200488fe2984b887",
+        "android_client_info": {
+          "package_name": "com.example.digital_order_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "602059747078-dj7msoghbomttp5boh1i5id2573br0hv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCxo9jx0pju2j6xLoTJh2vsSHdVRxuxyNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "602059747078-dj7msoghbomttp5boh1i5id2573br0hv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

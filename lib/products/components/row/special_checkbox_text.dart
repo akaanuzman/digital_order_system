@@ -1,4 +1,4 @@
-import 'package:digital_order_system/core/extensions/ui_extensions.dart';
+import '../../../core/extensions/ui_extensions.dart';
 import 'package:flutter/material.dart';
 
 class SpecialRow extends StatelessWidget {

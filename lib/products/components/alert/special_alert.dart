@@ -1,4 +1,4 @@
-import 'package:digital_order_system/_export_ui.dart';
+import '../../../_export_ui.dart';
 import '../button/alert_button.dart';
 
 class SpecialAlert extends StatelessWidget with BaseSingleton {

@@ -1,4 +1,4 @@
-import 'package:digital_order_system/_export_ui.dart';
+import '../../_export_ui.dart';
 
 class ImageConstants {
   static ImageConstants? _instance;

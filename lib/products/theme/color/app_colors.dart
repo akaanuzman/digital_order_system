@@ -27,5 +27,7 @@ class AppColors with BaseSingleton {
   Color get mandarinJelly => const Color(0xffFD8700);
   Color get gray => const Color(0xff979797);
   Color get darkBlue => const Color(0x331b39ff);
+  Color get successSnackbarColor => const Color(0xff34C759);
+  Color get failureSnackbarColor => const Color(0xffCC2229);
   MaterialColor get randomColor => Colors.primaries[Random().nextInt(17)];
 }

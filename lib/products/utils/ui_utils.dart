@@ -1,5 +1,7 @@
+import 'package:digital_order_system/_export_ui.dart';
+import 'package:digital_order_system/products/theme/_export_theme.dart';
 
-import 'package:digital_order_system/products/extensions/alert_extension.dart';
+import '../extensions/alert_extension.dart';
 import 'package:flutter/material.dart';
 import '../../core/components/snackbar/special_snackbar.dart';
 import '../enums/alert_enum.dart';
@@ -17,25 +19,39 @@ class UIUtils {
 
   UIUtils.init();
 
+  AppColors get colors => AppColors.instance;
+
   Divider get divider => const Divider(
         thickness: 1.5,
       );
 
-  void showSnackBar({
-    required String content,
+  showSnackbar({
     required BuildContext context,
-    Color? contentColor,
-    Color? bgColor,
+    required String text,
+    bool isFail = false,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SpecialSnackbar(
-        context: context,
-        content: content,
-        contentColor: contentColor,
-        bgColor: bgColor,
+      SnackBar(
+        duration: const Duration(milliseconds: 1200),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor:
+            isFail ? colors.failureSnackbarColor : colors.successSnackbarColor,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        content: SizedBox(
+          height: 18,
+          child: Center(
+            child: Text(
+              text,
+              style: context.textTheme.labelMedium!.copyWith(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
+
 
   void showAlertDialog({
     required BuildContext context,

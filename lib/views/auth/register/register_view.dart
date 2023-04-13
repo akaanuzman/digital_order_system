@@ -1,9 +1,9 @@
-import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/products/components/text/display_medium_text.dart';
-import 'package:digital_order_system/products/enums/custom_button_enum.dart';
-import 'package:digital_order_system/products/components/button/custom_button.dart';
-import 'package:digital_order_system/products/components/row/special_row_button.dart';
-import 'package:digital_order_system/views/auth/login/login_view.dart';
+import '../../../_export_ui.dart';
+import '../../../products/components/text/display_medium_text.dart';
+import '../../../products/enums/custom_button_enum.dart';
+import '../../../products/components/button/custom_button.dart';
+import '../../../products/components/row/special_row_button.dart';
+import '../login/login_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../products/components/text_field/special_text_field.dart';
 
@@ -83,6 +83,8 @@ class RegisterView extends StatelessWidget with BaseSingleton {
         context: context,
         buttonType: CustomButtonEnum.medium,
         label: AppLocalizations.of(context)!.registerBtn,
+        onTap: () {
+        } ,
       ),
     );
   }

@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:animate_do/animate_do.dart';
-import 'package:digital_order_system/core/extensions/ui_extensions.dart';
 import 'package:digital_order_system/core/components/skeleton/skeleton_item.dart';
+import 'package:digital_order_system/core/extensions/ui_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 

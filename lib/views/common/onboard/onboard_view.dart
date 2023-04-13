@@ -1,6 +1,6 @@
-import 'package:digital_order_system/core/utils/navigator_service.dart';
+import '../../../core/utils/navigator_service.dart';
 import '../../../products/models/local/onboard_model.dart';
-import 'package:digital_order_system/_export_ui.dart';
+import '../../../_export_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../products/view_models/onboard_view_model.dart';

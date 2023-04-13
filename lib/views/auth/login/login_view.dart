@@ -1,6 +1,6 @@
-import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/views/auth/register/register_view.dart';
-import 'package:digital_order_system/views/common/navbar/navbar_view.dart';
+import '../../../_export_ui.dart';
+import '../register/register_view.dart';
+import '../../common/navbar/navbar_view.dart';
 
 import '../../../products/components/button/custom_button.dart';
 import '../../../products/components/row/special_checkbox_text.dart';

@@ -1,5 +1,5 @@
-import 'package:digital_order_system/core/utils/navigator_service.dart';
-import 'package:digital_order_system/views/common/splash/splash_view.dart';
+import '../../core/utils/navigator_service.dart';
+import '../../views/common/splash/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 

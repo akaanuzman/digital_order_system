@@ -1,19 +1,16 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:digital_order_system/products/base/base_singleton.dart';
 import 'package:digital_order_system/products/constants/app_constants.dart';
 import 'package:digital_order_system/core/utils/navigator_service.dart';
+import 'package:digital_order_system/products/initialize/application_initialize.dart';
 import 'package:digital_order_system/views/common/splash/splash_view.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:provider/provider.dart';
+import '_export_ui.dart';
 
 void main() async {
-  await GetStorage.init();
-  AppConstants constants = AppConstants.instance;
+  await ApplicationInitialize.init();
   runApp(
     MultiProvider(
-      providers: constants.providers,
+      providers: AppConstants.instance.providers,
       child: DevicePreview(
         enabled: !kReleaseMode,
         builder: (context) => const MyApp(),

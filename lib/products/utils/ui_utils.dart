@@ -2,8 +2,6 @@ import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/theme/_export_theme.dart';
 
 import '../extensions/alert_extension.dart';
-import 'package:flutter/material.dart';
-import '../../core/components/snackbar/special_snackbar.dart';
 import '../enums/alert_enum.dart';
 
 class UIUtils {

@@ -64,6 +64,7 @@ class AppTheme extends ITheme {
   AppBarTheme get appBarTheme {
     return AppBarTheme(
       titleTextStyle: texts.textTheme.headlineLarge,
+      centerTitle: false,
     );
   }
 

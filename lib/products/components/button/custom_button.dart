@@ -6,6 +6,7 @@ import 'package:digital_order_system/products/theme/color/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends Container {
+  final TextStyle? textStyle;
   final BuildContext context;
   final CustomButtonEnum buttonType;
   final String label;
@@ -19,6 +20,7 @@ class CustomButton extends Container {
     required this.label,
     this.onTap,
     this.padding,
+    this.textStyle,
   }) : super(
           height: _height(buttonType, context),
           width: context.maxFinite,
@@ -26,7 +28,7 @@ class CustomButton extends Container {
           decoration: _decoration(buttonType, context),
           child: ElevatedButton(
             onPressed: onTap ?? () {},
-            style: _buttonStyle(context, buttonType),
+            style: _buttonStyle(context, buttonType, textStyle),
             child: Text(label),
           ),
         );
@@ -39,13 +41,14 @@ class CustomButton extends Container {
     required IconData icon,
     this.onTap,
     this.padding,
+    this.textStyle,
   }) : super(
           height: _height(buttonType, context),
           decoration: _decoration(buttonType, context),
           padding: padding,
           child: ElevatedButton(
             onPressed: onTap ?? () {},
-            style: _buttonStyle(context, buttonType),
+            style: _buttonStyle(context, buttonType, textStyle),
             child: Padding(
               padding: padding ?? context.padding1x,
               child: Row(
@@ -93,11 +96,13 @@ class CustomButton extends Container {
   }
 
   static ButtonStyle _buttonStyle(
-      BuildContext context, CustomButtonEnum buttonType) {
+      BuildContext context, CustomButtonEnum buttonType, TextStyle? textStyle) {
+        
     return ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(
         borderRadius: _borderRadius(buttonType, context),
       ),
+      textStyle: textStyle,
     );
   }
 }

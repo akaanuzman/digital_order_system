@@ -1,5 +1,5 @@
-import '../../../core/extensions/ui_extensions.dart';
-import 'package:flutter/material.dart';
+import 'package:digital_order_system/products/view_models/login_view_model.dart';
+import '../../../_export_ui.dart';
 
 class SpecialRow extends StatelessWidget {
   final String leftText;
@@ -17,9 +17,13 @@ class SpecialRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            Checkbox(
-              value: false,
-              onChanged: (value) => {},
+            Consumer<LoginViewModel>(
+              builder: (context, pv, _) {
+                return Checkbox(
+                  value: pv.isRememberMe,
+                  onChanged: (value) => pv.onChangedRememberMe,
+                );
+              },
             ),
             Text(
               leftText,

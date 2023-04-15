@@ -1,4 +1,5 @@
 import '../../../_export_ui.dart';
+import '../../../products/view_models/login_view_model.dart';
 import '../register/register_view.dart';
 import '../../common/navbar/navbar_view.dart';
 
@@ -88,18 +89,31 @@ class LoginView extends StatelessWidget with BaseSingleton {
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
       hintText: stringConstants.loginEmailHintText,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
     );
   }
 
-  DisplayMediumTextField passwordField(BuildContext context) {
-    return DisplayMediumTextField(
-      labelText: AppLocalizations.of(context)!.passwordLabelText,
-      suffixIcon: const Icon(Icons.visibility_off),
-      hintText: stringConstants.loginPasswordHintText,
+  Widget passwordField(BuildContext context) {
+    return Consumer<LoginViewModel>(
+      builder: (context, pv, _) {
+        return DisplayMediumTextField(
+          labelText: AppLocalizations.of(context)!.passwordLabelText,
+          suffixIcon: IconButton(
+            onPressed: () => pv.openOrCloseObscureText,
+            icon: pv.isObscureText
+                ? const Icon(Icons.visibility_off)
+                : const Icon(Icons.visibility),
+          ),
+          hintText: stringConstants.loginPasswordHintText,
+          obscureText: pv.isObscureText,
+          keyboardType: TextInputType.visiblePassword,
+        );
+      },
     );
   }
 
-  SpecialRow rememberMeSection(BuildContext context) {
+  Widget rememberMeSection(BuildContext context) {
     return SpecialRow(
       leftText: AppLocalizations.of(context)!.rememberMe,
       rightText: AppLocalizations.of(context)!.forgotPassword,

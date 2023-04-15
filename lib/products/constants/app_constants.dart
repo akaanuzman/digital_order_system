@@ -1,3 +1,6 @@
+import 'package:digital_order_system/products/view_models/login_view_model.dart';
+import 'package:digital_order_system/products/view_models/register_view_model.dart';
+
 import '../view_models/splash_view_model.dart';
 import '../view_models/user_selection_view_model.dart';
 import 'package:provider/provider.dart';
@@ -34,6 +37,12 @@ class AppConstants {
     ),
     ChangeNotifierProvider(
       create: (_) => UserSelectionViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => LoginViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => RegisterViewModel(),
     ),
     ChangeNotifierProvider(
       create: (_) => NavbarViewModel(),

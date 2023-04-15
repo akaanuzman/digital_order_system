@@ -19,13 +19,15 @@ class AppTheme extends ITheme {
         // colorSchemeSeed: colors.redSavinaPepper,
         // useMaterial3: true,
         primaryColor: colors.redSavinaPepper,
+        unselectedWidgetColor: colors.gray,
         colorScheme: colorScheme,
         textTheme: texts.textTheme,
-        elevatedButtonTheme: elevatedButton,
-        outlinedButtonTheme: outlinedButton,
-        textButtonTheme: textButton,
+        elevatedButtonTheme: elevatedButtonTheme,
+        outlinedButtonTheme: outlinedButtonTheme,
+        textButtonTheme: textButtonTheme,
         appBarTheme: appBarTheme,
         bottomNavigationBarTheme: bottomNavbarTheme,
+        checkboxTheme: checkboxTheme,
       );
 
   ColorScheme get colorScheme {
@@ -34,7 +36,7 @@ class AppTheme extends ITheme {
     );
   }
 
-  ElevatedButtonThemeData get elevatedButton {
+  ElevatedButtonThemeData get elevatedButtonTheme {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         textStyle: texts.textTheme.headlineSmall,
@@ -42,7 +44,7 @@ class AppTheme extends ITheme {
     );
   }
 
-  OutlinedButtonThemeData get outlinedButton {
+  OutlinedButtonThemeData get outlinedButtonTheme {
     return OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         backgroundColor: Colors.white,
@@ -51,7 +53,7 @@ class AppTheme extends ITheme {
     );
   }
 
-  TextButtonThemeData get textButton {
+  TextButtonThemeData get textButtonTheme {
     return TextButtonThemeData(
       style: TextButton.styleFrom(
         textStyle: texts.textTheme.titleMedium,
@@ -76,6 +78,22 @@ class AppTheme extends ITheme {
       unselectedIconTheme: const IconThemeData(
         color: Colors.white,
         size: 22,
+      ),
+    );
+  }
+
+  CheckboxThemeData get checkboxTheme {
+    return CheckboxThemeData(
+      fillColor: MaterialStateProperty.resolveWith(
+        (states) {
+          if (states.contains(MaterialState.disabled)) {
+            return colors.gray;
+          }
+          if (states.contains(MaterialState.selected)) {
+            return colors.redSavinaPepper;
+          }
+          return null;
+        },
       ),
     );
   }

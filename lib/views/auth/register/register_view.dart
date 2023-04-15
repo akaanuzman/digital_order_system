@@ -1,3 +1,5 @@
+import 'package:digital_order_system/products/view_models/register_view_model.dart';
+
 import '../../../_export_ui.dart';
 import '../../../products/components/text/display_medium_text.dart';
 import '../../../products/enums/custom_button_enum.dart';
@@ -65,14 +67,26 @@ class RegisterView extends StatelessWidget with BaseSingleton {
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
       hintText: stringConstants.loginEmailHintText,
+      keyboardType: TextInputType.emailAddress,
+      textInputAction: TextInputAction.next,
     );
   }
 
-  DisplayMediumTextField passwordField(BuildContext context) {
-    return DisplayMediumTextField(
-      labelText: AppLocalizations.of(context)!.passwordLabelText,
-      suffixIcon: const Icon(Icons.visibility_off),
-      hintText: stringConstants.loginPasswordHintText,
+  Widget passwordField(BuildContext context) {
+    return Consumer<RegisterViewModel>(
+      builder: (context, pv, _) {
+        return DisplayMediumTextField(
+          labelText: AppLocalizations.of(context)!.passwordLabelText,
+          suffixIcon: IconButton(
+            onPressed: () => pv.openOrCloseObscureText,
+            icon: pv.isObscureText
+                ? const Icon(Icons.visibility_off)
+                : const Icon(Icons.visibility),
+          ),
+          hintText: stringConstants.loginPasswordHintText,
+          obscureText: pv.isObscureText,
+        );
+      },
     );
   }
 
@@ -83,8 +97,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
         context: context,
         buttonType: CustomButtonEnum.medium,
         label: AppLocalizations.of(context)!.registerBtn,
-        onTap: () {
-        } ,
+        onTap: () {},
       ),
     );
   }

@@ -11,40 +11,15 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(context.val15x * 3.5),
+        preferredSize: Size.fromHeight(context.val15x * 3),
         child: AppBar(
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               bottom: Radius.elliptical(150, 100),
             ),
           ),
-          title: Text(
-            AppLocalizations.of(context)!.createProfileAppBarTitle,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          bottom: PreferredSize(
-            preferredSize: Size.fromHeight(context.val4x),
-            child: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: colors.notYoCheese,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  height: context.val5x * 4,
-                  width: context.val5x * 4,
-                  child: Icon(
-                    Icons.camera_alt_outlined,
-                    size: context.val10x,
-                    color: Colors.white,
-                  ),
-                ),
-                context.emptySizedHeightBox4x,
-              ],
-            ),
-          ),
+          title: appBarTitle(context),
+          bottom: appBarImage(context),
         ),
       ),
       body: FadeInUp(
@@ -64,6 +39,40 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
         ),
       ),
     );
+  }
+
+  Text appBarTitle(BuildContext context) {
+    return Text(
+          AppLocalizations.of(context)!.createProfileAppBarTitle,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+          maxLines: 2,
+        );
+  }
+
+  PreferredSize appBarImage(BuildContext context) {
+    return PreferredSize(
+          preferredSize: Size.fromHeight(context.val4x),
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: colors.notYoCheese,
+                  borderRadius: context.borderRadius7x,
+                ),
+                height: context.val5x * 4,
+                width: context.val5x * 4,
+                child: Icon(
+                  Icons.camera_alt_outlined,
+                  size: context.val10x,
+                  color: Colors.white,
+                ),
+              ),
+              context.emptySizedHeightBox4x,
+            ],
+          ),
+        );
   }
 
   CustomButton complateButton(BuildContext context) {

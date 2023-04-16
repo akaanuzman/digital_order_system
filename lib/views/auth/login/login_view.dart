@@ -25,12 +25,6 @@ class LoginView extends StatelessWidget with BaseSingleton {
         builder: (context) => NavbarView(isUser: isUser),
       ),
     );
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => NavbarView(isUser: isUser),
-      ),
-    );
   }
 
   void goToRegisterView(BuildContext context) {

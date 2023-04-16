@@ -65,6 +65,9 @@ class AppTheme extends ITheme {
     return AppBarTheme(
       titleTextStyle: texts.textTheme.headlineLarge,
       centerTitle: false,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      iconTheme: const IconThemeData(color: Colors.black)
     );
   }
 

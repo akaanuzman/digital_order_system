@@ -3,14 +3,17 @@ import '../../../products/view_models/navbar_view_model.dart';
 
 class NavbarView extends StatelessWidget with BaseSingleton {
   final bool isUser;
-  const NavbarView({super.key, required this.isUser,});
+  const NavbarView({
+    super.key,
+    required this.isUser,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Consumer<NavbarViewModel>(
       builder: (_, NavbarViewModel provider, __) {
         return Scaffold(
-          body: provider.views.elementAt(provider.currentIndex),
+          body: provider.views(isUser).elementAt(provider.currentIndex),
           bottomNavigationBar: _navbarItems(context, provider),
         );
       },

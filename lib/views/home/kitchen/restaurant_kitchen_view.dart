@@ -1,4 +1,6 @@
+import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:digital_order_system/_export_ui.dart';
+import 'package:digital_order_system/products/components/action_sheet/edit_and_delete_action.dart';
 
 class RestaurantKitchenView extends StatelessWidget with BaseSingleton {
   const RestaurantKitchenView({super.key});
@@ -7,28 +9,14 @@ class RestaurantKitchenView extends StatelessWidget with BaseSingleton {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: ListView(
-        padding: context.padding6x,
-        children: [
-          managementInfoContainer(context),
-          ListView.separated(
-            padding: EdgeInsets.only(top: context.val4x),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => Card(
-              child: ListTile(
-                leading: const Icon(Icons.menu_book),
-                title: const Text("Mutfak İsmi"),
-                trailing: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.more_horiz),
-                ),
-              ),
-            ),
-            separatorBuilder: (context, index) => context.emptySizedHeightBox2x,
-            itemCount: 10,
-          )
-        ],
+      body: FadeInUp(
+        child: ListView(
+          padding: context.padding6x,
+          children: [
+            managementInfoContainer(context),
+            kitchenList(context),
+          ],
+        ),
       ),
     );
   }
@@ -85,6 +73,31 @@ class RestaurantKitchenView extends StatelessWidget with BaseSingleton {
         style: context.textTheme.headlineSmall!
             .copyWith(color: colors.notYoCheese),
         maxLines: 5,
+      ),
+    );
+  }
+
+  ListView kitchenList(BuildContext context) {
+    return ListView.separated(
+      padding: EdgeInsets.only(top: context.val4x),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) => kitchenItem(context),
+      separatorBuilder: (context, index) => context.emptySizedHeightBox2x,
+      itemCount: 10,
+    );
+  }
+
+  Card kitchenItem(BuildContext context) {
+    return Card(
+      child: ListTile(
+        leading: const Icon(Icons.menu_book),
+        title: const Text("Mutfak İsmi"),
+        trailing: IconButton(
+          onPressed: () =>
+              EditAndDeleteAction.showEditAndDeleteAction(context: context),
+          icon: const Icon(Icons.more_horiz),
+        ),
       ),
     );
   }

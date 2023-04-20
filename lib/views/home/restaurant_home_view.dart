@@ -1,7 +1,5 @@
-import 'package:digital_order_system/core/extensions/ui_extensions.dart';
-import 'package:digital_order_system/products/base/base_singleton.dart';
 import 'package:digital_order_system/products/models/local/restaurant_management_model.dart';
-import 'package:flutter/material.dart';
+import '../../_export_ui.dart';
 
 class RestaurantHomeView extends StatelessWidget with BaseSingleton {
   const RestaurantHomeView({super.key});
@@ -10,11 +8,13 @@ class RestaurantHomeView extends StatelessWidget with BaseSingleton {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: Column(
-        children: [
-          managementInfoContainer(context),
-          managementItems(context),
-        ],
+      body: FadeInUp(
+        child: Column(
+          children: [
+            managementInfoContainer(context),
+            managementItems(context),
+          ],
+        ),
       ),
     );
   }
@@ -22,9 +22,11 @@ class RestaurantHomeView extends StatelessWidget with BaseSingleton {
   AppBar appBar() {
     return AppBar(
       backgroundColor: colors.redSavinaPepper,
-      title: Text(
-        "Mağaza Yönetimi",
-        style: TextStyle(color: colors.notYoCheese),
+      title: FadeInDown(
+        child: Text(
+          "Mağaza Yönetimi",
+          style: TextStyle(color: colors.notYoCheese),
+        ),
       ),
       iconTheme: IconThemeData(color: colors.notYoCheese),
     );

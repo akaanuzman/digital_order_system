@@ -32,6 +32,7 @@ class RestaurantHomeView extends StatelessWidget with BaseSingleton {
     );
   }
 
+  //TODO: MAKE A COMPONENT
   Container managementInfoContainer(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -90,6 +91,7 @@ class RestaurantHomeView extends StatelessWidget with BaseSingleton {
 
   InkWell managementItem(BuildContext context, RestaurantManagementModel item) {
     return InkWell(
+      onTap: item.onTap,
       child: Container(
         decoration: BoxDecoration(
           color: colors.redSavinaPepper,

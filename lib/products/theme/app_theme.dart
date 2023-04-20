@@ -28,6 +28,8 @@ class AppTheme extends ITheme {
         appBarTheme: appBarTheme,
         bottomNavigationBarTheme: bottomNavbarTheme,
         checkboxTheme: checkboxTheme,
+        cardTheme: cardTheme,
+        listTileTheme: listTileTheme,
       );
 
   ColorScheme get colorScheme {
@@ -67,7 +69,7 @@ class AppTheme extends ITheme {
       centerTitle: false,
       backgroundColor: Colors.transparent,
       elevation: 0,
-      iconTheme: const IconThemeData(color: Colors.black)
+      iconTheme: const IconThemeData(color: Colors.black),
     );
   }
 
@@ -98,6 +100,23 @@ class AppTheme extends ITheme {
           return null;
         },
       ),
+    );
+  }
+
+  CardTheme get cardTheme {
+    return CardTheme(
+      color: colors.redSavinaPepper,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+    );
+  }
+
+  ListTileThemeData get listTileTheme {
+    return ListTileThemeData(
+      iconColor: colors.notYoCheese,
+      textColor: colors.notYoCheese,
+      style: ListTileStyle.drawer,
     );
   }
 }

@@ -1,4 +1,7 @@
+import 'package:digital_order_system/core/utils/navigator_service.dart';
 import 'package:flutter/material.dart';
+
+import '../../../views/home/kitchen/restaurant_kitchen_view.dart';
 
 class RestaurantManagementModel {
   final IconData icon;
@@ -13,11 +16,18 @@ class RestaurantManagementModel {
 }
 
 extension RestaurantManagementModelExtension on RestaurantManagementModel {
-  static final List<RestaurantManagementModel> managements = [
+  static List<RestaurantManagementModel> managements = [
     RestaurantManagementModel(
       Icons.menu_book,
       "Mutfak Yönetimi",
-      () {},
+      () {
+        Navigator.push(
+          NavigationService.navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => const RestaurantKitchenView(),
+          ),
+        );
+      },
     ),
     RestaurantManagementModel(
       Icons.fastfood,

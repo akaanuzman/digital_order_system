@@ -1,6 +1,6 @@
-import 'package:digital_order_system/products/view_models/login_view_model.dart';
-import 'package:digital_order_system/products/view_models/register_view_model.dart';
-import 'package:digital_order_system/views/home/restaurant_home_view.dart';
+import '../view_models/login_view_model.dart';
+import '../view_models/register_view_model.dart';
+import '../../views/home/restaurant_home_view.dart';
 
 import '../../_export_ui.dart';
 import '../view_models/splash_view_model.dart';

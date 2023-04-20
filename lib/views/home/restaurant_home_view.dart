@@ -1,4 +1,4 @@
-import 'package:digital_order_system/products/models/local/restaurant_management_model.dart';
+import '../../products/models/local/restaurant_management_model.dart';
 import '../../_export_ui.dart';
 
 class RestaurantHomeView extends StatelessWidget with BaseSingleton {

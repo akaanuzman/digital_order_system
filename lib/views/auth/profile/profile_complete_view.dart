@@ -1,7 +1,7 @@
-import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/products/components/text_field/profile_text_field.dart';
-import 'package:digital_order_system/products/enums/custom_button_enum.dart';
-import 'package:digital_order_system/views/common/navbar/navbar_view.dart';
+import '../../../_export_ui.dart';
+import '../../../products/components/text_field/profile_text_field.dart';
+import '../../../products/enums/custom_button_enum.dart';
+import '../../common/navbar/navbar_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../products/components/button/custom_button.dart';
 

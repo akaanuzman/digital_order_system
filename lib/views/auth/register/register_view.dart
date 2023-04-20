@@ -1,5 +1,5 @@
-import 'package:digital_order_system/products/view_models/register_view_model.dart';
-import 'package:digital_order_system/views/auth/profile/profile_complete_view.dart';
+import '../../../products/view_models/register_view_model.dart';
+import '../profile/profile_complete_view.dart';
 import '../../../_export_ui.dart';
 import '../../../products/components/text/display_medium_text.dart';
 import '../../../products/enums/custom_button_enum.dart';

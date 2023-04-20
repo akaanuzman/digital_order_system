@@ -1,5 +1,5 @@
-import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/products/theme/_export_theme.dart';
+import '../../_export_ui.dart';
+import '../theme/_export_theme.dart';
 
 import '../extensions/alert_extension.dart';
 import '../enums/alert_enum.dart';

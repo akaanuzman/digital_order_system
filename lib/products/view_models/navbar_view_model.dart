@@ -1,4 +1,4 @@
-import 'package:digital_order_system/products/base/base_singleton.dart';
+import '../base/base_singleton.dart';
 import 'package:flutter/material.dart';
 import '../models/local/navbar_model.dart';
 

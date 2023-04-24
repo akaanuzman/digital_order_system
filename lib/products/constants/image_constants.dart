@@ -23,5 +23,5 @@ class ImageConstants {
   final String signup = "signup".toPng;
   final String loginRestaurant = "login_restaurant".toPng;
   final String loginUser = "login_user".toPng;
-
+  final String mainDishes = "main_dishes".toPng;
 }

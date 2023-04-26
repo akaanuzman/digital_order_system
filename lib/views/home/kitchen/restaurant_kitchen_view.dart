@@ -1,19 +1,30 @@
-import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/products/components/action_sheet/edit_and_delete_action.dart';
+import 'package:digital_order_system/products/components/appbar/restaurant_appbar.dart';
+import 'package:digital_order_system/products/components/information_container/informantion_container.dart';
+import 'package:digital_order_system/products/enums/alert_enum.dart';
+import 'package:digital_order_system/views/home/kitchen/kitchen_operations_view.dart';
 
 class RestaurantKitchenView extends StatelessWidget with BaseSingleton {
   const RestaurantKitchenView({super.key});
 
+  Future goToKitchenOperationsPage(BuildContext context) async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const KitchenOperationView(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(),
+      appBar: appBar(context),
       body: FadeInUp(
         child: ListView(
           padding: context.padding6x,
           children: [
-            managementInfoContainer(context),
+            managementInfoContainer(),
             kitchenList(context),
           ],
         ),
@@ -21,59 +32,24 @@ class RestaurantKitchenView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  AppBar appBar() {
-    return AppBar(
-      backgroundColor: colors.redSavinaPepper,
-      title: FadeInDown(
-        child: Text(
-          "Mutfak Yönetimi",
-          style: TextStyle(color: colors.notYoCheese),
-        ),
-      ),
-      iconTheme: IconThemeData(color: colors.notYoCheese),
+  InformationContainer managementInfoContainer() {
+    return const InformationContainer(
+      icon: Icons.thumb_up,
+      information:
+          "Mutfak yönetiminizi sağda bulunan üç noktaya tıklayarak hızlı ve kolay bir şekilde yönetibilirsiniz.",
+      margin: EdgeInsets.zero,
+    );
+  }
+
+  AppBar appBar(BuildContext context) {
+    return RestaurantAppBar(
+      title: "Mutfak Yönetimi",
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () => goToKitchenOperationsPage(context),
           icon: const Icon(Icons.add),
-        ),
+        )
       ],
-    );
-  }
-
-  //TODO: MAKE A COMPONENT
-  Container managementInfoContainer(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: colors.redSavinaPepper,
-        borderRadius: context.borderRadius8x,
-      ),
-      padding: context.padding6x,
-      child: Row(
-        children: [
-          managementInfoIcon(context),
-          context.emptySizedWidthBox3x,
-          managementInfoText(context),
-        ],
-      ),
-    );
-  }
-
-  Icon managementInfoIcon(BuildContext context) {
-    return Icon(
-      Icons.thumb_up,
-      color: colors.notYoCheese,
-      size: context.val14x,
-    );
-  }
-
-  Flexible managementInfoText(BuildContext context) {
-    return Flexible(
-      child: Text(
-        "Mutfak yönetiminizi sağda bulunan üç noktaya tıklayarak hızlı ve kolay bir şekilde yönetibilirsiniz.",
-        style: context.textTheme.headlineSmall!
-            .copyWith(color: colors.notYoCheese),
-        maxLines: 5,
-      ),
     );
   }
 
@@ -94,8 +70,21 @@ class RestaurantKitchenView extends StatelessWidget with BaseSingleton {
         leading: const Icon(Icons.menu_book),
         title: const Text("Mutfak İsmi"),
         trailing: IconButton(
-          onPressed: () =>
-              EditAndDeleteAction.showEditAndDeleteAction(context: context),
+          onPressed: () => uiUtils.showEditAndDeleteAction(
+            context: context,
+            editOnTap: (context) async =>
+                goToKitchenOperationsPage(context).then(
+              (value) => Navigator.pop(context),
+            ),
+            deleteOnTap: (context) => uiUtils.showAlertDialog(
+              context: context,
+              alertEnum: AlertEnum.AREUSURE,
+              contentTitle: "Emin misiniz?",
+              contentSubtitle: "Kayıtlı olan mutfak silinecektir.",
+              buttonLabel: "Evet",
+              secondButtonLabel: "Hayır"
+            ),
+          ),
           icon: const Icon(Icons.more_horiz),
         ),
       ),

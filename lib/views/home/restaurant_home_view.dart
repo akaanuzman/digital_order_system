@@ -1,3 +1,6 @@
+import 'package:digital_order_system/products/components/appbar/restaurant_appbar.dart';
+import 'package:digital_order_system/products/components/information_container/informantion_container.dart';
+
 import '../../products/models/local/restaurant_management_model.dart';
 import '../../_export_ui.dart';
 
@@ -11,7 +14,7 @@ class RestaurantHomeView extends StatelessWidget with BaseSingleton {
       body: FadeInUp(
         child: Column(
           children: [
-            managementInfoContainer(context),
+            managemenetInformationContainer(),
             managementItems(context),
           ],
         ),
@@ -19,54 +22,17 @@ class RestaurantHomeView extends StatelessWidget with BaseSingleton {
     );
   }
 
+  InformationContainer managemenetInformationContainer() {
+    return const InformationContainer(
+      icon: Icons.thumb_up,
+      information:
+          "Mağaza yönetiminizi buradan hızlı ve kolay bir şekilde yönetibilirsiniz.",
+    );
+  }
+
   AppBar appBar() {
-    return AppBar(
-      backgroundColor: colors.redSavinaPepper,
-      title: FadeInDown(
-        child: Text(
-          "Mağaza Yönetimi",
-          style: TextStyle(color: colors.notYoCheese),
-        ),
-      ),
-      iconTheme: IconThemeData(color: colors.notYoCheese),
-    );
-  }
-
-  //TODO: MAKE A COMPONENT
-  Container managementInfoContainer(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: colors.redSavinaPepper,
-        borderRadius: context.borderRadius8x,
-      ),
-      padding: context.padding6x,
-      margin: context.padding3x,
-      child: Row(
-        children: [
-          managementInfoIcon(context),
-          context.emptySizedWidthBox3x,
-          managementInfoText(context),
-        ],
-      ),
-    );
-  }
-
-  Icon managementInfoIcon(BuildContext context) {
-    return Icon(
-      Icons.thumb_up,
-      color: colors.notYoCheese,
-      size: context.val14x,
-    );
-  }
-
-  Flexible managementInfoText(BuildContext context) {
-    return Flexible(
-      child: Text(
-        "Mağaza yönetiminizi buradan hızlı ve kolay bir şekilde yönetibilirsiniz.",
-        style: context.textTheme.headlineSmall!
-            .copyWith(color: colors.notYoCheese),
-        maxLines: 3,
-      ),
+    return RestaurantAppBar(
+      title: "Mağaza Yönetimi",
     );
   }
 
@@ -114,15 +80,14 @@ class RestaurantHomeView extends StatelessWidget with BaseSingleton {
     return Icon(
       item.icon,
       size: context.val20x,
-      color: colors.notYoCheese,
+      color: Colors.white,
     );
   }
 
   Text managementTitle(RestaurantManagementModel item, BuildContext context) {
     return Text(
       item.title,
-      style:
-          context.textTheme.headlineSmall!.copyWith(color: colors.notYoCheese),
+      style: context.textTheme.headlineSmall!.copyWith(color: Colors.white),
     );
   }
 }

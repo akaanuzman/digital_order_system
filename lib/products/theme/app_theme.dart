@@ -20,6 +20,7 @@ class AppTheme extends ITheme {
         // useMaterial3: true,
         primaryColor: colors.redSavinaPepper,
         unselectedWidgetColor: colors.gray,
+        scaffoldBackgroundColor: Colors.grey.shade50,
         colorScheme: colorScheme,
         textTheme: texts.textTheme,
         elevatedButtonTheme: elevatedButtonTheme,
@@ -113,9 +114,9 @@ class AppTheme extends ITheme {
   }
 
   ListTileThemeData get listTileTheme {
-    return ListTileThemeData(
-      iconColor: colors.notYoCheese,
-      textColor: colors.notYoCheese,
+    return const ListTileThemeData(
+      iconColor: Colors.white,
+      textColor: Colors.white,
       style: ListTileStyle.drawer,
     );
   }

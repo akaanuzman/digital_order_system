@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/extensions/ui_extensions.dart';
 
-class DisplayMediumTextField extends StatelessWidget {
+class SpecialTextField extends StatelessWidget {
   final String labelText;
   final Widget suffixIcon;
   final String? hintText;
@@ -10,7 +10,7 @@ class DisplayMediumTextField extends StatelessWidget {
   final TextStyle? textFormFieldTextStyle;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
-  const DisplayMediumTextField({
+  const SpecialTextField({
     super.key,
     required this.labelText,
     required this.suffixIcon,

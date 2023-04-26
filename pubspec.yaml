@@ -25,12 +25,6 @@ dependencies:
   firebase_storage: ^11.1.0
   cloud_firestore: ^4.5.0
 
-  # Firebase
-  firebase_core: ^2.9.0
-  firebase_auth: ^4.4.0
-  firebase_storage: ^11.1.0
-  cloud_firestore: ^4.5.0
-
   # State Management
   provider: ^6.0.5
 

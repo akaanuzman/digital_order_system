@@ -119,7 +119,7 @@ class FoodOperationsView extends StatelessWidget with BaseSingleton {
       child: Column(
         children: [
           Text(
-            "Mutfak Resmi Yükle",
+            "Yemek Resmi Yükle",
             style: context.textTheme.labelMedium!.copyWith(
               color: Colors.white,
               fontWeight: context.fw700,
@@ -140,7 +140,7 @@ class FoodOperationsView extends StatelessWidget with BaseSingleton {
     return CustomButton(
       context: context,
       buttonType: CustomButtonEnum.medium,
-      label: isEdit ? "Değişikleri Kaydet" : "Mutfağı Ekle",
+      label: isEdit ? "Değişikleri Kaydet" : "Yemeği Ekle",
     );
   }
 }

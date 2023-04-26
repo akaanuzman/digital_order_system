@@ -1,12 +1,12 @@
 import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/products/components/appbar/restaurant_appbar.dart';
-import 'package:digital_order_system/products/components/button/custom_button.dart';
-import 'package:digital_order_system/products/components/text_field/special_text_field.dart';
-import 'package:digital_order_system/products/enums/custom_button_enum.dart';
+import '../../../products/components/appbar/restaurant_appbar.dart';
+import '../../../products/components/button/custom_button.dart';
+import '../../../products/components/text_field/special_text_field.dart';
+import '../../../products/enums/custom_button_enum.dart';
 
-class KitchenOperationView extends StatelessWidget with BaseSingleton {
+class DrinkOperationsView extends StatelessWidget with BaseSingleton {
   final bool isEdit;
-  const KitchenOperationView({
+  const DrinkOperationsView({
     super.key,
     this.isEdit = false,
   });
@@ -14,28 +14,39 @@ class KitchenOperationView extends StatelessWidget with BaseSingleton {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          RestaurantAppBar(title: isEdit ? "Mutfağı Düzenle" : "Mutfak Ekle"),
+      appBar: RestaurantAppBar(
+        title: isEdit ? "İçeceği Düzenle" : "İçecek Ekle",
+      ),
       body: FadeInUp(
         child: ListView(
           padding: context.padding4x,
           children: [
             context.emptySizedHeightBox2x,
-            kitchenNameField(),
+            foodNameField(),
+            context.emptySizedHeightBox2x,
+            priceField(),
             context.emptySizedHeightBox4x,
             imageSectionCard(context),
             context.emptySizedHeightBox4x,
-            addOrEditKitchenBtn(context),
+            addOrEditFoodBtn(context),
           ],
         ),
       ),
     );
   }
 
-  SpecialTextField kitchenNameField() {
+  SpecialTextField foodNameField() {
     return const SpecialTextField(
-      labelText: "Mutfak Adı",
+      labelText: "İçecek Adı",
       suffixIcon: Icon(Icons.food_bank_outlined),
+    );
+  }
+
+  SpecialTextField priceField() {
+    return const SpecialTextField(
+      labelText: "Ücret",
+      suffixIcon: Icon(Icons.attach_money),
+      keyboardType: TextInputType.number,
     );
   }
 
@@ -98,7 +109,7 @@ class KitchenOperationView extends StatelessWidget with BaseSingleton {
       child: Column(
         children: [
           Text(
-            "Mutfak Resmi Yükle",
+            "İçecek Resmi Yükle",
             style: context.textTheme.labelMedium!.copyWith(
               color: Colors.white,
               fontWeight: context.fw700,
@@ -115,11 +126,11 @@ class KitchenOperationView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  CustomButton addOrEditKitchenBtn(BuildContext context) {
+  CustomButton addOrEditFoodBtn(BuildContext context) {
     return CustomButton(
       context: context,
       buttonType: CustomButtonEnum.medium,
-      label: isEdit ? "Değişikleri Kaydet" : "Mutfağı Ekle",
+      label: isEdit ? "Değişikleri Kaydet" : "İçeceği Ekle",
     );
   }
 }

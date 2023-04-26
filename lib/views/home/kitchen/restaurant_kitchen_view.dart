@@ -7,11 +7,12 @@ import 'package:digital_order_system/views/home/kitchen/kitchen_operations_view.
 class RestaurantKitchenView extends StatelessWidget with BaseSingleton {
   const RestaurantKitchenView({super.key});
 
-  Future goToKitchenOperationsPage(BuildContext context) async {
+  Future goToKitchenOperationsPage(BuildContext context,
+      {bool isEdit = false}) async {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const KitchenOperationView(),
+        builder: (context) => KitchenOperationView(isEdit: isEdit),
       ),
     );
   }
@@ -72,18 +73,19 @@ class RestaurantKitchenView extends StatelessWidget with BaseSingleton {
         trailing: IconButton(
           onPressed: () => uiUtils.showEditAndDeleteAction(
             context: context,
-            editOnTap: (context) async =>
-                goToKitchenOperationsPage(context).then(
+            editOnTap: (context) async => goToKitchenOperationsPage(
+              context,
+              isEdit: true,
+            ).then(
               (value) => Navigator.pop(context),
             ),
             deleteOnTap: (context) => uiUtils.showAlertDialog(
-              context: context,
-              alertEnum: AlertEnum.AREUSURE,
-              contentTitle: "Emin misiniz?",
-              contentSubtitle: "Kayıtlı olan mutfak silinecektir.",
-              buttonLabel: "Evet",
-              secondButtonLabel: "Hayır"
-            ),
+                context: context,
+                alertEnum: AlertEnum.AREUSURE,
+                contentTitle: "Emin misiniz?",
+                contentSubtitle: "Kayıtlı olan mutfak silinecektir.",
+                buttonLabel: "Evet",
+                secondButtonLabel: "Hayır"),
           ),
           icon: const Icon(Icons.more_horiz),
         ),

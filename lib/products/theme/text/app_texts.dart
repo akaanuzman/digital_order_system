@@ -47,7 +47,7 @@ class AppTexts {
 
         // 20 - bold ** Appbar Title
         headlineLarge: TextStyle(
-          color: _textColor,
+          color: Colors.black,
           fontSize: 20,
           fontWeight: FontWeight.bold,
           fontFamily: _fontFamily,

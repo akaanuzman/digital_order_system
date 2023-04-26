@@ -1,5 +1,5 @@
-import 'package:digital_order_system/products/view_models/register_view_model.dart';
-
+import '../../../products/view_models/register_view_model.dart';
+import '../profile/profile_complete_view.dart';
 import '../../../_export_ui.dart';
 import '../../../products/components/text/display_medium_text.dart';
 import '../../../products/enums/custom_button_enum.dart';
@@ -16,11 +16,24 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     required this.isUser,
   });
 
-  void goToRegisterView(BuildContext context) {
+  void goToLoginView(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginView(isUser: isUser),
+        builder: (context) => LoginView(
+          isUser: isUser,
+        ),
+      ),
+    );
+  }
+
+  void goToProfileCreateView(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProfileCompleteView(
+          isUser: isUser,
+        ),
       ),
     );
   }
@@ -62,8 +75,8 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  DisplayMediumTextField emailField(BuildContext context) {
-    return DisplayMediumTextField(
+  SpecialTextField emailField(BuildContext context) {
+    return SpecialTextField(
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
       hintText: stringConstants.loginEmailHintText,
@@ -75,7 +88,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
   Widget passwordField(BuildContext context) {
     return Consumer<RegisterViewModel>(
       builder: (context, pv, _) {
-        return DisplayMediumTextField(
+        return SpecialTextField(
           labelText: AppLocalizations.of(context)!.passwordLabelText,
           suffixIcon: IconButton(
             onPressed: () => pv.openOrCloseObscureText,
@@ -97,7 +110,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
         context: context,
         buttonType: CustomButtonEnum.medium,
         label: AppLocalizations.of(context)!.registerBtn,
-        onTap: () {},
+        onTap: () => goToProfileCreateView(context),
       ),
     );
   }
@@ -106,7 +119,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     return SpecialRowButton(
       firstText: AppLocalizations.of(context)!.alreadyHaveAnAcoount,
       buttonText: AppLocalizations.of(context)!.loginBtn,
-      onPressed: () => goToRegisterView(context),
+      onPressed: () => goToLoginView(context),
     );
   }
 }

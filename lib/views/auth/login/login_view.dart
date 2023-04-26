@@ -25,12 +25,6 @@ class LoginView extends StatelessWidget with BaseSingleton {
         builder: (context) => NavbarView(isUser: isUser),
       ),
     );
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => NavbarView(isUser: isUser),
-      ),
-    );
   }
 
   void goToRegisterView(BuildContext context) {
@@ -84,8 +78,8 @@ class LoginView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  DisplayMediumTextField emailField(BuildContext context) {
-    return DisplayMediumTextField(
+  SpecialTextField emailField(BuildContext context) {
+    return SpecialTextField(
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
       hintText: stringConstants.loginEmailHintText,
@@ -97,7 +91,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
   Widget passwordField(BuildContext context) {
     return Consumer<LoginViewModel>(
       builder: (context, pv, _) {
-        return DisplayMediumTextField(
+        return SpecialTextField(
           labelText: AppLocalizations.of(context)!.passwordLabelText,
           suffixIcon: IconButton(
             onPressed: () => pv.openOrCloseObscureText,

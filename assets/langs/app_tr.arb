@@ -22,5 +22,15 @@
     "loginBtn": "Giriş yap",
     "dontHaveAnAccount": "Henüz hesabın yok mu?",
     "alreadyHaveAnAcoount": "Zaten bir hesabın var mı?",
-    "registerBtn": "Kayıt ol"
+    "registerBtn": "Kayıt ol",
+    "complateBtn": "Tamamlandı",
+    "usernameLabelText": "Kullanıcı Adı",
+    "usernameHintText": "Kullanıcı Adınızı Giriniz",
+    "firstNameLabelText": "Adınız",
+    "firstNameHintText": "Lütfen Adınızı Giriniz",
+    "lastNameLabelText": "Soy Adınız",
+    "lastNameHintText": "Soy Adınızı Giriniz",
+    "dateOfBirthLabelText": "Doğum Tarihiniz",
+    "dateOfBirthHintText": "Doğum Tarihinizi Giriniz",
+    "createProfileAppBarTitle": "Başlamak için biyografinizi doldurun" 
 }

@@ -20,6 +20,7 @@ class AppTheme extends ITheme {
         // useMaterial3: true,
         primaryColor: colors.redSavinaPepper,
         unselectedWidgetColor: colors.gray,
+        scaffoldBackgroundColor: Colors.grey.shade50,
         colorScheme: colorScheme,
         textTheme: texts.textTheme,
         elevatedButtonTheme: elevatedButtonTheme,
@@ -28,6 +29,8 @@ class AppTheme extends ITheme {
         appBarTheme: appBarTheme,
         bottomNavigationBarTheme: bottomNavbarTheme,
         checkboxTheme: checkboxTheme,
+        cardTheme: cardTheme,
+        listTileTheme: listTileTheme,
       );
 
   ColorScheme get colorScheme {
@@ -64,6 +67,10 @@ class AppTheme extends ITheme {
   AppBarTheme get appBarTheme {
     return AppBarTheme(
       titleTextStyle: texts.textTheme.headlineLarge,
+      centerTitle: false,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      iconTheme: const IconThemeData(color: Colors.black),
     );
   }
 
@@ -94,6 +101,23 @@ class AppTheme extends ITheme {
           return null;
         },
       ),
+    );
+  }
+
+  CardTheme get cardTheme {
+    return CardTheme(
+      color: colors.redSavinaPepper,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+    );
+  }
+
+  ListTileThemeData get listTileTheme {
+    return const ListTileThemeData(
+      iconColor: Colors.white,
+      textColor: Colors.white,
+      style: ListTileStyle.drawer,
     );
   }
 }

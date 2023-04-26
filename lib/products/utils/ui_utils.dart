@@ -2,7 +2,6 @@ import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 
 import '../../_export_ui.dart';
 import '../theme/_export_theme.dart';
-
 import '../extensions/alert_extension.dart';
 import '../enums/alert_enum.dart';
 
@@ -51,6 +50,7 @@ class UIUtils {
       ),
     );
   }
+
 
   void showAlertDialog({
     required BuildContext context,

@@ -1,3 +1,4 @@
+import '../../../core/extensions/ui_extensions.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/extensions/ui_extensions.dart';
@@ -13,6 +14,7 @@ class SpecialTextField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   const SpecialTextField({
+  const DisplayMediumTextField({
     super.key,
     required this.labelText,
     required this.suffixIcon,

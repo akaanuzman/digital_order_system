@@ -1,4 +1,5 @@
 import 'package:digital_order_system/core/utils/navigator_service.dart';
+import 'package:digital_order_system/views/home/food/restaurant_food_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../views/home/kitchen/restaurant_kitchen_view.dart';
@@ -32,7 +33,14 @@ extension RestaurantManagementModelExtension on RestaurantManagementModel {
     RestaurantManagementModel(
       Icons.fastfood,
       "Yemek Yönetimi",
-      () {},
+      () {
+        Navigator.push(
+          NavigationService.navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (context) => const RestaurnatFoodView(),
+          ),
+        );
+      },
     ),
     RestaurantManagementModel(
       Icons.local_cafe,

@@ -10,6 +10,8 @@ class SpecialTextField extends StatelessWidget {
   final TextStyle? textFormFieldTextStyle;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
+  final bool readOnly;
+  final VoidCallback? onTap;
   const SpecialTextField({
     super.key,
     required this.labelText,
@@ -19,11 +21,15 @@ class SpecialTextField extends StatelessWidget {
     this.textFormFieldTextStyle,
     this.keyboardType,
     this.textInputAction,
+    this.readOnly = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly,
+      onTap: onTap,
       obscureText: obscureText,
       style: textFormFieldTextStyle,
       keyboardType: keyboardType,

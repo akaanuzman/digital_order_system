@@ -14,7 +14,6 @@ class SpecialTextField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   const SpecialTextField({
-  const DisplayMediumTextField({
     super.key,
     required this.labelText,
     required this.suffixIcon,

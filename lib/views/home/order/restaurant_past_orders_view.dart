@@ -1,12 +1,21 @@
 import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/products/components/button/custom_outlined_button.dart';
 import 'package:digital_order_system/products/components/row/row_icon_text.dart';
 import 'package:digital_order_system/products/enums/custom_button_enum.dart';
+import 'package:digital_order_system/views/home/order/restaurant_past_order_detail_view.dart';
 
 import '../../../products/components/button/custom_button.dart';
 
 class RestaurantPastOrdersView extends StatelessWidget with BaseSingleton {
   const RestaurantPastOrdersView({super.key});
+
+  void goToDetailPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const RestaurantPastOrderDetailView(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +116,7 @@ class RestaurantPastOrdersView extends StatelessWidget with BaseSingleton {
           context: context,
           buttonType: CustomButtonEnum.small,
           label: "Detay Gör",
+          onTap: () => goToDetailPage(context),
         ),
       ),
     );

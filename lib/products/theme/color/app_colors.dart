@@ -26,10 +26,12 @@ class AppColors with BaseSingleton {
   Color get orangeade => const Color(0xffE65037);
   Color get mandarinJelly => const Color(0xffFD8700);
   Color get gray => const Color(0xff979797);
+  Color get scropion => const Color(0xff5C5C5C);
   Color get darkBlue => const Color(0x331b39ff);
   Color get orochimaru => const Color(0xffD9D9D9);
   Color get successSnackbarColor => const Color(0xff34C759);
   Color get failureSnackbarColor => const Color(0xffCC2229);
+
   MaterialColor get randomColor => Colors.primaries[Random().nextInt(17)];
 
   Color withOpacity({

@@ -31,6 +31,7 @@ class AppTheme extends ITheme {
         checkboxTheme: checkboxTheme,
         cardTheme: cardTheme,
         listTileTheme: listTileTheme,
+        tabBarTheme: tabbarTheme,
       );
 
   ColorScheme get colorScheme {
@@ -118,6 +119,18 @@ class AppTheme extends ITheme {
       iconColor: Colors.white,
       textColor: Colors.white,
       style: ListTileStyle.drawer,
+    );
+  }
+
+  TabBarTheme get tabbarTheme {
+    return TabBarTheme(
+      unselectedLabelColor: Colors.white.withOpacity(0.7),
+      indicator: const UnderlineTabIndicator(
+        borderSide: BorderSide(
+          color: Colors.white,
+          width: 4,
+        ),
+      ),
     );
   }
 }

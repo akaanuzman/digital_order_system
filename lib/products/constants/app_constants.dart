@@ -1,3 +1,7 @@
+import 'package:digital_order_system/views/home/order/restaurant_current_orders_view.dart';
+import 'package:digital_order_system/views/home/order/restaurant_orders_view.dart';
+import 'package:digital_order_system/views/home/order/restaurant_past_orders_view.dart';
+
 import '../view_models/login_view_model.dart';
 import '../view_models/register_view_model.dart';
 import '../../views/home/restaurant_home_view.dart';
@@ -60,7 +64,12 @@ class AppConstants {
 
   List<Widget> restaurantNavbarViews = [
     const RestaurantHomeView(),
+    const RestaurantOrdersView(),
     const Scaffold(),
-    const Scaffold(),
+  ];
+
+  List<Widget> restaurantOrderTabBarViews = [
+    const RestaurantPastOrdersView(),
+    const RestaurantCurrentOrdersView(),
   ];
 }

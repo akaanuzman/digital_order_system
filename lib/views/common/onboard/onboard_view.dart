@@ -1,3 +1,5 @@
+import 'package:digital_order_system/products/enums/aspect_ratio_enum.dart';
+
 import '../../../products/models/local/onboard_model.dart';
 import '../../../_export_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -70,7 +72,7 @@ class OnboardView extends StatelessWidget with BaseSingleton {
 
   Widget image(OnboardModel page) {
     return AspectRatio(
-      aspectRatio: 1.5,
+      aspectRatio: AspectRatioEnum.small.value,
       child: Image.asset(
         page.imageUrl,
       ),

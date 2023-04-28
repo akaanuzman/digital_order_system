@@ -10,19 +10,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../products/components/text_field/special_text_field.dart';
 
 class RegisterView extends StatelessWidget with BaseSingleton {
-  final bool isUser;
-  const RegisterView({
-    super.key,
-    required this.isUser,
-  });
+  final pv = Provider.of<UserSelectionViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
+  RegisterView({super.key});
 
   void goToLoginView(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginView(
-          isUser: isUser,
-        ),
+        builder: (context) => LoginView(),
       ),
     );
   }
@@ -31,9 +29,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProfileCompleteView(
-          isUser: isUser,
-        ),
+        builder: (context) => ProfileCompleteView(),
       ),
     );
   }
@@ -69,7 +65,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
 
   DisplayMediumText title(BuildContext context) {
     return DisplayMediumText(
-      textLabel: isUser
+      textLabel: pv.isUser
           ? AppLocalizations.of(context)!.registerWithUser
           : AppLocalizations.of(context)!.registerWithRestaurant,
     );

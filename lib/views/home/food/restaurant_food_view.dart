@@ -1,6 +1,5 @@
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/views/home/food/food_operations_view.dart';
-import 'package:flutter/material.dart';
 
 import '../../../products/components/appbar/restaurant_appbar.dart';
 import '../../../products/components/information_container/informantion_container.dart';

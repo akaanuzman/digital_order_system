@@ -1,6 +1,5 @@
 import 'package:device_preview/device_preview.dart';
 import 'products/constants/app_constants.dart';
-import 'core/utils/navigator_service.dart';
 import 'products/initialize/application_initialize.dart';
 import 'views/common/splash/splash_view.dart';
 import 'package:flutter/foundation.dart';

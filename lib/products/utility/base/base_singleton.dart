@@ -1,7 +1,7 @@
-import '../constants/_export_constants.dart';
-import '../theme/_export_theme.dart';
-import '../../core/utils/app_validators.dart';
-import '../utils/ui_utils.dart';
+import '../../constants/_export_constants.dart';
+import '../../theme/_export_theme.dart';
+import '../../../core/utils/app_validators.dart';
+import '../../utils/ui_utils.dart';
 
 abstract class BaseSingleton {
   AppColors get colors => AppColors.instance;

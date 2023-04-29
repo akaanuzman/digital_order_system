@@ -25,16 +25,11 @@ dependencies:
   firebase_storage: ^11.1.0
   cloud_firestore: ^4.5.0
 
-  # State Management
+  # Core
   provider: ^6.0.5
-
-  # Format
   intl: ^0.17.0
-
-  # Storage Operation
   get_storage: ^2.1.1
-
-  # Localizations
+  equatable: ^2.0.5
   flutter_localizations:
     sdk: flutter
 

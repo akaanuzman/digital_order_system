@@ -7,7 +7,7 @@ import 'package:digital_order_system/products/enums/aspect_ratio_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
-import '../../../products/base/base_singleton.dart';
+import '../../../products/utility/base/base_singleton.dart';
 import '../../../products/components/decoration/special_container_decoration.dart';
 
 class SkeletonList extends StatelessWidget with BaseSingleton {

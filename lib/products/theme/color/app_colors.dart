@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../base/base_singleton.dart';
+import '../../utility/base/base_singleton.dart';
 
 class AppColors with BaseSingleton {
   static AppColors? _instance;

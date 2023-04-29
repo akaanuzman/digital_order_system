@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:digital_order_system/views/test.dart';
 import 'products/constants/app_constants.dart';
 import 'products/initialize/application_initialize.dart';
 import 'views/common/splash/splash_view.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget with BaseSingleton {
       title: constants.appTitle,
       theme: theme.themeData,
       navigatorKey: NavigationService.navigatorKey,
-      home: SplashView(),
+      home: Test(),
     );
   }
 }

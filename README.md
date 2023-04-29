@@ -1,4 +1,4 @@
-## 🍽️ Dijital Sipariş Sistemi
+## 🍽️ Dijital Sipariş Sistemi 🇹🇷
 
 ### 🗒️ Proje Hakkında 
 * Bu tez projesi ben ve arkadaşım [Alperen Akarslan](https://github.com/alperenakarslan) ile geliştirilmiş olup 2022-2023 Bahar Dönemi sonunda Düzce Üniversitesi Bilgisayar Mühendisliği akademisyenlerinin beğenisine sunulacaktır. Projenin amacı restoranlarda bulunan garson ihtiyacını kaldırmak ve bu sürecin mobil uygulama üzerinden hızlı ve kolay bir şekilde yapılmasını sağlmaktır. Ayrıca müşterilerin oluşturdukları hesaplarına yükledikleri kişisel resimlerine göre görüntü işleme teknikleri kullanılarak karakter analizi ve fiziksel özellik analizi çıkarımı yapmaktadır. Yapılan analizler gerekli sınıflandırma algoritmalarından geçerek kullanıcıya yemek önerisi sunmaktadır.

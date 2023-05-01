@@ -69,8 +69,8 @@ class LoginView extends StatelessWidget with BaseSingleton {
     return AspectRatio(
       aspectRatio: AspectRatioEnum.small.value,
       child: pv.isUser
-          ? ImageConstants1.loginUser.toImage
-          : ImageConstants1.loginRestaurant.toImage,
+          ? ImageConstants.loginUser.toImage
+          : ImageConstants.loginRestaurant.toImage,
     );
   }
 

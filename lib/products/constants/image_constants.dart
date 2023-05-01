@@ -1,6 +1,6 @@
 import '../../_export_ui.dart';
 
-enum ImageConstants1 {
+enum ImageConstants {
   splashLogo('splash_logo'),
   logo('logo'),
   onboardFirst('onboarding0'),
@@ -14,7 +14,7 @@ enum ImageConstants1 {
   ;
 
   final String value;
-  const ImageConstants1(this.value);
+  const ImageConstants(this.value);
 
   String get toPng => 'assets/images/$value.png';
   Image get toImage => Image.asset(toPng);

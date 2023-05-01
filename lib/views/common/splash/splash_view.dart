@@ -27,7 +27,7 @@ class SplashView extends StatelessWidget with BaseSingleton {
           child: Column(
             mainAxisAlignment: context.mainAxisACenter,
             children: [
-              ImageConstants1.splashLogo.toImage,
+              ImageConstants.splashLogo.toImage,
               context.emptySizedHeightBox4x,
               appTitle(context),
             ],

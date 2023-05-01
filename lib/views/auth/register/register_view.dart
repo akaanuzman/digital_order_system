@@ -44,7 +44,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
           padding: context.padding3x,
           children: [
             context.emptySizedHeightBox4x,
-            ImageConstants1.signup.toImage,
+            ImageConstants.signup.toImage,
             context.emptySizedHeightBox2x,
             title(context),
             context.emptySizedHeightBox2x,

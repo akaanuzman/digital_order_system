@@ -30,7 +30,7 @@ class OnboardView extends StatelessWidget with BaseSingleton {
   Positioned get background {
     return Positioned(
       bottom: -70,
-      child: ImageConstants1.background.toImage,
+      child: ImageConstants.background.toImage,
     );
   }
 
@@ -54,7 +54,7 @@ class OnboardView extends StatelessWidget with BaseSingleton {
           mainAxisAlignment: context.mainAxisACenter,
           children: [
             context.emptySizedHeightBox5x,
-            ImageConstants1.logo.toImage,
+            ImageConstants.logo.toImage,
             context.emptySizedHeightBox2x,
             const Spacer(),
             image(page),

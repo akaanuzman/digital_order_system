@@ -20,9 +20,9 @@ class UserSelectionView extends StatelessWidget with BaseSingleton {
           child: Column(
             children: [
               context.emptySizedHeightBox6x,
-              ImageConstants1.logo.toImage,
+              ImageConstants.logo.toImage,
               context.emptySizedHeightBox7x,
-              ImageConstants1.restaurant.toImage,
+              ImageConstants.restaurant.toImage,
               context.emptySizedHeightBox9x,
               loginWithRestaurantBtn(context, pv),
               context.emptySizedHeightBox2x,

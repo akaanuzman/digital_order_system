@@ -17,7 +17,7 @@ class OnboardModel {
 extension OnboardModelExtension on OnboardModel {
   static List<OnboardModel> get pages => [
         OnboardModel(
-          imageUrl: ImageConstants.instance.onboardFirst,
+          imageUrl: ImageConstants1.onboardFirst.toPng,
           title: AppLocalizations.of(
                   NavigationService.navigatorKey.currentContext!)!
               .onboardFirstTitle,
@@ -26,7 +26,7 @@ extension OnboardModelExtension on OnboardModel {
               .onboardFirstSubtitle,
         ),
         OnboardModel(
-          imageUrl: ImageConstants.instance.onboardSecond,
+          imageUrl: ImageConstants1.onboardSecond.toPng,
           title: AppLocalizations.of(
                   NavigationService.navigatorKey.currentContext!)!
               .onboardSecondTitle,
@@ -35,7 +35,7 @@ extension OnboardModelExtension on OnboardModel {
               .onboardSecondSubtitle,
         ),
         OnboardModel(
-          imageUrl: ImageConstants.instance.onboardThird,
+          imageUrl: ImageConstants1.onboardThird.toPng,
           title: AppLocalizations.of(
                   NavigationService.navigatorKey.currentContext!)!
               .onboardThirdTitle,

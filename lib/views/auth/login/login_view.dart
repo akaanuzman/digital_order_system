@@ -1,3 +1,4 @@
+import 'package:digital_order_system/products/constants/image_constants.dart';
 import 'package:digital_order_system/products/enums/aspect_ratio_enum.dart';
 
 import '../../../_export_ui.dart';
@@ -67,9 +68,9 @@ class LoginView extends StatelessWidget with BaseSingleton {
   AspectRatio image() {
     return AspectRatio(
       aspectRatio: AspectRatioEnum.small.value,
-      child: Image.asset(
-        pv.isUser ? imageConstants.loginUser : imageConstants.loginRestaurant,
-      ),
+      child: pv.isUser
+          ? ImageConstants1.loginUser.toImage
+          : ImageConstants1.loginRestaurant.toImage,
     );
   }
 

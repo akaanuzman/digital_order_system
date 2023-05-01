@@ -1,3 +1,5 @@
+import 'package:digital_order_system/products/constants/image_constants.dart';
+
 import '../../../_export_ui.dart';
 import '../../../products/enums/custom_button_enum.dart';
 import '../../../products/components/button/custom_button.dart';
@@ -18,9 +20,9 @@ class UserSelectionView extends StatelessWidget with BaseSingleton {
           child: Column(
             children: [
               context.emptySizedHeightBox6x,
-              Image.asset(imageConstants.logo),
+              ImageConstants1.logo.toImage,
               context.emptySizedHeightBox7x,
-              Image.asset(imageConstants.restaurant),
+              ImageConstants1.restaurant.toImage,
               context.emptySizedHeightBox9x,
               loginWithRestaurantBtn(context, pv),
               context.emptySizedHeightBox2x,

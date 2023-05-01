@@ -10,6 +10,5 @@ abstract class BaseSingleton {
   UIUtils get uiUtils => UIUtils.instance;
   AppValidators get validators => AppValidators.instance;
   AppConstants get constants => AppConstants.instance;
-  ImageConstants get imageConstants => ImageConstants.instance;
   StringConstants get stringConstants => StringConstants.instance;
 }

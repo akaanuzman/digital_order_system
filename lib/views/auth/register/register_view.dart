@@ -1,3 +1,5 @@
+import 'package:digital_order_system/products/constants/image_constants.dart';
+
 import '../../../products/view_models/register_view_model.dart';
 import '../profile/profile_complete_view.dart';
 import '../../../_export_ui.dart';
@@ -42,7 +44,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
           padding: context.padding3x,
           children: [
             context.emptySizedHeightBox4x,
-            image(),
+            ImageConstants1.signup.toImage,
             context.emptySizedHeightBox2x,
             title(context),
             context.emptySizedHeightBox2x,
@@ -57,10 +59,6 @@ class RegisterView extends StatelessWidget with BaseSingleton {
         ),
       ),
     );
-  }
-
-  Widget image() {
-    return Image.asset(imageConstants.signup);
   }
 
   DisplayMediumText title(BuildContext context) {

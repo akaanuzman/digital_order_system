@@ -1,3 +1,4 @@
+import 'package:digital_order_system/products/constants/image_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../_export_ui.dart';
@@ -26,7 +27,7 @@ class SplashView extends StatelessWidget with BaseSingleton {
           child: Column(
             mainAxisAlignment: context.mainAxisACenter,
             children: [
-              image,
+              ImageConstants1.splashLogo.toImage,
               context.emptySizedHeightBox4x,
               appTitle(context),
             ],
@@ -36,7 +37,6 @@ class SplashView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  Image get image => Image.asset(imageConstants.splashLogo);
 
   Text appTitle(BuildContext context) {
     return Text(

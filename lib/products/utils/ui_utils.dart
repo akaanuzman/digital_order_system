@@ -52,7 +52,7 @@ class UIUtils {
   }
 
 
-  void showAlertDialog({
+  Future<void> showAlertDialog({
     required BuildContext context,
     required AlertEnum alertEnum,
     required String contentTitle,
@@ -60,12 +60,13 @@ class UIUtils {
     required String buttonLabel,
     Function()? onTap,
     bool isHasActions = false,
+    bool barrierDismissible = false,
     String? secondButtonLabel,
     Function()? secondActionOnTap,
-  }) {
-    showDialog(
+  }) async {
+    await showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: barrierDismissible,
       builder: (context) {
         return alertEnum.getAlert(
           contentTitle: contentTitle,

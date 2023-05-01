@@ -73,7 +73,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     return SpecialTextField(
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
-      hintText: stringConstants.loginEmailHintText,
+      hintText: StringConstants.loginEmailHintText,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
     );
@@ -90,7 +90,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
                 ? const Icon(Icons.visibility_off)
                 : const Icon(Icons.visibility),
           ),
-          hintText: stringConstants.loginPasswordHintText,
+          hintText: StringConstants.loginPasswordHintText,
           obscureText: pv.isObscureText,
         );
       },

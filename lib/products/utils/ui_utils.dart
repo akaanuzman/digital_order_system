@@ -1,6 +1,7 @@
-import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/products/theme/_export_theme.dart';
+import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 
+import '../../_export_ui.dart';
+import '../theme/_export_theme.dart';
 import '../extensions/alert_extension.dart';
 import '../enums/alert_enum.dart';
 
@@ -51,7 +52,7 @@ class UIUtils {
   }
 
 
-  void showAlertDialog({
+  Future<void> showAlertDialog({
     required BuildContext context,
     required AlertEnum alertEnum,
     required String contentTitle,
@@ -59,12 +60,13 @@ class UIUtils {
     required String buttonLabel,
     Function()? onTap,
     bool isHasActions = false,
+    bool barrierDismissible = false,
     String? secondButtonLabel,
     Function()? secondActionOnTap,
-  }) {
-    showDialog(
+  }) async {
+    await showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: barrierDismissible,
       builder: (context) {
         return alertEnum.getAlert(
           contentTitle: contentTitle,
@@ -76,6 +78,41 @@ class UIUtils {
           secondActionOnTap: secondActionOnTap,
         );
       },
+    );
+  }
+
+  Future showEditAndDeleteAction({
+    required BuildContext context,
+    void Function(BuildContext)? editOnTap,
+    void Function(BuildContext)? deleteOnTap,
+  }) {
+    return showAdaptiveActionSheet(
+      context: context,
+      actions: [
+        BottomSheetAction(
+          title: Text(
+            "Düzenle",
+            style:
+                context.textTheme.headlineSmall!.copyWith(color: Colors.blue),
+          ),
+          onPressed: editOnTap ?? (context) {},
+        ),
+        BottomSheetAction(
+          title: Text(
+            "Sil",
+            style: context.textTheme.headlineSmall!
+                .copyWith(color: colors.redSavinaPepper),
+          ),
+          onPressed: deleteOnTap ?? (context) {},
+        ),
+      ],
+      cancelAction: CancelAction(
+        title: Text(
+          'İptal',
+          style: context.textTheme.headlineSmall!
+              .copyWith(color: colors.redSavinaPepper),
+        ),
+      ),
     );
   }
 }

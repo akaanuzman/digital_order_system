@@ -1,3 +1,4 @@
+import 'package:digital_order_system/products/enums/text_sizes_enum.dart';
 import 'package:flutter/material.dart';
 
 import '../color/app_colors.dart';
@@ -24,7 +25,7 @@ class AppTexts {
         // 35 - semibold ** Splash Screen
         displayLarge: TextStyle(
           color: _colors.notYoCheese,
-          fontSize: 35,
+          fontSize: TextSizesEnum.xxxLarge.value,
           fontWeight: FontWeight.w600,
           fontFamily: _fontFamily,
         ),
@@ -32,7 +33,7 @@ class AppTexts {
         // 28 - bold  ** Sign in, Sign up
         displayMedium: TextStyle(
           color: _colors.redSavinaPepper,
-          fontSize: 28,
+          fontSize: TextSizesEnum.xxLarge.value,
           fontWeight: FontWeight.bold,
           fontFamily: _fontFamily,
         ),
@@ -40,15 +41,15 @@ class AppTexts {
         // 24 - bold ** Splash and others
         displaySmall: TextStyle(
           color: _textColor,
-          fontSize: 24,
+          fontSize: TextSizesEnum.xLarge.value,
           fontWeight: FontWeight.bold,
           fontFamily: _fontFamily,
         ),
 
         // 20 - bold ** Appbar Title
         headlineLarge: TextStyle(
-          color: _textColor,
-          fontSize: 20,
+          color: Colors.black,
+          fontSize: TextSizesEnum.large.value,
           fontWeight: FontWeight.bold,
           fontFamily: _fontFamily,
         ),
@@ -56,7 +57,7 @@ class AppTexts {
         // 18 - medium
         headlineMedium: TextStyle(
           color: _textColor,
-          fontSize: 18,
+          fontSize: TextSizesEnum.medium.value,
           fontWeight: FontWeight.w500,
           fontFamily: _fontFamily,
         ),
@@ -64,7 +65,7 @@ class AppTexts {
         // 16 - bold  ** For buttons
         headlineSmall: TextStyle(
           color: _textColor,
-          fontSize: 16,
+          fontSize: TextSizesEnum.normal.value,
           fontWeight: FontWeight.bold,
           fontFamily: _fontFamily,
         ),
@@ -72,7 +73,7 @@ class AppTexts {
         // 16 - regular
         titleLarge: TextStyle(
           color: _textColor,
-          fontSize: 16,
+          fontSize: TextSizesEnum.normal.value,
           fontWeight: FontWeight.w400,
           fontFamily: _fontFamily,
         ),
@@ -80,7 +81,7 @@ class AppTexts {
         // 14 - regular
         titleMedium: TextStyle(
           color: _textColor,
-          fontSize: 14,
+          fontSize: TextSizesEnum.xSmall.value,
           fontWeight: FontWeight.w400,
           fontFamily: _fontFamily,
         ),
@@ -88,7 +89,7 @@ class AppTexts {
         // 12 - regular
         titleSmall: TextStyle(
           color: _textColor,
-          fontSize: 12,
+          fontSize: TextSizesEnum.xxSmall.value,
           fontWeight: FontWeight.w400,
           fontFamily: _fontFamily,
         ),
@@ -96,7 +97,7 @@ class AppTexts {
         // 16 - medium
         labelLarge: TextStyle(
           color: _textColor,
-          fontSize: 16,
+          fontSize: TextSizesEnum.normal.value,
           fontWeight: FontWeight.w500,
           fontFamily: _fontFamily,
         ),
@@ -121,7 +122,7 @@ class AppTexts {
         // 16 - semibold
         bodyLarge: TextStyle(
           color: _textColor,
-          fontSize: 16,
+          fontSize: TextSizesEnum.normal.value,
           fontWeight: FontWeight.w600,
           fontFamily: _fontFamily,
         ),
@@ -129,7 +130,7 @@ class AppTexts {
         // 15 - semibold
         bodyMedium: TextStyle(
           color: _textColor,
-          fontSize: 15,
+          fontSize: TextSizesEnum.small.value,
           fontWeight: FontWeight.w600,
           fontFamily: _fontFamily,
         ),
@@ -137,7 +138,7 @@ class AppTexts {
         // 10 - regular
         bodySmall: TextStyle(
           color: _textColor,
-          fontSize: 10,
+          fontSize: TextSizesEnum.xxxSmall.value,
           fontWeight: FontWeight.w400,
           fontFamily: _fontFamily,
         ),

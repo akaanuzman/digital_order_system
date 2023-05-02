@@ -1,5 +1,7 @@
-import 'package:digital_order_system/products/view_models/register_view_model.dart';
+import 'package:digital_order_system/products/constants/image_constants.dart';
 
+import '../../../products/view_models/register_view_model.dart';
+import '../profile/profile_complete_view.dart';
 import '../../../_export_ui.dart';
 import '../../../products/components/text/display_medium_text.dart';
 import '../../../products/enums/custom_button_enum.dart';
@@ -10,17 +12,26 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../products/components/text_field/special_text_field.dart';
 
 class RegisterView extends StatelessWidget with BaseSingleton {
-  final bool isUser;
-  const RegisterView({
-    super.key,
-    required this.isUser,
-  });
+  final pv = Provider.of<UserSelectionViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
+  RegisterView({super.key});
 
-  void goToRegisterView(BuildContext context) {
+  void goToLoginView(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginView(isUser: isUser),
+        builder: (context) => LoginView(),
+      ),
+    );
+  }
+
+  void goToProfileCreateView(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProfileCompleteView(),
       ),
     );
   }
@@ -33,7 +44,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
           padding: context.padding3x,
           children: [
             context.emptySizedHeightBox4x,
-            image(),
+            ImageConstants.signup.toImage,
             context.emptySizedHeightBox2x,
             title(context),
             context.emptySizedHeightBox2x,
@@ -50,23 +61,19 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  Widget image() {
-    return Image.asset(imageConstants.signup);
-  }
-
   DisplayMediumText title(BuildContext context) {
     return DisplayMediumText(
-      textLabel: isUser
+      textLabel: pv.isUser
           ? AppLocalizations.of(context)!.registerWithUser
           : AppLocalizations.of(context)!.registerWithRestaurant,
     );
   }
 
-  DisplayMediumTextField emailField(BuildContext context) {
-    return DisplayMediumTextField(
+  SpecialTextField emailField(BuildContext context) {
+    return SpecialTextField(
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
-      hintText: stringConstants.loginEmailHintText,
+      hintText: StringConstants.loginEmailHintText,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
     );
@@ -75,7 +82,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
   Widget passwordField(BuildContext context) {
     return Consumer<RegisterViewModel>(
       builder: (context, pv, _) {
-        return DisplayMediumTextField(
+        return SpecialTextField(
           labelText: AppLocalizations.of(context)!.passwordLabelText,
           suffixIcon: IconButton(
             onPressed: () => pv.openOrCloseObscureText,
@@ -83,7 +90,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
                 ? const Icon(Icons.visibility_off)
                 : const Icon(Icons.visibility),
           ),
-          hintText: stringConstants.loginPasswordHintText,
+          hintText: StringConstants.loginPasswordHintText,
           obscureText: pv.isObscureText,
         );
       },
@@ -97,7 +104,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
         context: context,
         buttonType: CustomButtonEnum.medium,
         label: AppLocalizations.of(context)!.registerBtn,
-        onTap: () {},
+        onTap: () => goToProfileCreateView(context),
       ),
     );
   }
@@ -106,7 +113,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     return SpecialRowButton(
       firstText: AppLocalizations.of(context)!.alreadyHaveAnAcoount,
       buttonText: AppLocalizations.of(context)!.loginBtn,
-      onPressed: () => goToRegisterView(context),
+      onPressed: () => goToLoginView(context),
     );
   }
 }

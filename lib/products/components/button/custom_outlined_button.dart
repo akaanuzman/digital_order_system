@@ -74,7 +74,7 @@ class CustomOutlinedButton extends Container {
 
   static double _height(CustomButtonEnum buttonType, BuildContext context) {
     return buttonType == CustomButtonEnum.small
-        ? context.val12x
+        ? context.val8x
         : buttonType == CustomButtonEnum.medium
             ? context.val15x
             : context.val15x * 1.25;

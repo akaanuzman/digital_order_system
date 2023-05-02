@@ -34,6 +34,15 @@ extension MediaQueryExtension on BuildContext {
   double get val13x => width * 0.13;
   double get val14x => width * 0.14;
   double get val15x => width * 0.15;
+  double get val16x => width * 0.16;
+  double get val17x => width * 0.17;
+  double get val18x => width * 0.18;
+  double get val19x => width * 0.19;
+  double get val20x => width * 0.2;
+  double get val21x => width * 0.21;
+  double get val22x => width * 0.22;
+  double get val23x => width * 0.23;
+  double get val24x => width * 0.24;
 
   // Dynamic height and weight generator
   double dynamicWidth(double val) => width * val;

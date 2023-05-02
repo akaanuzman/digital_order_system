@@ -1,16 +1,10 @@
 class StringConstants {
-  static StringConstants? _instance;
-  static StringConstants get instance {
-    if (_instance != null) {
-      return _instance!;
-    } else {
-      _instance = StringConstants.init();
-      return _instance!;
-    }
-  }
+  const StringConstants._();
 
-  StringConstants.init();
-
-  final loginEmailHintText = "example@gmail.com";
-  final loginPasswordHintText = "******";
+  static const String loginEmailHintText = "example@gmail.com";
+  static const String loginPasswordHintText = "******";
+  static const String googlePlayStoreUrl =
+      "https://play.google.com/store/apps/details?id=com.singularitysoftware.anytime";
+  static const String appStoreUrl =
+      "https://apps.apple.com/tr/app/anytime/id1615656130?l=tr";
 }

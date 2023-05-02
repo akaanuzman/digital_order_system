@@ -1,7 +1,8 @@
 import '../../../core/extensions/ui_extensions.dart';
 import 'package:flutter/material.dart';
 
-class DisplayMediumTextField extends StatelessWidget {
+
+class SpecialTextField extends StatelessWidget {
   final String labelText;
   final Widget suffixIcon;
   final String? hintText;
@@ -9,7 +10,9 @@ class DisplayMediumTextField extends StatelessWidget {
   final TextStyle? textFormFieldTextStyle;
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
-  const DisplayMediumTextField({
+  final bool readOnly;
+  final VoidCallback? onTap;
+  const SpecialTextField({
     super.key,
     required this.labelText,
     required this.suffixIcon,
@@ -18,11 +21,15 @@ class DisplayMediumTextField extends StatelessWidget {
     this.textFormFieldTextStyle,
     this.keyboardType,
     this.textInputAction,
+    this.readOnly = false,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: readOnly,
+      onTap: onTap,
       obscureText: obscureText,
       style: textFormFieldTextStyle,
       keyboardType: keyboardType,

@@ -1,9 +1,14 @@
-import 'package:digital_order_system/products/view_models/login_view_model.dart';
-import 'package:digital_order_system/products/view_models/register_view_model.dart';
+import 'package:digital_order_system/views/home/order/restaurant_current_orders_view.dart';
+import 'package:digital_order_system/views/home/order/restaurant_orders_view.dart';
+import 'package:digital_order_system/views/home/order/restaurant_past_orders_view.dart';
+import 'package:digital_order_system/views/test.dart';
 
+import '../view_models/login_view_model.dart';
+import '../view_models/register_view_model.dart';
+import '../../views/home/restaurant_home_view.dart';
+
+import '../../_export_ui.dart';
 import '../view_models/splash_view_model.dart';
-import '../view_models/user_selection_view_model.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/single_child_widget.dart';
 
@@ -50,4 +55,21 @@ class AppConstants {
   ];
 
   List<SingleChildWidget> get providers => _providers;
+
+  List<Widget> userNavbarViews = [
+    const Test(),
+    const Scaffold(),
+    const Scaffold(),
+  ];
+
+  List<Widget> restaurantNavbarViews = [
+    const RestaurantHomeView(),
+    const RestaurantOrdersView(),
+    const Scaffold(),
+  ];
+
+  List<Widget> restaurantOrderTabBarViews = [
+    const RestaurantPastOrdersView(),
+    const RestaurantCurrentOrdersView(),
+  ];
 }

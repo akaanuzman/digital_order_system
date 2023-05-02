@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   animate_do: ^3.0.2
   shimmer_animation: ^2.1.0+1
+  adaptive_action_sheet: ^2.0.2
 
   # Firebase
   firebase_core: ^2.9.0
@@ -24,16 +25,13 @@ dependencies:
   firebase_storage: ^11.1.0
   cloud_firestore: ^4.5.0
 
-  # State Management
+  # Core
   provider: ^6.0.5
-
-  # Format
   intl: ^0.17.0
-
-  # Storage Operation
   get_storage: ^2.1.1
-
-  # Localizations
+  equatable: ^2.0.5
+  package_info_plus: ^3.1.2
+  url_launcher: ^6.1.10
   flutter_localizations:
     sdk: flutter
 

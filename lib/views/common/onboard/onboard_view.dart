@@ -1,4 +1,6 @@
-import '../../../core/utils/navigator_service.dart';
+import 'package:digital_order_system/products/constants/image_constants.dart';
+import 'package:digital_order_system/products/enums/aspect_ratio_enum.dart';
+
 import '../../../products/models/local/onboard_model.dart';
 import '../../../_export_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,7 +30,7 @@ class OnboardView extends StatelessWidget with BaseSingleton {
   Positioned get background {
     return Positioned(
       bottom: -70,
-      child: Image.asset(imageConstants.background),
+      child: ImageConstants.background.toImage,
     );
   }
 
@@ -52,7 +54,7 @@ class OnboardView extends StatelessWidget with BaseSingleton {
           mainAxisAlignment: context.mainAxisACenter,
           children: [
             context.emptySizedHeightBox5x,
-            Image.asset(imageConstants.logo),
+            ImageConstants.logo.toImage,
             context.emptySizedHeightBox2x,
             const Spacer(),
             image(page),
@@ -71,7 +73,7 @@ class OnboardView extends StatelessWidget with BaseSingleton {
 
   Widget image(OnboardModel page) {
     return AspectRatio(
-      aspectRatio: 1.5,
+      aspectRatio: AspectRatioEnum.small.value,
       child: Image.asset(
         page.imageUrl,
       ),

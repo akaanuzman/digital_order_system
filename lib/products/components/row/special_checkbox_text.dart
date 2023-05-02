@@ -1,4 +1,4 @@
-import 'package:digital_order_system/products/view_models/login_view_model.dart';
+import '../../view_models/login_view_model.dart';
 import '../../../_export_ui.dart';
 
 class SpecialRow extends StatelessWidget {

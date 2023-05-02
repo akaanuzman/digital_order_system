@@ -48,7 +48,7 @@ extension AlertExtension on AlertEnum {
         return SpecialAlert(
           icon: Icons.lightbulb,
           titleBgColor: Colors.yellowAccent.shade400,
-          circleAvatarBgColor: Colors.greenAccent.shade700,
+          circleAvatarBgColor: Colors.yellowAccent.shade700,
           contentTitle: contentTitle,
           contentSubtitle: contentSubtitle,
           buttonLabel: buttonLabel,

@@ -1,4 +1,5 @@
 import '../../../_export_ui.dart';
+import '../../products/constants/image_constants.dart';
 
 class UserHomeView extends StatelessWidget with BaseSingleton {
   const UserHomeView({super.key});
@@ -25,7 +26,7 @@ class UserHomeView extends StatelessWidget with BaseSingleton {
           mainAxisSpacing: 1,
         ),
         itemBuilder: (context, index) {
-          return gridViewContainer(context, imageConstants.mainDishes);
+          return gridViewContainer(context, ImageConstants.mainDishes.toPng);
         },
       ),
     );

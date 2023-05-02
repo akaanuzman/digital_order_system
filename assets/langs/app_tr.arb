@@ -32,5 +32,10 @@
     "lastNameHintText": "Soy Adınızı Giriniz",
     "dateOfBirthLabelText": "Doğum Tarihiniz",
     "dateOfBirthHintText": "Doğum Tarihinizi Giriniz",
-    "createProfileAppBarTitle": "Başlamak için biyografinizi doldurun" 
+    "createProfileAppBarTitle": "Başlamak için biyografinizi doldurun",
+    "homeAppBarTitle": "Bir yemek türü seçiniz",
+    "mainDishes": "Ana Yemek",
+    "fastFood": "Fast Food",
+    "salad": "Salata",
+    "fruit": "Meyve"
 }

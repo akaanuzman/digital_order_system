@@ -10,9 +10,11 @@ enum ImageConstants {
   restaurant('restaurant'),
   signup('signup'),
   loginRestaurant('login_restaurant'),
-  loginUser('login_user')
+  loginUser('login_user'),
+  mainDishes('main_dishes')
   ;
-
+  
+  
   final String value;
   const ImageConstants(this.value);
 

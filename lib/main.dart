@@ -1,7 +1,9 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:digital_order_system/views/auth/login/login_view.dart';
 import 'package:digital_order_system/views/auth/profile/profile_complete.dart';
+import 'package:digital_order_system/views/home/food_detail_card_view.dart';
 import 'package:digital_order_system/views/home/user_select_meal_type_view.dart';
+import 'package:digital_order_system/views/home/user_home_view.dart';
 import 'products/constants/app_constants.dart';
 import 'core/utils/navigator_service.dart';
 import 'products/initialize/application_initialize.dart';
@@ -39,7 +41,7 @@ class MyApp extends StatelessWidget with BaseSingleton {
       title: constants.appTitle,
       theme: theme.themeData,
       navigatorKey: NavigationService.navigatorKey,
-      home: UserSelectMealTypeView(),
+      home: SplashView(),
     );
   }
 }

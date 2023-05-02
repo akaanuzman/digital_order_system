@@ -29,5 +29,6 @@ class AppColors with BaseSingleton {
   Color get darkBlue => const Color(0x331b39ff);
   Color get successSnackbarColor => const Color(0xff34C759);
   Color get failureSnackbarColor => const Color(0xffCC2229);
+  Color get circleColor => const Color(0xffFFEDED);
   MaterialColor get randomColor => Colors.primaries[Random().nextInt(17)];
 }

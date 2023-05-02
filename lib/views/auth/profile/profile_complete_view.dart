@@ -6,17 +6,20 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../products/components/button/custom_button.dart';
 
 class ProfileCompleteView extends StatelessWidget with BaseSingleton {
-  final bool isUser;
-  const ProfileCompleteView({
+  final pv = Provider.of<UserSelectionViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
+
+  ProfileCompleteView({
     super.key,
-    required this.isUser,
   });
 
   void goToNavbarView(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NavbarView(isUser: isUser),
+        builder: (context) => NavbarView(),
       ),
     );
   }

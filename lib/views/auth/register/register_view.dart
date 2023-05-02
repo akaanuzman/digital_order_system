@@ -1,3 +1,5 @@
+import 'package:digital_order_system/products/constants/image_constants.dart';
+
 import '../../../products/view_models/register_view_model.dart';
 import '../profile/profile_complete_view.dart';
 import '../../../_export_ui.dart';
@@ -10,19 +12,17 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../products/components/text_field/special_text_field.dart';
 
 class RegisterView extends StatelessWidget with BaseSingleton {
-  final bool isUser;
-  const RegisterView({
-    super.key,
-    required this.isUser,
-  });
+  final pv = Provider.of<UserSelectionViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
+  RegisterView({super.key});
 
   void goToLoginView(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => LoginView(
-          isUser: isUser,
-        ),
+        builder: (context) => LoginView(),
       ),
     );
   }
@@ -31,9 +31,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProfileCompleteView(
-          isUser: isUser,
-        ),
+        builder: (context) => ProfileCompleteView(),
       ),
     );
   }
@@ -46,7 +44,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
           padding: context.padding3x,
           children: [
             context.emptySizedHeightBox4x,
-            image(),
+            ImageConstants.signup.toImage,
             context.emptySizedHeightBox2x,
             title(context),
             context.emptySizedHeightBox2x,
@@ -63,13 +61,9 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  Widget image() {
-    return Image.asset(imageConstants.signup);
-  }
-
   DisplayMediumText title(BuildContext context) {
     return DisplayMediumText(
-      textLabel: isUser
+      textLabel: pv.isUser
           ? AppLocalizations.of(context)!.registerWithUser
           : AppLocalizations.of(context)!.registerWithRestaurant,
     );
@@ -79,7 +73,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     return SpecialTextField(
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
-      hintText: stringConstants.loginEmailHintText,
+      hintText: StringConstants.loginEmailHintText,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
     );
@@ -96,7 +90,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
                 ? const Icon(Icons.visibility_off)
                 : const Icon(Icons.visibility),
           ),
-          hintText: stringConstants.loginPasswordHintText,
+          hintText: StringConstants.loginPasswordHintText,
           obscureText: pv.isObscureText,
         );
       },

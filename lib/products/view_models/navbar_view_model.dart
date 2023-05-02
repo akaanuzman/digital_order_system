@@ -1,4 +1,4 @@
-import '../base/base_singleton.dart';
+import '../utility/base/base_singleton.dart';
 import 'package:flutter/material.dart';
 import '../models/local/navbar_model.dart';
 

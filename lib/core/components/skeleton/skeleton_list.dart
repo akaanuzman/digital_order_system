@@ -3,10 +3,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:digital_order_system/core/components/skeleton/skeleton_item.dart';
 import 'package:digital_order_system/core/extensions/ui_extensions.dart';
+import 'package:digital_order_system/products/enums/aspect_ratio_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 
-import '../../../products/base/base_singleton.dart';
+import '../../../products/utility/base/base_singleton.dart';
 import '../../../products/components/decoration/special_container_decoration.dart';
 
 class SkeletonList extends StatelessWidget with BaseSingleton {
@@ -61,7 +62,7 @@ class SkeletonList extends StatelessWidget with BaseSingleton {
       padding: EdgeInsets.only(top: context.val2x),
       child: SkeletonItem(
         context: context,
-        aspectRatio: 4.5,
+        aspectRatio: AspectRatioEnum.medium.value,
       ),
     );
   }

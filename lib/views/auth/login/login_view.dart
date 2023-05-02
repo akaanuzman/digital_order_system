@@ -1,3 +1,6 @@
+import 'package:digital_order_system/products/constants/image_constants.dart';
+import 'package:digital_order_system/products/enums/aspect_ratio_enum.dart';
+
 import '../../../_export_ui.dart';
 import '../../../products/view_models/login_view_model.dart';
 import '../register/register_view.dart';
@@ -12,17 +15,18 @@ import '../../../products/enums/custom_button_enum.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginView extends StatelessWidget with BaseSingleton {
-  final bool isUser;
-  const LoginView({
-    super.key,
-    required this.isUser,
-  });
+  final pv = Provider.of<UserSelectionViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
+
+  LoginView({super.key});
 
   void loginOperation(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NavbarView(isUser: isUser),
+        builder: (context) => NavbarView(),
       ),
     );
   }
@@ -31,7 +35,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => RegisterView(isUser: isUser),
+        builder: (context) => RegisterView(),
       ),
     );
   }
@@ -63,16 +67,16 @@ class LoginView extends StatelessWidget with BaseSingleton {
 
   AspectRatio image() {
     return AspectRatio(
-      aspectRatio: 1.5,
-      child: Image.asset(
-        isUser ? imageConstants.loginUser : imageConstants.loginRestaurant,
-      ),
+      aspectRatio: AspectRatioEnum.small.value,
+      child: pv.isUser
+          ? ImageConstants.loginUser.toImage
+          : ImageConstants.loginRestaurant.toImage,
     );
   }
 
   DisplayMediumText title(BuildContext context) {
     return DisplayMediumText(
-      textLabel: isUser
+      textLabel: pv.isUser
           ? AppLocalizations.of(context)!.loginWithUser
           : AppLocalizations.of(context)!.loginWithRestaurant,
     );
@@ -82,7 +86,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
     return SpecialTextField(
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
-      hintText: stringConstants.loginEmailHintText,
+      hintText: StringConstants.loginEmailHintText,
       keyboardType: TextInputType.emailAddress,
       textInputAction: TextInputAction.next,
     );
@@ -99,7 +103,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
                 ? const Icon(Icons.visibility_off)
                 : const Icon(Icons.visibility),
           ),
-          hintText: stringConstants.loginPasswordHintText,
+          hintText: StringConstants.loginPasswordHintText,
           obscureText: pv.isObscureText,
           keyboardType: TextInputType.visiblePassword,
         );

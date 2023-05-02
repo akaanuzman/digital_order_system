@@ -9,8 +9,8 @@
     "skipBtn": "Geç",
     "nextBtn": "İlerle",
     "letsStartBtn": "Haydi Başla!",
-    "loginWithRestaurantBtn": "Restoran için giriş yap!",
-    "loginWithUserBtn": "Müşteri için giriş yap!",
+    "loginWithRestaurantBtn": "Restoran için devam et",
+    "loginWithUserBtn": "Müşteri için devam et",
     "loginWithRestaurant": "Restoran girişi",
     "loginWithUser": "Müşteri girişi",
     "registerWithRestaurant": "Restoran hesabı oluştur",
@@ -32,5 +32,10 @@
     "lastNameHintText": "Soy Adınızı Giriniz",
     "dateOfBirthLabelText": "Doğum Tarihiniz",
     "dateOfBirthHintText": "Doğum Tarihinizi Giriniz",
-    "createProfileAppBarTitle": "Başlamak için biyografinizi doldurun" 
+    "createProfileAppBarTitle": "Başlamak için biyografinizi doldurun",
+    "homeAppBarTitle": "Bir yemek türü seçiniz",
+    "mainDishes": "Ana Yemek",
+    "fastFood": "Fast Food",
+    "salad": "Salata",
+    "fruit": "Meyve"
 }

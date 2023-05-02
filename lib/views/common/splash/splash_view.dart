@@ -1,3 +1,4 @@
+import 'package:digital_order_system/products/constants/image_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../_export_ui.dart';
@@ -13,7 +14,7 @@ class SplashView extends StatelessWidget with BaseSingleton {
       backgroundColor: colors.charismaticRed,
       body: FutureBuilder(
         future: pv.initPage,
-        builder: (_, snapshot) => pv.screenSelectionByStorage(snapshot),
+        builder: (_, snapshot) => pv.screenSelectionByStorage(_, snapshot),
       ),
     );
   }
@@ -26,7 +27,7 @@ class SplashView extends StatelessWidget with BaseSingleton {
           child: Column(
             mainAxisAlignment: context.mainAxisACenter,
             children: [
-              image,
+              ImageConstants.splashLogo.toImage,
               context.emptySizedHeightBox4x,
               appTitle(context),
             ],
@@ -35,8 +36,6 @@ class SplashView extends StatelessWidget with BaseSingleton {
       ),
     );
   }
-
-  Image get image => Image.asset(imageConstants.splashLogo);
 
   Text appTitle(BuildContext context) {
     return Text(

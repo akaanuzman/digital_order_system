@@ -1,27 +1,23 @@
 import '../../_export_ui.dart';
 
-class ImageConstants {
-  static ImageConstants? _instance;
-  static ImageConstants get instance {
-    if (_instance != null) {
-      return _instance!;
-    } else {
-      _instance = ImageConstants.init();
-      return _instance!;
-    }
-  }
+enum ImageConstants {
+  splashLogo('splash_logo'),
+  logo('logo'),
+  onboardFirst('onboarding0'),
+  onboardSecond('onboarding1'),
+  onboardThird('onboarding2'),
+  background('background'),
+  restaurant('restaurant'),
+  signup('signup'),
+  loginRestaurant('login_restaurant'),
+  loginUser('login_user'),
+  mainDishes('main_dishes')
+  ;
+  
+  
+  final String value;
+  const ImageConstants(this.value);
 
-  ImageConstants.init();
-
-  final String splashLogo = "splash_logo".toPng;
-  final String onboardFirst = "onboarding0".toPng;
-  final String onboardSecond = "onboarding1".toPng;
-  final String onboardThird = "onboarding2".toPng;
-  final String logo = "logo".toPng;
-  final String background = "background".toPng;
-  final String restaurant = "restaurant".toPng;
-  final String signup = "signup".toPng;
-  final String loginRestaurant = "login_restaurant".toPng;
-  final String loginUser = "login_user".toPng;
-
+  String get toPng => 'assets/images/$value.png';
+  Image get toImage => Image.asset(toPng);
 }

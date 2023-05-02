@@ -1,4 +1,5 @@
 import 'package:digital_order_system/_export_ui.dart';
+import 'package:digital_order_system/products/constants/image_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserSelectMealTypeView extends StatelessWidget with BaseSingleton {
@@ -20,7 +21,7 @@ class UserSelectMealTypeView extends StatelessWidget with BaseSingleton {
           return context.emptySizedHeightBox3x;
         },
         itemBuilder: (context, index) {
-          return homePageStack(context, imageConstants.mainDishes);
+          return homePageStack(context, ImageConstants.mainDishes.toPng);
         },
       ),
     );

@@ -71,6 +71,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
 
   SpecialTextField emailField(BuildContext context) {
     return SpecialTextField(
+      controller: TextEditingController(),
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
       hintText: StringConstants.loginEmailHintText,
@@ -83,6 +84,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     return Consumer<RegisterViewModel>(
       builder: (context, pv, _) {
         return SpecialTextField(
+          controller: TextEditingController(),
           labelText: AppLocalizations.of(context)!.passwordLabelText,
           suffixIcon: IconButton(
             onPressed: () => pv.openOrCloseObscureText,

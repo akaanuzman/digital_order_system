@@ -38,25 +38,28 @@ class FoodOperationsView extends StatelessWidget with BaseSingleton {
   }
 
   SpecialTextField foodNameField() {
-    return const SpecialTextField(
+    return SpecialTextField(
+      controller: TextEditingController(),
       labelText: "Yemek Adı",
-      suffixIcon: Icon(Icons.food_bank_outlined),
+      suffixIcon: const Icon(Icons.food_bank_outlined),
     );
   }
 
   SpecialTextField priceField() {
-    return const SpecialTextField(
+    return SpecialTextField(
+      controller: TextEditingController(),
       labelText: "Ücret",
-      suffixIcon: Icon(Icons.attach_money),
+      suffixIcon: const Icon(Icons.attach_money),
       keyboardType: TextInputType.number,
     );
   }
 
   SpecialTextField chooseKitchenField() {
-    return const SpecialTextField(
+    return SpecialTextField(
+      controller: TextEditingController(),
       labelText: "Mutfak Seçiniz",
       readOnly: true,
-      suffixIcon: Icon(Icons.chevron_right),
+      suffixIcon: const Icon(Icons.chevron_right),
     );
   }
 

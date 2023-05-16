@@ -3,7 +3,7 @@
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/enums/platform_enum.dart';
 import 'package:digital_order_system/products/models/service/verison_model.dart';
-import 'package:digital_order_system/products/utility/firebase/firebase_collections.dart';
+import 'package:digital_order_system/products/utility/service/collections_service.dart';
 import 'package:digital_order_system/products/utility/managers/version_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -95,7 +95,7 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
   Future<String?> getVersionNumberFromDb() async {
     if (kIsWeb) return null;
 
-    final response = await FirebaseCollections.Version.reference
+    final response = await CollectionsService.Version.reference
         .withConverter<VersionModel>(
           fromFirestore: (snapshot, options) =>
               VersionModel().fromFirebase(snapshot),

@@ -54,7 +54,7 @@ class AppValidators {
   String? titleCheck(String? content) {
     if (content == null || content.isEmpty) {
       return 'Please enter a title!';
-    } else if(content.length < 10 ){
+    } else if (content.length < 10) {
       return 'Your title must be longer than 10 char.';
     }
     return null;

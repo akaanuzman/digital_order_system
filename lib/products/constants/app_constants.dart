@@ -2,7 +2,6 @@ import 'package:digital_order_system/views/home/order/restaurant_current_orders_
 import 'package:digital_order_system/views/home/order/restaurant_orders_view.dart';
 import 'package:digital_order_system/views/home/order/restaurant_past_orders_view.dart';
 import 'package:digital_order_system/views/home/user_home_view.dart';
-import 'package:digital_order_system/views/home/user_select_meal_type_view.dart';
 import 'package:digital_order_system/views/test.dart';
 
 import '../view_models/login_view_model.dart';

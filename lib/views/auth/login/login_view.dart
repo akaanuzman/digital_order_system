@@ -4,8 +4,6 @@ import 'package:digital_order_system/products/enums/aspect_ratio_enum.dart';
 import '../../../_export_ui.dart';
 import '../../../products/view_models/login_view_model.dart';
 import '../register/register_view.dart';
-import '../../common/navbar/navbar_view.dart';
-
 import '../../../products/components/button/custom_button.dart';
 import '../../../products/components/row/special_checkbox_text.dart';
 import '../../../products/components/row/special_row_button.dart';
@@ -15,20 +13,20 @@ import '../../../products/enums/custom_button_enum.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginView extends StatelessWidget with BaseSingleton {
-  final pv = Provider.of<UserSelectionViewModel>(
+  final userSelectionVM = Provider.of<UserSelectionViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
+
+  final loginVM = Provider.of<LoginViewModel>(
     NavigationService.navigatorKey.currentContext!,
     listen: false,
   );
 
   LoginView({super.key});
 
-  void loginOperation(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => NavbarView(),
-      ),
-    );
+  Future loginOperation(BuildContext context) async {
+    await loginVM.signInAsRestaurant;
   }
 
   void goToRegisterView(BuildContext context) {
@@ -68,7 +66,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
   AspectRatio image() {
     return AspectRatio(
       aspectRatio: AspectRatioEnum.small.value,
-      child: pv.isUser
+      child: userSelectionVM.isUser
           ? ImageConstants.loginUser.toImage
           : ImageConstants.loginRestaurant.toImage,
     );
@@ -76,7 +74,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
 
   DisplayMediumText title(BuildContext context) {
     return DisplayMediumText(
-      textLabel: pv.isUser
+      textLabel: userSelectionVM.isUser
           ? AppLocalizations.of(context)!.loginWithUser
           : AppLocalizations.of(context)!.loginWithRestaurant,
     );
@@ -84,6 +82,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
 
   SpecialTextField emailField(BuildContext context) {
     return SpecialTextField(
+      controller: loginVM.emailController,
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
       hintText: StringConstants.loginEmailHintText,
@@ -94,17 +93,18 @@ class LoginView extends StatelessWidget with BaseSingleton {
 
   Widget passwordField(BuildContext context) {
     return Consumer<LoginViewModel>(
-      builder: (context, pv, _) {
+      builder: (context, userSelectionVM, _) {
         return SpecialTextField(
+          controller: loginVM.passwordController,
           labelText: AppLocalizations.of(context)!.passwordLabelText,
           suffixIcon: IconButton(
-            onPressed: () => pv.openOrCloseObscureText,
-            icon: pv.isObscureText
+            onPressed: () => userSelectionVM.openOrCloseObscureText,
+            icon: userSelectionVM.isObscureText
                 ? const Icon(Icons.visibility_off)
                 : const Icon(Icons.visibility),
           ),
           hintText: StringConstants.loginPasswordHintText,
-          obscureText: pv.isObscureText,
+          obscureText: userSelectionVM.isObscureText,
           keyboardType: TextInputType.visiblePassword,
         );
       },

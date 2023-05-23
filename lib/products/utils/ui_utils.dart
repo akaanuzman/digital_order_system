@@ -1,4 +1,5 @@
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
+import 'package:intl/intl.dart';
 
 import '../../_export_ui.dart';
 import '../theme/_export_theme.dart';
@@ -34,7 +35,7 @@ class UIUtils {
         duration: const Duration(milliseconds: 1200),
         behavior: SnackBarBehavior.floating,
         backgroundColor:
-            isFail ? colors.failureSnackbarColor : colors.successSnackbarColor,
+            isFail ? colors.redSavinaPepper : colors.successSnackbarColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         content: SizedBox(
           height: 18,
@@ -50,7 +51,6 @@ class UIUtils {
       ),
     );
   }
-
 
   Future<void> showAlertDialog({
     required BuildContext context,
@@ -113,6 +113,27 @@ class UIUtils {
               .copyWith(color: colors.redSavinaPepper),
         ),
       ),
+    );
+  }
+
+  Future getDateTimePicker({
+    required BuildContext context,
+    required TextEditingController controller,
+  }) async {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    ).then(
+      (value) {
+        if (value != null) {
+          DateFormat dateFormat = DateFormat.yMd('tr');
+          controller.text = dateFormat.format(value);
+        } else {
+          controller.text = "";
+        }
+      },
     );
   }
 }

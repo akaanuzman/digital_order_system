@@ -25,9 +25,9 @@ class LoginViewModel extends ChangeNotifier with BaseSingleton {
     notifyListeners();
   }
 
-  Future get signInAsRestaurant async {
+  Future get signIn async {
     BuildContext context = NavigationService.navigatorKey.currentContext!;
-    if (validatorForSignInRestaurant) {
+    if (validator) {
       await EasyLoading.show(
         maskType: EasyLoadingMaskType.black,
       );
@@ -48,7 +48,7 @@ class LoginViewModel extends ChangeNotifier with BaseSingleton {
     }
   }
 
-  bool get validatorForSignInRestaurant {
+  bool get validator {
     BuildContext context = NavigationService.navigatorKey.currentContext!;
     if (emailController.text.isEmpty) {
       uiUtils.showSnackbar(

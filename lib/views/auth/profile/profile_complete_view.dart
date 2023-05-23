@@ -1,3 +1,7 @@
+import 'package:digital_order_system/products/enums/alert_enum.dart';
+import 'package:digital_order_system/products/view_models/register_view_model.dart';
+import 'package:intl/intl.dart';
+
 import '../../../_export_ui.dart';
 import '../../../products/components/text_field/profile_text_field.dart';
 import '../../../products/enums/custom_button_enum.dart';
@@ -10,6 +14,11 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
     NavigationService.navigatorKey.currentContext!,
     listen: false,
   );
+  final registerViewModel = Provider.of<RegisterViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
+  final TextEditingController dateController = TextEditingController();
 
   ProfileCompleteView({
     super.key,
@@ -80,21 +89,64 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
       preferredSize: Size.fromHeight(context.val4x),
       child: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: colors.notYoCheese,
-              borderRadius: context.borderRadius7x,
-            ),
-            height: context.val5x * 4,
-            width: context.val5x * 4,
-            child: Icon(
-              Icons.camera_alt_outlined,
-              size: context.val10x,
-              color: Colors.white,
-            ),
+          Consumer<RegisterViewModel>(
+            builder: (context, pv, _) {
+              return SizedBox(
+                width: context.maxFinite,
+                height: context.val5x * 6,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () => pv.selectImage,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: colors.notYoCheese,
+                          borderRadius: context.borderRadius6x,
+                          image: pv.selectedImage != null
+                              ? DecorationImage(
+                                  image: FileImage(pv.selectedImage!),
+                                  fit: BoxFit.cover,
+                                )
+                              : null,
+                        ),
+                        height: context.val5x * 4,
+                        width: context.val5x * 4,
+                        child: pv.selectedImage != null
+                            ? const SizedBox()
+                            : Icon(
+                                Icons.camera_alt_outlined,
+                                size: context.val10x,
+                                color: Colors.white,
+                              ),
+                      ),
+                    ),
+                    deleteImageBtn(context, pv),
+                  ],
+                ),
+              );
+            },
           ),
           context.emptySizedHeightBox2x,
         ],
+      ),
+    );
+  }
+
+  Positioned deleteImageBtn(BuildContext context, RegisterViewModel pv) {
+    return Positioned(
+      right: 0,
+      left: context.val17x,
+      bottom: 10,
+      child: GestureDetector(
+        onTap: () => pv.deleteImage,
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          child: Icon(
+            Icons.delete,
+            color: colors.redSavinaPepper,
+          ),
+        ),
       ),
     );
   }
@@ -125,8 +177,29 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
 
   ProfileTextField dateOfBirthTextField(BuildContext context) {
     return ProfileTextField(
+      controller: dateController,
       labelText: AppLocalizations.of(context)!.dateOfBirthLabelText,
       hintText: AppLocalizations.of(context)!.dateOfBirthHintText,
+      readOnly: true,
+      suffixIcon: IconButton(
+        onPressed: () {
+          uiUtils.showAlertDialog(
+            context: context,
+            alertEnum: AlertEnum.INFO,
+            contentTitle: "UYARI",
+            contentSubtitle:
+                "Yemek öneri sisteminden faydalanmak için doğum tarihini girmeniz önemle rica olunur.",
+            buttonLabel: "KAPAT",
+          );
+        },
+        icon: const Icon(Icons.info),
+      ),
+      onTap: () {
+        uiUtils.getDateTimePicker(
+          context: context,
+          controller: dateController,
+        );
+      },
     );
   }
 

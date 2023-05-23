@@ -26,7 +26,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
   LoginView({super.key});
 
   Future loginOperation(BuildContext context) async {
-    await loginVM.signInAsRestaurant;
+    await loginVM.signIn;
   }
 
   void goToRegisterView(BuildContext context) {

@@ -1,7 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:digital_order_system/products/constants/image_constants.dart';
 
 import '../../../products/view_models/register_view_model.dart';
-import '../profile/profile_complete_view.dart';
 import '../../../_export_ui.dart';
 import '../../../products/components/text/display_medium_text.dart';
 import '../../../products/enums/custom_button_enum.dart';
@@ -16,6 +17,10 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     NavigationService.navigatorKey.currentContext!,
     listen: false,
   );
+  final registerViewModel = Provider.of<RegisterViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
   RegisterView({super.key});
 
   void goToLoginView(BuildContext context) {
@@ -27,43 +32,42 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  void goToProfileCreateView(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ProfileCompleteView(),
-      ),
-    );
+  Future register(BuildContext context) async {
+    await registerViewModel.signUp(pv.isCustomer);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FadeInUp(
-        child: ListView(
-          padding: context.padding3x,
-          children: [
-            context.emptySizedHeightBox4x,
-            ImageConstants.signup.toImage,
-            context.emptySizedHeightBox2x,
-            title(context),
-            context.emptySizedHeightBox2x,
-            emailField(context),
-            context.emptySizedHeightBox2x,
-            passwordField(context),
-            context.emptySizedHeightBox2x,
-            registerBtn(context),
-            context.emptySizedWidthBox2x,
-            alreadyHaveAnAcoountSection(context)
-          ],
-        ),
+      body: Consumer<UserSelectionViewModel>(
+        builder: (context, pv, _) {
+          return FadeInUp(
+            child: ListView(
+              padding: context.padding3x,
+              children: [
+                context.emptySizedHeightBox4x,
+                ImageConstants.signup.toImage,
+                context.emptySizedHeightBox2x,
+                title(context),
+                context.emptySizedHeightBox2x,
+                emailField(context),
+                context.emptySizedHeightBox2x,
+                passwordField(context),
+                context.emptySizedHeightBox2x,
+                registerBtn(context),
+                context.emptySizedWidthBox2x,
+                alreadyHaveAnAcoountSection(context)
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 
   DisplayMediumText title(BuildContext context) {
     return DisplayMediumText(
-      textLabel: pv.isUser
+      textLabel: pv.isCustomer
           ? AppLocalizations.of(context)!.registerWithUser
           : AppLocalizations.of(context)!.registerWithRestaurant,
     );
@@ -71,6 +75,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
 
   SpecialTextField emailField(BuildContext context) {
     return SpecialTextField(
+      controller: registerViewModel.mailController,
       labelText: AppLocalizations.of(context)!.emailLabelText,
       suffixIcon: const Icon(Icons.email),
       hintText: StringConstants.loginEmailHintText,
@@ -83,6 +88,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     return Consumer<RegisterViewModel>(
       builder: (context, pv, _) {
         return SpecialTextField(
+          controller: registerViewModel.passwordController,
           labelText: AppLocalizations.of(context)!.passwordLabelText,
           suffixIcon: IconButton(
             onPressed: () => pv.openOrCloseObscureText,
@@ -97,14 +103,14 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  Padding registerBtn(BuildContext context) {
+  Widget registerBtn(BuildContext context) {
     return Padding(
       padding: context.paddingHorizontal9x,
       child: CustomButton(
         context: context,
         buttonType: CustomButtonEnum.medium,
         label: AppLocalizations.of(context)!.registerBtn,
-        onTap: () => goToProfileCreateView(context),
+        onTap: () => register(context),
       ),
     );
   }

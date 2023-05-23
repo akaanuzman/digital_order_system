@@ -1,51 +1,92 @@
+import 'package:digital_order_system/views/home/food_detail_card_view.dart';
+
 import '../../../_export_ui.dart';
 import '../../products/constants/image_constants.dart';
 
 class UserHomeView extends StatelessWidget with BaseSingleton {
   const UserHomeView({super.key});
 
+  void goToFoodDetaislCard(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const FoodDetailCardView(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        title: const Text("sadasd"),
+        title: FadeInDown(child: const Text("Ana Sayfa")),
         actions: [
           appBarActionsIcon(context),
         ],
       ),
-      body: GridView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 50,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          //scroll directions varmış ona bakarak vereceksin.
-          maxCrossAxisExtent: context.val15x * 2,
-          mainAxisExtent: context.val15x * 4,
-          childAspectRatio: 1 / 2,
-          crossAxisSpacing: 1,
-          mainAxisSpacing: 1,
+      body: FadeInUp(
+        child: ListView.separated(
+          padding: context.padding3x,
+          itemBuilder: (context, index) {
+            return Column(
+              crossAxisAlignment: context.crossAxisAStart,
+              children: [
+                Padding(
+                  padding: context.padding2x,
+                  child: Text(
+                    "Ana Yemek",
+                    style: context.textTheme.headlineSmall,
+                  ),
+                ),
+                SizedBox(
+                  height: context.dynamicHeight(0.35),
+                  child: GridView.builder(
+                    padding: context.padding2x,
+                    scrollDirection: Axis.horizontal,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: context.width / 2,
+                      crossAxisSpacing: context.val2x,
+                      mainAxisSpacing: context.val2x,
+                    ),
+                    itemBuilder: (context, index) {
+                      return gridViewContainer(
+                          context, ImageConstants.mainDishes.toPng);
+                    },
+                  ),
+                ),
+              ],
+            );
+          },
+          separatorBuilder: (context, index) => context.emptySizedHeightBox3x,
+          itemCount: 4,
         ),
-        itemBuilder: (context, index) {
-          return gridViewContainer(context, ImageConstants.mainDishes.toPng);
-        },
       ),
     );
   }
 
   Widget gridViewContainer(BuildContext context, String imageLabel) {
-    return Image.asset(
-      imageLabel,
-      width: context.val15x * 3,
-      height: context.val15x * 3,
+    return GestureDetector(
+      onTap: () => goToFoodDetaislCard(context),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: context.borderRadius4x,
+          image: DecorationImage(
+            image: AssetImage(imageLabel),
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
     );
   }
 
-  Padding appBarActionsIcon(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(right: context.val4x),
-      child: Icon(
-        Icons.notifications_outlined,
-        size: context.val8x,
+  Widget appBarActionsIcon(BuildContext context) {
+    return FadeInDown(
+      child: Padding(
+        padding: EdgeInsets.only(right: context.val4x),
+        child: Icon(
+          Icons.notifications_outlined,
+          size: context.val8x,
+        ),
       ),
     );
   }

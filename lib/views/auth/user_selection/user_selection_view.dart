@@ -61,7 +61,7 @@ class UserSelectionView extends StatelessWidget with BaseSingleton {
       label: AppLocalizations.of(context)!.loginWithUserBtn,
       icon: Icons.arrow_forward,
       onTap: () {
-        pv.chooseUser;
+        pv.chooseCustomer;
         Navigator.push(
           context,
           MaterialPageRoute(

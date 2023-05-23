@@ -3,25 +3,37 @@
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/enums/platform_enum.dart';
 import 'package:digital_order_system/products/models/service/verison_model.dart';
-import 'package:digital_order_system/products/utility/firebase/firebase_collections.dart';
+import 'package:digital_order_system/products/utility/service/collections_service.dart';
 import 'package:digital_order_system/products/utility/managers/version_manager.dart';
+import 'package:digital_order_system/products/utility/service/locale_services.dart';
+import 'package:digital_order_system/views/auth/profile/profile_complete_view.dart';
+import 'package:digital_order_system/views/common/navbar/navbar_view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../_export_ui.dart';
 import '../../views/auth/user_selection/user_selection_view.dart';
 import '../../views/common/splash/splash_view.dart';
-import 'package:get_storage/get_storage.dart';
-
 import '../../views/common/onboard/onboard_view.dart';
 
 class SplashViewModel extends ChangeNotifier with BaseSingleton {
+  final LocaleServices localeServices = LocaleServices();
   bool isRequiredForceUpdate = false;
-  final box = GetStorage();
+  bool isLogin = false;
+  bool isDontComplateProfile = true;
 
   Future<bool> get initPage async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    bool isRedirectHome = await checkOnboardScreensIsOpen();
+    bool isRedirectHome = await localeServices.readOnboard();
+    Map<String, dynamic>? user = await localeServices.readAccount();
+    if (user != null) {
+      isLogin = true;
+      if (user['companyName'] != null || user['name'] != null) {
+        isDontComplateProfile = false;
+      } else {
+        isDontComplateProfile = true;
+      }
+    }
     checkAppLicationVersion(packageInfo.version);
     return isRedirectHome;
   }
@@ -55,7 +67,11 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
               hasRequiredForceUpdate(context);
               return !snapshot.data!
                   ? OnboardView()
-                  : const UserSelectionView();
+                  : isLogin && isDontComplateProfile
+                      ? ProfileCompleteView()
+                      : isLogin && !isDontComplateProfile
+                          ? NavbarView()
+                          : const UserSelectionView();
             },
           );
         } else if (!snapshot.hasData) {
@@ -63,11 +79,6 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
         }
         return splashBody;
     }
-  }
-
-  Future<bool> checkOnboardScreensIsOpen() async {
-    final result = await box.read("openOnboard");
-    return result;
   }
 
   Future<void> checkAppLicationVersion(String clientVersion) async {
@@ -95,7 +106,7 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
   Future<String?> getVersionNumberFromDb() async {
     if (kIsWeb) return null;
 
-    final response = await FirebaseCollections.Version.reference
+    final response = await CollectionsService.Version.reference
         .withConverter<VersionModel>(
           fromFirestore: (snapshot, options) =>
               VersionModel().fromFirebase(snapshot),

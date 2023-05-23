@@ -88,7 +88,7 @@ class RestaurantModel extends Equatable
   }
 
   Map<String, dynamic> toJson() {
-    return {
+    Map<String, dynamic> json = {
       'restaurantId': restaurantId,
       'createdDate': createdDate,
       'companyName': companyName,
@@ -103,6 +103,8 @@ class RestaurantModel extends Equatable
       'imageStoragePath': imageStoragePath,
       'fcmToken': fcmToken,
     };
+    json.removeWhere((key, value) => value == null);
+    return json;
   }
 
   @override

@@ -66,7 +66,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
   AspectRatio image() {
     return AspectRatio(
       aspectRatio: AspectRatioEnum.small.value,
-      child: userSelectionVM.isUser
+      child: userSelectionVM.isCustomer
           ? ImageConstants.loginUser.toImage
           : ImageConstants.loginRestaurant.toImage,
     );
@@ -74,7 +74,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
 
   DisplayMediumText title(BuildContext context) {
     return DisplayMediumText(
-      textLabel: userSelectionVM.isUser
+      textLabel: userSelectionVM.isCustomer
           ? AppLocalizations.of(context)!.loginWithUser
           : AppLocalizations.of(context)!.loginWithRestaurant,
     );

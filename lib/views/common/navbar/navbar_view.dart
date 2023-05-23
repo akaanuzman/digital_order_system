@@ -13,7 +13,7 @@ class NavbarView extends StatelessWidget with BaseSingleton {
     return Consumer<NavbarViewModel>(
       builder: (_, NavbarViewModel provider, __) {
         return Scaffold(
-          body: provider.views(pv.isUser).elementAt(provider.currentIndex),
+          body: provider.views(pv.isCustomer).elementAt(provider.currentIndex),
           bottomNavigationBar: _navbarItems(context, provider),
         );
       },
@@ -28,7 +28,7 @@ class NavbarView extends StatelessWidget with BaseSingleton {
           topLeft: context.radius6x,
         ),
         child: BottomNavigationBar(
-          items: provider.items(pv.isUser),
+          items: provider.items(pv.isCustomer),
           currentIndex: provider.currentIndex,
           onTap: (index) => provider.onItemTapped(index),
         ),

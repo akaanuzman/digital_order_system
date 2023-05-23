@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/models/service/restaurant_model.dart';
 import 'package:digital_order_system/products/utility/exception/firebase_custom_exception.dart';
-import 'package:digital_order_system/products/utility/firebase/firebase_collections.dart';
+
+import '../products/utility/service/collections_service.dart';
 
 class Test extends StatelessWidget with BaseSingleton {
   const Test({super.key});
@@ -10,7 +11,7 @@ class Test extends StatelessWidget with BaseSingleton {
   @override
   Widget build(BuildContext context) {
     CollectionReference restaurants =
-        FirebaseCollections.Restaurants.reference;
+        CollectionsService.Restaurants.reference;
 
     final response = restaurants.withConverter(
       fromFirestore: (snapshot, options) {

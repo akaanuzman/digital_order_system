@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 
 class SpecialTextField extends StatelessWidget {
+  final TextEditingController controller;
   final String labelText;
   final Widget suffixIcon;
   final String? hintText;
@@ -14,6 +15,7 @@ class SpecialTextField extends StatelessWidget {
   final VoidCallback? onTap;
   const SpecialTextField({
     super.key,
+    required this.controller,
     required this.labelText,
     required this.suffixIcon,
     this.hintText,
@@ -28,6 +30,7 @@ class SpecialTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       readOnly: readOnly,
       onTap: onTap,
       obscureText: obscureText,

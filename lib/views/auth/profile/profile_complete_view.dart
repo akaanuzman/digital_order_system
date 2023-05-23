@@ -1,3 +1,7 @@
+import 'package:digital_order_system/products/enums/alert_enum.dart';
+import 'package:digital_order_system/products/view_models/image_view_model.dart';
+import 'package:digital_order_system/products/view_models/register_view_model.dart';
+
 import '../../../_export_ui.dart';
 import '../../../products/components/text_field/profile_text_field.dart';
 import '../../../products/enums/custom_button_enum.dart';
@@ -7,6 +11,10 @@ import '../../../products/components/button/custom_button.dart';
 
 class ProfileCompleteView extends StatelessWidget with BaseSingleton {
   final pv = Provider.of<UserSelectionViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
+  final registerViewModel = Provider.of<RegisterViewModel>(
     NavigationService.navigatorKey.currentContext!,
     listen: false,
   );
@@ -57,6 +65,8 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
             lastNameTextField(context),
             context.emptySizedHeightBox2x,
             dateOfBirthTextField(context),
+            context.emptySizedHeightBox2x,
+            phoneTextFiled(context),
             context.emptySizedHeightBox4x,
             complateButton(context)
           ],
@@ -80,21 +90,72 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
       preferredSize: Size.fromHeight(context.val4x),
       child: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: colors.notYoCheese,
-              borderRadius: context.borderRadius7x,
-            ),
-            height: context.val5x * 4,
-            width: context.val5x * 4,
-            child: Icon(
-              Icons.camera_alt_outlined,
-              size: context.val10x,
-              color: Colors.white,
-            ),
+          Consumer<ImageViewModel>(
+            builder: (context, pv, _) {
+              return SizedBox(
+                width: context.maxFinite,
+                height: context.val5x * 6,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    selectImage(pv, context),
+                    deleteImageBtn(context, pv),
+                  ],
+                ),
+              );
+            },
           ),
           context.emptySizedHeightBox2x,
         ],
+      ),
+    );
+  }
+
+  GestureDetector selectImage(ImageViewModel pv, BuildContext context) {
+    return GestureDetector(
+      onTap: () => pv.selectImage,
+      child: Container(
+        decoration: imageDecoration(context, pv),
+        height: context.val5x * 4,
+        width: context.val5x * 4,
+        child: pv.selectedImage != null
+            ? const SizedBox()
+            : Icon(
+                Icons.camera_alt_outlined,
+                size: context.val10x,
+                color: Colors.white,
+              ),
+      ),
+    );
+  }
+
+  BoxDecoration imageDecoration(BuildContext context, ImageViewModel pv) {
+    return BoxDecoration(
+      color: colors.notYoCheese,
+      borderRadius: context.borderRadius6x,
+      image: pv.selectedImage != null
+          ? DecorationImage(
+              image: FileImage(pv.selectedImage!),
+              fit: BoxFit.cover,
+            )
+          : null,
+    );
+  }
+
+  Positioned deleteImageBtn(BuildContext context, ImageViewModel pv) {
+    return Positioned(
+      right: 0,
+      left: context.val17x,
+      bottom: 10,
+      child: GestureDetector(
+        onTap: () => pv.deleteImage,
+        child: CircleAvatar(
+          backgroundColor: Colors.white,
+          child: Icon(
+            Icons.delete,
+            color: colors.redSavinaPepper,
+          ),
+        ),
       ),
     );
   }
@@ -125,8 +186,38 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
 
   ProfileTextField dateOfBirthTextField(BuildContext context) {
     return ProfileTextField(
+      controller: registerViewModel.dateController,
       labelText: AppLocalizations.of(context)!.dateOfBirthLabelText,
       hintText: AppLocalizations.of(context)!.dateOfBirthHintText,
+      readOnly: true,
+      suffixIcon: IconButton(
+        onPressed: () {
+          uiUtils.showAlertDialog(
+            context: context,
+            alertEnum: AlertEnum.INFO,
+            contentTitle: "UYARI",
+            contentSubtitle:
+                "Yemek öneri sisteminden faydalanmak için doğum tarihini girmeniz önemle rica olunur.",
+            buttonLabel: "KAPAT",
+          );
+        },
+        icon: const Icon(Icons.info),
+      ),
+      onTap: () {
+        uiUtils.getDateTimePicker(
+          context: context,
+          controller: registerViewModel.dateController,
+        );
+      },
+    );
+  }
+
+  ProfileTextField phoneTextFiled(BuildContext context) {
+    return ProfileTextField(
+      labelText: "Telefon Numarası",
+      hintText: "05XXX XXX XXX",
+      textInputAction: TextInputAction.next,
+      keyboardType: TextInputType.phone,
     );
   }
 

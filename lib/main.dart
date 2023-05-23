@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'products/constants/app_constants.dart';
 import 'products/initialize/application_initialize.dart';
 import 'views/common/splash/splash_view.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget with BaseSingleton {
     return MaterialApp(
       // Device preview parameters...
       useInheritedMediaQuery: true,
-      builder: DevicePreview.appBuilder,
+      builder: EasyLoading.init(),
       // Device preview parameters...
 
       debugShowCheckedModeBanner: constants.debugShowCheckedModeBanner,

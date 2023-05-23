@@ -2,8 +2,9 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum FirebaseCollections {
+enum CollectionsService {
   Restaurants,
+  Customers,
   Version;
 
   CollectionReference get reference =>

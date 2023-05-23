@@ -1,13 +1,13 @@
 import '../../_export_ui.dart';
 
 class UserSelectionViewModel extends ChangeNotifier with BaseSingleton {
-  bool isUser = false;
+  bool isCustomer = false;
 
-  void get chooseUser {
-    isUser = true;
+  void get chooseCustomer {
+    isCustomer = true;
   }
 
   void get chooseRestaurant {
-    isUser = false;
+    isCustomer = false;
   }
 }

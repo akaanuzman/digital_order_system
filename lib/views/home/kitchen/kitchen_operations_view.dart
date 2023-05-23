@@ -33,9 +33,10 @@ class KitchenOperationView extends StatelessWidget with BaseSingleton {
   }
 
   SpecialTextField kitchenNameField() {
-    return const SpecialTextField(
+    return SpecialTextField(
+      controller: TextEditingController(),
       labelText: "Mutfak Adı",
-      suffixIcon: Icon(Icons.food_bank_outlined),
+      suffixIcon: const Icon(Icons.food_bank_outlined),
     );
   }
 

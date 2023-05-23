@@ -1,9 +1,19 @@
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/constants/image_constants.dart';
+import 'package:digital_order_system/views/home/user_home_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserSelectMealTypeView extends StatelessWidget with BaseSingleton {
   const UserSelectMealTypeView({super.key});
+
+  void goToUserHomeView(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UserHomeView(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +25,7 @@ class UserSelectMealTypeView extends StatelessWidget with BaseSingleton {
         ],
       ),
       body: ListView.separated(
-        padding: EdgeInsets.only(top: context.val8x),
+        padding: EdgeInsets.symmetric(vertical: context.val8x),
         itemCount: 4,
         separatorBuilder: (context, index) {
           return context.emptySizedHeightBox3x;
@@ -28,15 +38,14 @@ class UserSelectMealTypeView extends StatelessWidget with BaseSingleton {
   }
 
   Widget homePageStack(BuildContext context, String imageLabel) {
-    return Padding(
-      padding: context.paddingHorizontal10x,
+    return GestureDetector(
+      onTap: () => goToUserHomeView(context),
       child: Stack(
         alignment: Alignment.center,
         children: [
           Image.asset(imageLabel),
           Text(
-            AppLocalizations.of(context)!
-                .mainDishes, //parametre olarak nasıl verebilirim diye sor kaana.
+            AppLocalizations.of(context)!.mainDishes,
             style: context.textTheme.headlineLarge!.copyWith(
               color: Colors.white,
             ),

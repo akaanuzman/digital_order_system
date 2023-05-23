@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, overridden_fields
 
 import 'package:equatable/equatable.dart';
 

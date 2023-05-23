@@ -34,30 +34,33 @@ class RegisterView extends StatelessWidget with BaseSingleton {
 
   Future register(BuildContext context) async {
     await registerViewModel.signUp(pv.isCustomer);
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FadeInUp(
-        child: ListView(
-          padding: context.padding3x,
-          children: [
-            context.emptySizedHeightBox4x,
-            ImageConstants.signup.toImage,
-            context.emptySizedHeightBox2x,
-            title(context),
-            context.emptySizedHeightBox2x,
-            emailField(context),
-            context.emptySizedHeightBox2x,
-            passwordField(context),
-            context.emptySizedHeightBox2x,
-            registerBtn(context),
-            context.emptySizedWidthBox2x,
-            alreadyHaveAnAcoountSection(context)
-          ],
-        ),
+      body: Consumer<UserSelectionViewModel>(
+        builder: (context, pv, _) {
+          return FadeInUp(
+            child: ListView(
+              padding: context.padding3x,
+              children: [
+                context.emptySizedHeightBox4x,
+                ImageConstants.signup.toImage,
+                context.emptySizedHeightBox2x,
+                title(context),
+                context.emptySizedHeightBox2x,
+                emailField(context),
+                context.emptySizedHeightBox2x,
+                passwordField(context),
+                context.emptySizedHeightBox2x,
+                registerBtn(context),
+                context.emptySizedWidthBox2x,
+                alreadyHaveAnAcoountSection(context)
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -100,7 +103,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  Padding registerBtn(BuildContext context) {
+  Widget registerBtn(BuildContext context) {
     return Padding(
       padding: context.paddingHorizontal9x,
       child: CustomButton(

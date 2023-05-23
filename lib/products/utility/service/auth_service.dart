@@ -2,6 +2,8 @@ import 'package:digital_order_system/products/utility/service/error_handler_serv
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer';
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
 class AuthService {
   final ErrorHandlerService errorHandlerService = ErrorHandlerService();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -28,6 +30,7 @@ class AuthService {
         password: password,
       );
     } on FirebaseAuthException catch (e) {
+      await EasyLoading.dismiss();
       log(e.toString());
       errorHandlerService.authErrorHandler(e.code);
     }

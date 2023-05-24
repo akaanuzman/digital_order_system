@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:digital_order_system/products/constants/image_constants.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../../products/view_models/register_view_model.dart';
 import '../../../_export_ui.dart';
@@ -33,7 +34,7 @@ class RegisterView extends StatelessWidget with BaseSingleton {
   }
 
   Future register(BuildContext context) async {
-    await registerViewModel.signUp(pv.isCustomer);
+    await registerViewModel.signUp();
   }
 
   @override

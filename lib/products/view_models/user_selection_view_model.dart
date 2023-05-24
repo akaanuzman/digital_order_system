@@ -5,9 +5,11 @@ class UserSelectionViewModel extends ChangeNotifier with BaseSingleton {
 
   void get chooseCustomer {
     isCustomer = true;
+    notifyListeners();
   }
 
   void get chooseRestaurant {
     isCustomer = false;
+    notifyListeners();
   }
 }

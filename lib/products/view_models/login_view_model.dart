@@ -1,11 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:digital_order_system/core/utils/navigator_service.dart';
-import 'package:digital_order_system/products/utility/base/base_singleton.dart';
+import 'package:digital_order_system/products/models/service/customer_model.dart';
+import 'package:digital_order_system/products/models/service/restaurant_model.dart';
+import 'package:digital_order_system/products/utility/service/firestore_service.dart';
+import 'package:digital_order_system/products/utility/service/locale_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../../_export_ui.dart';
 import '../../views/common/navbar/navbar_view.dart';
 import '../utility/service/auth_service.dart';
 
@@ -14,6 +16,7 @@ class LoginViewModel extends ChangeNotifier with BaseSingleton {
   TextEditingController passwordController = TextEditingController();
   bool isObscureText = true;
   bool isRememberMe = false;
+  final FireStoreService fireStoreService = FireStoreService();
 
   void get openOrCloseObscureText {
     isObscureText = !isObscureText;
@@ -25,17 +28,17 @@ class LoginViewModel extends ChangeNotifier with BaseSingleton {
     notifyListeners();
   }
 
-  Future get signIn async {
+  Future signIn() async {
     BuildContext context = NavigationService.navigatorKey.currentContext!;
     if (validator) {
-      await EasyLoading.show(
+      EasyLoading.show(
         maskType: EasyLoadingMaskType.black,
       );
       UserCredential? userCredential = await AuthService()
           .signInWithEmail(emailController.text, passwordController.text);
       if (userCredential != null) {
         if (isRememberMe) {
-          //TODO: ADD TO LOCAL STORAGE SERVİCE
+          LocaleServices().saveAccount(userCredential.user!.uid);
         }
         Navigator.push(
           context,
@@ -67,5 +70,12 @@ class LoginViewModel extends ChangeNotifier with BaseSingleton {
       return false;
     }
     return true;
+  }
+
+  @override
+  void dispose() {
+    emailController.clear();
+    passwordController.clear();
+    super.dispose();
   }
 }

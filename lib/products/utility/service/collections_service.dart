@@ -8,5 +8,5 @@ enum CollectionsService {
   Version;
 
   CollectionReference get reference =>
-      FirebaseFirestore.instance.collection(name);
+      FirebaseFirestore.instance.collection(name);  
 }

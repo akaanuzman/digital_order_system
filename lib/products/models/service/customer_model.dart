@@ -122,6 +122,7 @@ class CustomerModel extends Equatable
     return CustomerModel(
       customerId: json['customerId'] as String?,
       createdDate: json['createdDate'] as Timestamp?,
+      mail: json['mail'] as String?,
       name: json['name'] as String?,
       surname: json['surname'] as String?,
       fullName: json['fullName'] as String?,

@@ -20,19 +20,20 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
   final LocaleServices localeServices = LocaleServices();
   bool isRequiredForceUpdate = false;
   bool isLogin = false;
-  bool isDontComplateProfile = true;
+  bool? isComplate;
 
   Future<bool> get initPage async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     bool isRedirectHome = await localeServices.readOnboard();
-    Map<String, dynamic>? user = await localeServices.readAccount();
-    if (user != null) {
+    String? uid = await localeServices.readAccount();
+    if (uid != null) {
       isLogin = true;
-      if (user['companyName'] != null || user['name'] != null) {
-        isDontComplateProfile = false;
-      } else {
-        isDontComplateProfile = true;
-      }
+      final pv = Provider.of<UserSelectionViewModel>(
+        NavigationService.navigatorKey.currentContext!,
+        listen: false,
+      );
+      pv.isCustomer = await localeServices.readIsCustomer();
+      isComplate = await localeServices.readIsComplate();
     }
     checkAppLicationVersion(packageInfo.version);
     return isRedirectHome;
@@ -67,9 +68,9 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
               hasRequiredForceUpdate(context);
               return !snapshot.data!
                   ? OnboardView()
-                  : isLogin && isDontComplateProfile
+                  : isLogin && isComplate == null
                       ? ProfileCompleteView()
-                      : isLogin && !isDontComplateProfile
+                      : isLogin && isComplate != null
                           ? NavbarView()
                           : const UserSelectionView();
             },

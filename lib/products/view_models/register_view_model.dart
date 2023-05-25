@@ -142,6 +142,7 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
       );
       localeServices.saveAccount(userId);
       localeServices.saveIsCustomer(isCustomer);
+      localeServices.saveProfileComplate(false);
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
@@ -165,8 +166,6 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
       uid: userId,
       isCustomer: isCustomer,
     );
-    customerJson['createdDate'] =
-        customer.createdDate!.toDate().microsecondsSinceEpoch;
   }
 
   // Write firestore db for restaurant register information
@@ -269,56 +268,62 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
   }
 
   Future _profileComplate(bool isCustomer) async {
-    final pv = Provider.of<ImageViewModel>(context, listen: false);
     EasyLoading.show(
       maskType: EasyLoadingMaskType.black,
     );
     if (isCustomer) {
-      CustomerModel customer = CustomerModel();
-      customer.name = nameController.text;
-      customer.surname = surnameController.text;
-      customer.fullName = "${nameController.text} ${surnameController.text}";
-      customer.phone = phoneController.text;
-      customer.birthDate = Timestamp.fromDate(selectedBirthdate!);
-      customer.age = DateTime.now().year - selectedBirthdate!.year;
-      if (pv.selectedImage != null) {
-        List<String> response = await StorageService()
-            .uploadImage(pv.selectedImage!.path, "Customers/");
-        customer.imageUrl = response[0];
-        customer.imageStoragePath = response[1];
-      }
-      Map<String, dynamic> customerJson = customer.toJson();
-      await fireStoreService.updateUser(
-        userModel: customerJson,
-        isCustomer: isCustomer,
-      );
-      await EasyLoading.dismiss();
-      uiUtils.showSnackbar(
-        context: context,
-        text: "Değişiklikler başarıyla kaydedildi!",
-      );
-      localeServices.saveProfileComplate();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => NavbarView(),
-        ),
-      );
+      customerProfileComplate(isCustomer);
     } else {
-      RestaurantModel restaurant = RestaurantModel();
-      restaurant.companyName = nameController.text;
-      restaurant.openingTime = openingTimeController.text;
-      restaurant.closingTime = closingTimeController.text;
-      restaurant.companyNumber = phoneController.text;
+      restaurantProfileComplate(isCustomer);
+    }
+  }
+
+  // writes the customer's profile completion form to the database
+  void customerProfileComplate(bool isCustomer) {
+    CustomerModel customer = CustomerModel();
+    customer.name = nameController.text;
+    customer.surname = surnameController.text;
+    customer.fullName = "${nameController.text} ${surnameController.text}";
+    customer.phone = phoneController.text;
+    customer.birthDate = Timestamp.fromDate(selectedBirthdate!);
+    customer.age = DateTime.now().year - selectedBirthdate!.year;
+    genericProfileComplate(
+      model: customer,
+      isCustomer: isCustomer,
+    );
+  }
+
+  // writes the restaurant's profile completion form to the database
+  void restaurantProfileComplate(bool isCustomer) {
+    RestaurantModel restaurant = RestaurantModel();
+    restaurant.companyName = nameController.text;
+    restaurant.openingTime = openingTimeController.text;
+    restaurant.closingTime = closingTimeController.text;
+    restaurant.companyNumber = phoneController.text;
+    genericProfileComplate(
+      model: restaurant,
+      isCustomer: isCustomer,
+    );
+  }
+
+  // Writing data as generic to database
+  /// [dynamic model] : can only be customer model and restaurant model
+  Future genericProfileComplate({
+    dynamic model,
+    required bool isCustomer,
+  }) async {
+    final pv = Provider.of<ImageViewModel>(context, listen: false);
+    if (model is CustomerModel || model is RestaurantModel) {
       if (pv.selectedImage != null) {
+        var imagePath = isCustomer ? "Customers/" : "Restaurants/";
         List<String> response = await StorageService()
-            .uploadImage(pv.selectedImage!.path, "Restaurants/");
-        restaurant.imageUrl = response[0];
-        restaurant.imageStoragePath = response[1];
+            .uploadImage(pv.selectedImage!.path, imagePath);
+        model.imageUrl = response[0];
+        model.imageStoragePath = response[1];
       }
-      Map<String, dynamic> restaurantJson = restaurant.toJson();
+      Map<String, dynamic> json = model.toJson();
       await fireStoreService.updateUser(
-        userModel: restaurantJson,
+        userModel: json,
         isCustomer: isCustomer,
       );
       await EasyLoading.dismiss();
@@ -326,7 +331,7 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
         context: context,
         text: "Değişiklikler başarıyla kaydedildi!",
       );
-      localeServices.saveProfileComplate();
+      localeServices.saveProfileComplate(true);
       Navigator.push(
         context,
         MaterialPageRoute(

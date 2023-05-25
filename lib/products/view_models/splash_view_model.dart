@@ -19,22 +19,28 @@ import '../../views/common/onboard/onboard_view.dart';
 class SplashViewModel extends ChangeNotifier with BaseSingleton {
   final LocaleServices localeServices = LocaleServices();
   bool isRequiredForceUpdate = false;
-  bool isLogin = false;
+  bool? isLogin;
   bool? isComplate;
 
   Future<bool> get initPage async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     bool isRedirectHome = await localeServices.readOnboard();
     String? uid = await localeServices.readAccount();
+
     if (uid != null) {
-      isLogin = true;
       final pv = Provider.of<UserSelectionViewModel>(
         NavigationService.navigatorKey.currentContext!,
         listen: false,
       );
       pv.isCustomer = await localeServices.readIsCustomer();
       isComplate = await localeServices.readIsComplate();
+      if (isComplate!) {
+        isLogin = true;
+      } else {
+        isLogin = false;
+      }
     }
+
     checkAppLicationVersion(packageInfo.version);
     return isRedirectHome;
   }
@@ -68,9 +74,15 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
               hasRequiredForceUpdate(context);
               return !snapshot.data!
                   ? OnboardView()
-                  : isLogin && isComplate == null
+                  : isComplate != null &&
+                          isLogin != null &&
+                          !isComplate! &&
+                          !isLogin!
                       ? ProfileCompleteView()
-                      : isLogin && isComplate != null
+                      : isComplate != null &&
+                              isLogin != null &&
+                              isComplate! &&
+                              isLogin!
                           ? NavbarView()
                           : const UserSelectionView();
             },

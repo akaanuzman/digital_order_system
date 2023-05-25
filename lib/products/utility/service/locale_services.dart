@@ -30,12 +30,12 @@ class LocaleServices {
     return result;
   }
 
-  void saveProfileComplate() {
-    _box.write("isComplate", true);
+  void saveProfileComplate(bool isComplate) {
+    _box.write("isComplate", isComplate);
   }
 
-  Future<bool?> readIsComplate() async {
-    final bool? result = _box.read("isComplate");
+  Future<bool> readIsComplate() async {
+    final bool result = _box.read("isComplate");
     return result;
   }
 }

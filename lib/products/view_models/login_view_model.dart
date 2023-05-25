@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:digital_order_system/products/models/service/customer_model.dart';
-import 'package:digital_order_system/products/models/service/restaurant_model.dart';
 import 'package:digital_order_system/products/utility/service/firestore_service.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +15,7 @@ class LoginViewModel extends ChangeNotifier with BaseSingleton {
   bool isObscureText = true;
   bool isRememberMe = false;
   final FireStoreService fireStoreService = FireStoreService();
+  final LocaleServices localeServices = LocaleServices();
 
   void get openOrCloseObscureText {
     isObscureText = !isObscureText;
@@ -38,7 +37,10 @@ class LoginViewModel extends ChangeNotifier with BaseSingleton {
           .signInWithEmail(emailController.text, passwordController.text);
       if (userCredential != null) {
         if (isRememberMe) {
-          LocaleServices().saveAccount(userCredential.user!.uid);
+          final pv = Provider.of<UserSelectionViewModel>(context, listen: false);
+          localeServices.saveAccount(userCredential.user!.uid);
+          localeServices.saveIsCustomer(pv.isCustomer);
+          localeServices.saveProfileComplate(true);
         }
         Navigator.push(
           context,

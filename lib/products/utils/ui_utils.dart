@@ -1,6 +1,4 @@
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
-import 'package:intl/intl.dart';
-
 import '../../_export_ui.dart';
 import '../theme/_export_theme.dart';
 import '../extensions/alert_extension.dart';

@@ -32,6 +32,7 @@ class AppTheme extends ITheme {
         cardTheme: cardTheme,
         listTileTheme: listTileTheme,
         tabBarTheme: tabbarTheme,
+        radioTheme: radioTheme,
       );
 
   ColorScheme get colorScheme {
@@ -91,17 +92,7 @@ class AppTheme extends ITheme {
 
   CheckboxThemeData get checkboxTheme {
     return CheckboxThemeData(
-      fillColor: MaterialStateProperty.resolveWith(
-        (states) {
-          if (states.contains(MaterialState.disabled)) {
-            return colors.gray;
-          }
-          if (states.contains(MaterialState.selected)) {
-            return colors.redSavinaPepper;
-          }
-          return null;
-        },
-      ),
+      fillColor: genericDisabledAndEnabledColor,
     );
   }
 
@@ -131,6 +122,26 @@ class AppTheme extends ITheme {
           width: 4,
         ),
       ),
+    );
+  }
+
+  RadioThemeData get radioTheme {
+    return RadioThemeData(
+      fillColor: genericDisabledAndEnabledColor,
+    );
+  }
+
+  MaterialStateProperty<Color?> get genericDisabledAndEnabledColor {
+    return MaterialStateProperty.resolveWith(
+      (states) {
+        if (states.contains(MaterialState.disabled)) {
+          return colors.gray;
+        }
+        if (states.contains(MaterialState.selected)) {
+          return colors.redSavinaPepper;
+        }
+        return null;
+      },
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:digital_order_system/products/components/radio/custom_radio_text.dart';
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/view_models/image_view_model.dart';
 import 'package:digital_order_system/products/view_models/register_view_model.dart';
@@ -83,6 +84,24 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
                         ],
                       ),
                 phoneTextFiled(context),
+                pv.isCustomer
+                    ? Column(
+                        children: [
+                          context.emptySizedHeightBox2x,
+                          Consumer<RegisterViewModel>(
+                            builder: (context, pv, _) {
+                              return Row(
+                                children: [
+                                  maleRadio(pv),
+                                  context.emptySizedWidthBox4x,
+                                  femaleRadio(pv),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      )
+                    : Container(),
                 context.emptySizedHeightBox4x,
                 complateButton(context)
               ],
@@ -271,6 +290,24 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
         FilteringTextInputFormatter(RegExp("[0-9]*"), allow: true),
         LengthLimitingTextInputFormatter(10),
       ],
+    );
+  }
+
+  CustomRadioText<dynamic> maleRadio(RegisterViewModel pv) {
+    return CustomRadioText(
+      value: pv.male,
+      groupValue: pv.gender,
+      onChanged: pv.selectGender,
+      text: "Erkek",
+    );
+  }
+
+  CustomRadioText<dynamic> femaleRadio(RegisterViewModel pv) {
+    return CustomRadioText(
+      value: pv.female,
+      groupValue: pv.gender,
+      onChanged: pv.selectGender,
+      text: "Bayan",
     );
   }
 

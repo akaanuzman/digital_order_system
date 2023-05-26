@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_order_system/_export_ui.dart';
+import 'package:digital_order_system/products/enums/gender_enum.dart';
 import 'package:digital_order_system/products/models/service/customer_model.dart';
 import 'package:digital_order_system/products/models/service/restaurant_model.dart';
 import 'package:digital_order_system/products/utility/service/firestore_service.dart';
@@ -35,6 +36,14 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
   BuildContext context = NavigationService.navigatorKey.currentContext!;
 
   bool isObscureText = true;
+  GenderEnum gender = GenderEnum.unselected;
+  GenderEnum male = GenderEnum.male;
+  GenderEnum female = GenderEnum.female;
+
+  void selectGender(val) {
+    gender = val;
+    notifyListeners();
+  }
 
   void get openOrCloseObscureText {
     isObscureText = !isObscureText;
@@ -216,6 +225,14 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
       );
       return false;
     }
+    if (gender == GenderEnum.unselected) {
+      uiUtils.showSnackbar(
+        context: context,
+        text: "Cinsiyet bilgisi boş geçilemez",
+        isFail: true,
+      );
+      return false;
+    }
     return true;
   }
 
@@ -287,6 +304,9 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
     customer.phone = phoneController.text;
     customer.birthDate = Timestamp.fromDate(selectedBirthdate!);
     customer.age = DateTime.now().year - selectedBirthdate!.year;
+    gender == GenderEnum.male
+        ? customer.gender = true
+        : customer.gender = false;
     genericProfileComplate(
       model: customer,
       isCustomer: isCustomer,

@@ -1,6 +1,5 @@
-import 'package:digital_order_system/products/components/button/custom_button.dart';
-import 'package:digital_order_system/products/enums/custom_button_enum.dart';
 import 'package:digital_order_system/views/home/customer/food_detail_card_view.dart';
+import 'package:digital_order_system/views/home/customer/food_reccomendation_system_view.dart';
 
 import '../../../_export_ui.dart';
 import '../../products/constants/image_constants.dart';
@@ -13,6 +12,15 @@ class CustomerHomeView extends StatelessWidget with BaseSingleton {
       context,
       MaterialPageRoute(
         builder: (context) => const FoodDetailCardView(),
+      ),
+    );
+  }
+
+  void goToFoodReccomendationSystem(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const FoodReccomendationSystemView(),
       ),
     );
   }
@@ -86,8 +94,8 @@ class CustomerHomeView extends StatelessWidget with BaseSingleton {
       child: Padding(
         padding: EdgeInsets.only(right: context.val4x),
         child: TextButton(
-          onPressed: () {},
-          child: const Text("Yemek Önerme Sistemi"),
+          onPressed: () => goToFoodReccomendationSystem(context),
+          child: const Text("Yemek Önerme"),
         ),
       ),
     );

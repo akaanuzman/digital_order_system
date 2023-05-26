@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/components/button/custom_button.dart';
 import 'package:digital_order_system/products/components/container/food_reccomendation_container.dart';
@@ -5,11 +6,18 @@ import 'package:digital_order_system/products/components/row/food_reccomendation
 import 'package:digital_order_system/products/constants/_export_constants.dart';
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/enums/custom_button_enum.dart';
+import 'package:digital_order_system/products/models/service/customer_model.dart';
+import 'package:digital_order_system/products/view_models/splash_view_model.dart';
+import 'package:intl/intl.dart';
 
 import '../../../products/components/information_container/informantion_container.dart';
 
 class FoodReccomendationSystemView extends StatelessWidget with BaseSingleton {
-  const FoodReccomendationSystemView({super.key});
+  final pv = Provider.of<SplashViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
+  FoodReccomendationSystemView({super.key});
 
   void showInfoDialog(BuildContext context) {
     uiUtils.showAlertDialog(
@@ -89,7 +97,7 @@ class FoodReccomendationSystemView extends StatelessWidget with BaseSingleton {
   }
 
   Text welcomeText() {
-    return Text(
+    return const Text(
       "Yapay zeka tabanlı akıllı yemek önerme sistemimize hoş geldin!",
     );
   }
@@ -104,14 +112,26 @@ class FoodReccomendationSystemView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  FoodReccomendationContainer userProfilePhoto(BuildContext context) {
-    return FoodReccomendationContainer(
-      child: Icon(
-        Icons.person,
-        color: Colors.white,
-        size: context.val13x,
-      ),
-    );
+  Widget userProfilePhoto(BuildContext context) {
+    // return CachedNetworkImage(
+    //   imageUrl: pv.customer.imageUrl ?? "",
+    // );
+    return pv.customer.imageUrl != null
+        ? CachedNetworkImage(
+            imageUrl: pv.customer.imageUrl!,
+            placeholder: (context, url) => const CircularProgressIndicator(),
+            imageBuilder: (context, imageProvider) =>
+                FoodReccomendationContainer(
+              image: DecorationImage(image: imageProvider),
+            ),
+          )
+        : FoodReccomendationContainer(
+            child: Icon(
+              Icons.person,
+              color: Colors.white,
+              size: context.val13x,
+            ),
+          );
   }
 
   Column personelInformation(BuildContext context) {
@@ -135,28 +155,36 @@ class FoodReccomendationSystemView extends StatelessWidget with BaseSingleton {
   FoodReccomendationPersonelInfo fullNameInfo() {
     return FoodReccomendationPersonelInfo(
       icon: Icons.person,
-      text: "Ahmet Kaan Uzman",
+      text: pv.customer.fullName ?? "Bilgi Yok",
     );
   }
 
   FoodReccomendationPersonelInfo birthDayAndAgeInfo() {
+    DateFormat dateFormat = DateFormat.yMd('tr');
+    DateTime birthDate = DateTime.now();
+    String formattedDate = "Bilgi Yok";
+    if (pv.customer.birthDate != null) {
+      birthDate = pv.customer.birthDate!.toDate();
+      formattedDate = dateFormat.format(birthDate);
+    }
     return FoodReccomendationPersonelInfo(
       icon: Icons.cake,
-      text: "25.12.2001 / 21",
+      text: "$formattedDate / ${pv.customer.age}",
     );
   }
 
   FoodReccomendationPersonelInfo phoneInfo() {
     return FoodReccomendationPersonelInfo(
       icon: Icons.call,
-      text: "5XXX XXX XXX XX",
+      text: pv.customer.phone ?? "Bilgi Yok",
     );
   }
 
   FoodReccomendationPersonelInfo genderInfo() {
+    bool gender = pv.customer.gender ?? false;
     return FoodReccomendationPersonelInfo(
-      icon: Icons.male,
-      text: "Erkek",
+      icon: gender ? Icons.male : Icons.female,
+      text: gender ? "Erkek" : "Bayan",
     );
   }
 

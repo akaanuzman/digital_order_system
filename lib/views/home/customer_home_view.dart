@@ -20,7 +20,7 @@ class CustomerHomeView extends StatelessWidget with BaseSingleton {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const FoodReccomendationSystemView(),
+        builder: (context) => FoodReccomendationSystemView(),
       ),
     );
   }

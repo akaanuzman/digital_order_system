@@ -1,6 +1,5 @@
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/components/row/row_icon_text.dart';
-import 'package:flutter/material.dart';
 
 class FoodReccomendationPersonelInfo extends RowIconText {
   FoodReccomendationPersonelInfo({

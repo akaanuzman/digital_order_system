@@ -1,7 +1,7 @@
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/components/button/custom_button.dart';
 
-import '../../products/enums/custom_button_enum.dart';
+import '../../../products/enums/custom_button_enum.dart';
 
 class FoodDetailCardView extends StatelessWidget with BaseSingleton {
   const FoodDetailCardView({super.key});

@@ -1,11 +1,11 @@
 import 'package:digital_order_system/core/utils/navigator_service.dart';
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/utils/ui_utils.dart';
-import 'package:digital_order_system/views/home/drink/restaurant_drink_view.dart';
-import 'package:digital_order_system/views/home/food/restaurant_food_view.dart';
+import 'package:digital_order_system/views/home/restraurant/drink/restaurant_drink_view.dart';
+import 'package:digital_order_system/views/home/restraurant/food/restaurant_food_view.dart';
 import 'package:flutter/material.dart';
 
-import '../../../views/home/kitchen/restaurant_kitchen_view.dart';
+import '../../../views/home/restraurant/kitchen/restaurant_kitchen_view.dart';
 
 class RestaurantManagementModel {
   final IconData icon;

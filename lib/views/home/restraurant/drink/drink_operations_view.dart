@@ -1,12 +1,12 @@
-import '../../../_export_ui.dart';
-import '../../../products/components/appbar/restaurant_appbar.dart';
-import '../../../products/components/button/custom_button.dart';
-import '../../../products/components/text_field/special_text_field.dart';
-import '../../../products/enums/custom_button_enum.dart';
+import 'package:digital_order_system/_export_ui.dart';
+import '../../../../products/components/appbar/restaurant_appbar.dart';
+import '../../../../products/components/button/custom_button.dart';
+import '../../../../products/components/text_field/special_text_field.dart';
+import '../../../../products/enums/custom_button_enum.dart';
 
-class FoodOperationsView extends StatelessWidget with BaseSingleton {
+class DrinkOperationsView extends StatelessWidget with BaseSingleton {
   final bool isEdit;
-  const FoodOperationsView({
+  const DrinkOperationsView({
     super.key,
     this.isEdit = false,
   });
@@ -15,7 +15,7 @@ class FoodOperationsView extends StatelessWidget with BaseSingleton {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RestaurantAppBar(
-        title: isEdit ? "Yemeği Düzenle" : "Yemek Ekle",
+        title: isEdit ? "İçeceği Düzenle" : "İçecek Ekle",
       ),
       body: FadeInUp(
         child: ListView(
@@ -25,8 +25,6 @@ class FoodOperationsView extends StatelessWidget with BaseSingleton {
             foodNameField(),
             context.emptySizedHeightBox2x,
             priceField(),
-            context.emptySizedHeightBox2x,
-            chooseKitchenField(),
             context.emptySizedHeightBox4x,
             imageSectionCard(context),
             context.emptySizedHeightBox4x,
@@ -40,7 +38,7 @@ class FoodOperationsView extends StatelessWidget with BaseSingleton {
   SpecialTextField foodNameField() {
     return SpecialTextField(
       controller: TextEditingController(),
-      labelText: "Yemek Adı",
+      labelText: "İçecek Adı",
       suffixIcon: const Icon(Icons.food_bank_outlined),
     );
   }
@@ -51,15 +49,6 @@ class FoodOperationsView extends StatelessWidget with BaseSingleton {
       labelText: "Ücret",
       suffixIcon: const Icon(Icons.attach_money),
       keyboardType: TextInputType.number,
-    );
-  }
-
-  SpecialTextField chooseKitchenField() {
-    return SpecialTextField(
-      controller: TextEditingController(),
-      labelText: "Mutfak Seçiniz",
-      readOnly: true,
-      suffixIcon: const Icon(Icons.chevron_right),
     );
   }
 
@@ -122,7 +111,7 @@ class FoodOperationsView extends StatelessWidget with BaseSingleton {
       child: Column(
         children: [
           Text(
-            "Yemek Resmi Yükle",
+            "İçecek Resmi Yükle",
             style: context.textTheme.labelMedium!.copyWith(
               color: Colors.white,
               fontWeight: context.fw700,
@@ -143,7 +132,7 @@ class FoodOperationsView extends StatelessWidget with BaseSingleton {
     return CustomButton(
       context: context,
       buttonType: CustomButtonEnum.medium,
-      label: isEdit ? "Değişikleri Kaydet" : "Yemeği Ekle",
+      label: isEdit ? "Değişikleri Kaydet" : "İçeceği Ekle",
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/components/appbar/restaurant_appbar.dart';
 import 'package:digital_order_system/products/components/information_container/informantion_container.dart';
 import 'package:digital_order_system/products/enums/alert_enum.dart';
-import 'package:digital_order_system/views/home/kitchen/kitchen_operations_view.dart';
+import 'package:digital_order_system/views/home/restraurant/kitchen/kitchen_operations_view.dart';
 
 class RestaurantKitchenView extends StatelessWidget with BaseSingleton {
   const RestaurantKitchenView({super.key});

@@ -1,9 +1,9 @@
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/components/row/row_icon_text.dart';
 import 'package:digital_order_system/products/enums/custom_button_enum.dart';
-import 'package:digital_order_system/views/home/order/restaurant_past_order_detail_view.dart';
+import 'package:digital_order_system/views/home/restraurant/order/restaurant_past_order_detail_view.dart';
 
-import '../../../products/components/button/custom_button.dart';
+import '../../../../products/components/button/custom_button.dart';
 
 class RestaurantPastOrdersView extends StatelessWidget with BaseSingleton {
   const RestaurantPastOrdersView({super.key});

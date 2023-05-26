@@ -36,6 +36,9 @@ dependencies:
   image_picker: ^0.8.7+5
   cached_network_image: ^3.2.3
 
+  # AI
+  tflite: ^1.1.2
+
   flutter_localizations:
     sdk: flutter
 
@@ -51,6 +54,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/ai/
 
   fonts:
     - family: Montserrat

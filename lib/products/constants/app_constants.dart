@@ -1,3 +1,4 @@
+import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
 import 'package:digital_order_system/products/view_models/image_view_model.dart';
 import 'package:digital_order_system/views/home/restraurant/order/restaurant_current_orders_view.dart';
 import 'package:digital_order_system/views/home/restraurant/order/restaurant_orders_view.dart';
@@ -56,6 +57,9 @@ class AppConstants {
     ),
     ChangeNotifierProvider(
       create: (_) => ImageViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => FoodReccomendationViewModel(),
     ),
   ];
 

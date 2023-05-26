@@ -6,7 +6,7 @@ import 'package:digital_order_system/products/components/row/food_reccomendation
 import 'package:digital_order_system/products/constants/_export_constants.dart';
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/enums/custom_button_enum.dart';
-import 'package:digital_order_system/products/models/service/customer_model.dart';
+import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
 import 'package:digital_order_system/products/view_models/splash_view_model.dart';
 import 'package:intl/intl.dart';
 
@@ -14,6 +14,10 @@ import '../../../products/components/information_container/informantion_containe
 
 class FoodReccomendationSystemView extends StatelessWidget with BaseSingleton {
   final pv = Provider.of<SplashViewModel>(
+    NavigationService.navigatorKey.currentContext!,
+    listen: false,
+  );
+  final foodReccomendationVM = Provider.of<FoodReccomendationViewModel>(
     NavigationService.navigatorKey.currentContext!,
     listen: false,
   );
@@ -208,6 +212,9 @@ class FoodReccomendationSystemView extends StatelessWidget with BaseSingleton {
       buttonType: CustomButtonEnum.small,
       label: "Yemek Öner!",
       bgColor: colors.charismaticRed,
+      onTap: (){
+        // foodReccomendationVM.runModel(pv.customer.imageUrl ?? "",pv.customer.age ?? 0, pv.customer.gender ?? false);
+      },
     );
   }
 }

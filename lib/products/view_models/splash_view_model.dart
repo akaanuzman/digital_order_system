@@ -17,7 +17,6 @@ import '../../_export_ui.dart';
 import '../../views/auth/user_selection/user_selection_view.dart';
 import '../../views/common/splash/splash_view.dart';
 import '../../views/common/onboard/onboard_view.dart';
-import 'dart:developer';
 
 class SplashViewModel extends ChangeNotifier with BaseSingleton {
   final LocaleServices localeServices = LocaleServices();
@@ -42,7 +41,6 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
         isLogin = true;
         customer = await FireStoreService().getCustomerInfo(id: uid) ??
             CustomerModel();
-        log(customer.toString());
       } else {
         isLogin = false;
       }

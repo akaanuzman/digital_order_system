@@ -9,19 +9,41 @@ import 'package:digital_order_system/products/enums/custom_button_enum.dart';
 import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
 import 'package:digital_order_system/products/view_models/splash_view_model.dart';
 import 'package:intl/intl.dart';
+import 'package:tflite/tflite.dart';
 
 import '../../../products/components/information_container/informantion_container.dart';
 
-class FoodReccomendationSystemView extends StatelessWidget with BaseSingleton {
+class FoodReccomendationSystemView extends StatefulWidget {
+  FoodReccomendationSystemView({super.key});
+
+  @override
+  State<FoodReccomendationSystemView> createState() =>
+      _FoodReccomendationSystemViewState();
+}
+
+class _FoodReccomendationSystemViewState
+    extends State<FoodReccomendationSystemView> with BaseSingleton {
   final pv = Provider.of<SplashViewModel>(
     NavigationService.navigatorKey.currentContext!,
     listen: false,
   );
+
   final foodReccomendationVM = Provider.of<FoodReccomendationViewModel>(
     NavigationService.navigatorKey.currentContext!,
     listen: false,
   );
-  FoodReccomendationSystemView({super.key});
+
+  @override
+  void initState() {
+    foodReccomendationVM.loadAIModelFromAsset();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    foodReccomendationVM.disposeModel();
+    super.dispose();
+  }
 
   void showInfoDialog(BuildContext context) {
     uiUtils.showAlertDialog(
@@ -55,7 +77,40 @@ class FoodReccomendationSystemView extends StatelessWidget with BaseSingleton {
               welcomeSection(context),
               personelInformationSection(context),
               context.emptySizedHeightBox6x,
-              estimateInformationContainer(context),
+              Consumer<FoodReccomendationViewModel>(
+                builder: (context, pv, _) {
+                  return pv.isRecommendation
+                      ? Row(
+                          children: [
+                            FoodReccomendationContainer(
+                              child: Icon(
+                                Icons.insights,
+                                color: Colors.white,
+                                size: context.val13x,
+                              ),
+                            ),
+                            context.emptySizedWidthBox4x,
+                            Column(
+                              crossAxisAlignment: context.crossAxisAStart,
+                              children: [
+                                const Text("Tahmin Sonuçları"),
+                                context.emptySizedHeightBox1x,
+                                FoodReccomendationPersonelInfo(
+                                  icon: Icons.group,
+                                  text: pv.getAgeEstimation(isGroup: true),
+                                ),
+                                context.emptySizedHeightBox1x,
+                                FoodReccomendationPersonelInfo(
+                                  icon: Icons.cake,
+                                  text: pv.getAgeEstimation(),
+                                ),
+                              ],
+                            )
+                          ],
+                        )
+                      : estimateInformationContainer(context);
+                },
+              ),
               const Spacer(),
               reccomendationBtn(context),
               context.emptySizedHeightBox1x,
@@ -117,9 +172,6 @@ class FoodReccomendationSystemView extends StatelessWidget with BaseSingleton {
   }
 
   Widget userProfilePhoto(BuildContext context) {
-    // return CachedNetworkImage(
-    //   imageUrl: pv.customer.imageUrl ?? "",
-    // );
     return pv.customer.imageUrl != null
         ? CachedNetworkImage(
             imageUrl: pv.customer.imageUrl!,
@@ -212,8 +264,9 @@ class FoodReccomendationSystemView extends StatelessWidget with BaseSingleton {
       buttonType: CustomButtonEnum.small,
       label: "Yemek Öner!",
       bgColor: colors.charismaticRed,
-      onTap: (){
-        // foodReccomendationVM.runModel(pv.customer.imageUrl ?? "",pv.customer.age ?? 0, pv.customer.gender ?? false);
+      onTap: () async {
+        await foodReccomendationVM
+            .imageClassification(pv.customer.imageUrl ?? "");
       },
     );
   }

@@ -1,4 +1,8 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:digital_order_system/products/components/card/order_card.dart';
+import 'package:digital_order_system/views/home/favourites_page_view.dart';
+import 'package:digital_order_system/views/home/my_basket_view_page.dart';
+import 'package:digital_order_system/views/home/profile.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'products/constants/app_constants.dart';
 import 'products/initialize/application_initialize.dart';
@@ -37,7 +41,7 @@ class MyApp extends StatelessWidget with BaseSingleton {
       title: constants.appTitle,
       theme: theme.themeData,
       navigatorKey: NavigationService.navigatorKey,
-      home: SplashView(),
+      home: MyFavouritesViewPage(),
     );
   }
 }

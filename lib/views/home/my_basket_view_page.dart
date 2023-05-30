@@ -1,4 +1,5 @@
 import 'package:digital_order_system/products/components/card/order_card.dart';
+import 'package:digital_order_system/products/components/list_view/custom_listview.dart';
 import 'package:digital_order_system/products/constants/image_constants.dart';
 import 'package:digital_order_system/products/view_models/my_basket_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -42,12 +43,11 @@ class MyBasketViewPage extends StatelessWidget with BaseSingleton {
             },
             itemCount: 3,
             itemBuilder: (context, index) {
-              return myBasketProduct(
-                context,
-                "Burger & Fries",
-                "₺30",
-                "4:00 PM",
-                hpv,
+              return CustomListView(
+                title: "Burger & Fries",
+                price: "30",
+                time: "4:00",
+                hpv: hpv,
               );
             },
           ),
@@ -57,107 +57,6 @@ class MyBasketViewPage extends StatelessWidget with BaseSingleton {
             child: OrderCardView(),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget myBasketProduct(
-    BuildContext context,
-    String title,
-    String price,
-    String time,
-    MyBasketViewModel hpv,
-  ) {
-    return Card(
-      color: Colors.white,
-      child: Padding(
-        padding: EdgeInsets.only(
-          top: context.val3x,
-          bottom: context.val3x,
-        ),
-        child: ListTile(
-          leading: Image.asset("assets/images/hamburger.png"),
-          title: Text(
-            title,
-            style: const TextStyle(
-              color: Colors.black,
-            ),
-          ),
-          subtitle: Text(
-            price,
-            style: const TextStyle(
-              color: Colors.black,
-            ),
-          ),
-          trailing: SizedBox(
-            width: context.val19x,
-            child: Column(
-              children: [
-                Text(
-                  time,
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-                context.emptySizedHeightBox1x,
-                Row(
-                  children: [
-                    circleAvatarIcon(
-                      context,
-                      Icons.remove,
-                      colors.redSavinaPepper,
-                      Colors.red.shade100,
-                      () {
-                        hpv.decreaseCounter;
-                      },
-                    ),
-                    context.emptySizedWidthBox2x,
-                    Consumer<MyBasketViewModel>(
-                      builder: (context, hpv, _) => Text(
-                        "${hpv.counter}",
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                    context.emptySizedWidthBox2x,
-                    circleAvatarIcon(
-                      context,
-                      Icons.add,
-                      Colors.white,
-                      colors.redSavinaPepper,
-                      () {
-                        hpv.increaseCounter;
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  CircleAvatar circleAvatarIcon(
-    BuildContext context,
-    IconData icon,
-    Color color,
-    Color circleColor,
-    void Function()? onPressed,
-  ) {
-    return CircleAvatar(
-      backgroundColor: circleColor,
-      radius: context.val3x,
-      child: IconButton(
-        padding: EdgeInsets.zero,
-        onPressed: onPressed ?? () {},
-        icon: Icon(
-          icon,
-          size: context.val5x,
-          color: color,
-        ),
       ),
     );
   }

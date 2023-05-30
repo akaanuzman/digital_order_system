@@ -6,15 +6,14 @@ import 'package:digital_order_system/products/components/row/food_reccomendation
 import 'package:digital_order_system/products/constants/_export_constants.dart';
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/enums/custom_button_enum.dart';
+import 'package:digital_order_system/products/view_models/customer_view_model.dart';
 import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
-import 'package:digital_order_system/products/view_models/splash_view_model.dart';
 import 'package:intl/intl.dart';
-import 'package:tflite/tflite.dart';
 
 import '../../../products/components/information_container/informantion_container.dart';
 
 class FoodReccomendationSystemView extends StatefulWidget {
-  FoodReccomendationSystemView({super.key});
+  const FoodReccomendationSystemView({super.key});
 
   @override
   State<FoodReccomendationSystemView> createState() =>
@@ -23,7 +22,7 @@ class FoodReccomendationSystemView extends StatefulWidget {
 
 class _FoodReccomendationSystemViewState
     extends State<FoodReccomendationSystemView> with BaseSingleton {
-  final pv = Provider.of<SplashViewModel>(
+  final pv = Provider.of<CustomerViewModel>(
     NavigationService.navigatorKey.currentContext!,
     listen: false,
   );
@@ -76,36 +75,48 @@ class _FoodReccomendationSystemViewState
             children: [
               welcomeSection(context),
               personelInformationSection(context),
-              context.emptySizedHeightBox6x,
               Consumer<FoodReccomendationViewModel>(
                 builder: (context, pv, _) {
-                  return pv.isRecommendation
-                      ? Row(
+                  return pv.isComplateRecommendation
+                      ? Column(
                           children: [
-                            FoodReccomendationContainer(
-                              child: Icon(
-                                Icons.insights,
-                                color: Colors.white,
-                                size: context.val13x,
-                              ),
-                            ),
-                            context.emptySizedWidthBox4x,
-                            Column(
-                              crossAxisAlignment: context.crossAxisAStart,
+                            context.emptySizedHeightBox4x,
+                            Row(
                               children: [
-                                const Text("Tahmin Sonuçları"),
-                                context.emptySizedHeightBox1x,
-                                FoodReccomendationPersonelInfo(
-                                  icon: Icons.group,
-                                  text: pv.getAgeEstimation(isGroup: true),
+                                FoodReccomendationContainer(
+                                  child: Icon(
+                                    Icons.insights,
+                                    color: Colors.white,
+                                    size: context.val13x,
+                                  ),
                                 ),
-                                context.emptySizedHeightBox1x,
-                                FoodReccomendationPersonelInfo(
-                                  icon: Icons.cake,
-                                  text: pv.getAgeEstimation(),
-                                ),
+                                context.emptySizedWidthBox4x,
+                                Column(
+                                  crossAxisAlignment: context.crossAxisAStart,
+                                  children: [
+                                    context.emptySizedHeightBox4x,
+                                    const Text("Tahmin Sonuçları"),
+                                    context.emptySizedHeightBox1x,
+                                    FoodReccomendationPersonelInfo(
+                                      icon: Icons.group,
+                                      text: pv.getAgeEstimation(isGroup: true),
+                                    ),
+                                    context.emptySizedHeightBox1x,
+                                    FoodReccomendationPersonelInfo(
+                                      icon: Icons.cake,
+                                      text: pv.getAgeEstimation(),
+                                    ),
+                                    context.emptySizedHeightBox1x,
+                                    FoodReccomendationPersonelInfo(
+                                      icon: pv.isGender
+                                          ? Icons.male
+                                          : Icons.female,
+                                      text: pv.getGenderEstimation,
+                                    ),
+                                  ],
+                                )
                               ],
-                            )
+                            ),
                           ],
                         )
                       : estimateInformationContainer(context);
@@ -172,13 +183,16 @@ class _FoodReccomendationSystemViewState
   }
 
   Widget userProfilePhoto(BuildContext context) {
-    return pv.customer.imageUrl != null
+    return pv.currentCustomer.imageUrl != null
         ? CachedNetworkImage(
-            imageUrl: pv.customer.imageUrl!,
+            imageUrl: pv.currentCustomer.imageUrl!,
             placeholder: (context, url) => const CircularProgressIndicator(),
             imageBuilder: (context, imageProvider) =>
                 FoodReccomendationContainer(
-              image: DecorationImage(image: imageProvider),
+              image: DecorationImage(
+                image: imageProvider,
+                fit: BoxFit.cover,
+              ),
             ),
           )
         : FoodReccomendationContainer(
@@ -211,7 +225,7 @@ class _FoodReccomendationSystemViewState
   FoodReccomendationPersonelInfo fullNameInfo() {
     return FoodReccomendationPersonelInfo(
       icon: Icons.person,
-      text: pv.customer.fullName ?? "Bilgi Yok",
+      text: pv.currentCustomer.fullName ?? "Bilgi Yok",
     );
   }
 
@@ -219,42 +233,47 @@ class _FoodReccomendationSystemViewState
     DateFormat dateFormat = DateFormat.yMd('tr');
     DateTime birthDate = DateTime.now();
     String formattedDate = "Bilgi Yok";
-    if (pv.customer.birthDate != null) {
-      birthDate = pv.customer.birthDate!.toDate();
+    if (pv.currentCustomer.birthDate != null) {
+      birthDate = pv.currentCustomer.birthDate!.toDate();
       formattedDate = dateFormat.format(birthDate);
     }
     return FoodReccomendationPersonelInfo(
       icon: Icons.cake,
-      text: "$formattedDate / ${pv.customer.age}",
+      text: "$formattedDate / ${pv.currentCustomer.age}",
     );
   }
 
   FoodReccomendationPersonelInfo phoneInfo() {
     return FoodReccomendationPersonelInfo(
       icon: Icons.call,
-      text: pv.customer.phone ?? "Bilgi Yok",
+      text: pv.currentCustomer.phone ?? "Bilgi Yok",
     );
   }
 
   FoodReccomendationPersonelInfo genderInfo() {
-    bool gender = pv.customer.gender ?? false;
+    bool gender = pv.currentCustomer.gender ?? false;
     return FoodReccomendationPersonelInfo(
       icon: gender ? Icons.male : Icons.female,
       text: gender ? "Erkek" : "Bayan",
     );
   }
 
-  InformationContainer estimateInformationContainer(BuildContext context) {
-    return InformationContainer(
-      icon: Icons.celebration,
-      information: "Yapılan tahminler burada gözükecektir.",
-      margin: EdgeInsets.zero,
-      bgColor: colors.charismaticRed,
-      borderRadius: context.borderRadius4x,
-      padding: EdgeInsets.symmetric(
-        horizontal: context.val12x,
-        vertical: context.val12x * 1.2,
-      ),
+  Widget estimateInformationContainer(BuildContext context) {
+    return Column(
+      children: [
+        context.emptySizedHeightBox6x,
+        InformationContainer(
+          icon: Icons.celebration,
+          information: "Yapılan tahminler burada gözükecektir.",
+          margin: EdgeInsets.zero,
+          bgColor: colors.charismaticRed,
+          borderRadius: context.borderRadius4x,
+          padding: EdgeInsets.symmetric(
+            horizontal: context.val12x,
+            vertical: context.val12x * 1.2,
+          ),
+        ),
+      ],
     );
   }
 
@@ -266,7 +285,7 @@ class _FoodReccomendationSystemViewState
       bgColor: colors.charismaticRed,
       onTap: () async {
         await foodReccomendationVM
-            .imageClassification(pv.customer.imageUrl ?? "");
+            .imageClassification(pv.currentCustomer.imageUrl ?? "");
       },
     );
   }

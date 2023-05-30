@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'dart:math' hide log;
 
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tflite/tflite.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
@@ -11,39 +12,74 @@ import 'package:path_provider/path_provider.dart';
 
 class FoodReccomendationViewModel extends ChangeNotifier {
   late String? response;
-  List results = [];
-  bool isRecommendation = false;
+  List ageResults = [];
+  List genderResults = [];
+  bool isComplateRecommendation = false;
 
   Future loadAIModelFromAsset() async {
+    await loadModel();
+  }
+
+  Future loadModel({bool isAgeModel = true}) async {
     Tflite.close();
     response = await Tflite.loadModel(
-      model: "assets/ai/new_model.tflite",
-      labels: "assets/ai/new_label.txt",
+      model: isAgeModel
+          ? "assets/ai/age_model.tflite"
+          : "assets/ai/gender_model.tflite",
+      labels: isAgeModel
+          ? "assets/ai/age_labels.txt"
+          : "assets/ai/gender_labels.txt",
       numThreads: 2,
     );
     log("Model loaded: $response");
   }
 
   Future disposeModel() async {
-    await Tflite.close();
+    Tflite.close();
   }
 
   Future imageClassification(String imageUrl) async {
+    await EasyLoading.show(
+      maskType: EasyLoadingMaskType.black,
+    );
+    await estimation(imageUrl: imageUrl);
+    if (ageResults.isNotEmpty) {
+      await disposeModel();
+      await loadModel(isAgeModel: false);
+      await estimation(
+        imageUrl: imageUrl,
+        isAgeEstimation: false,
+      );
+      if (genderResults.isNotEmpty) {
+        isComplateRecommendation = true;
+        notifyListeners();
+      }
+    }
+    await EasyLoading.dismiss();
+  }
+
+  Future estimation({
+    required String imageUrl,
+    bool isAgeEstimation = true,
+  }) async {
     File file = await _fileFromImageUrl(imageUrl);
     log(file.path);
     try {
       var recognitions = await Tflite.runModelOnImage(
         path: file.path,
       );
-      results = recognitions ?? [];
-      if (results.isNotEmpty) {
-        isRecommendation = true;
-      }
-      notifyListeners();
-      log("Results is: $results");
-      log("Recognitions is: $recognitions");
+      isAgeEstimation
+          ? ageResults = recognitions ?? []
+          : genderResults = recognitions ?? [];
+      log(isAgeEstimation
+          ? "Age Results is: $ageResults"
+          : "Gender Results is: $genderResults");
+      log(isAgeEstimation
+          ? "Age Recognitions is: $recognitions"
+          : "Gender Recognitions is: $recognitions");
     } catch (e) {
       log(e.toString());
+      await EasyLoading.dismiss();
     }
   }
 
@@ -58,7 +94,7 @@ class FoodReccomendationViewModel extends ChangeNotifier {
 
   String getAgeEstimation({bool isGroup = false}) {
     if (isGroup) {
-      switch (results.first['label']) {
+      switch (ageResults.first['label']) {
         case 'baby':
           return 'Bebek';
         case 'child':
@@ -73,7 +109,7 @@ class FoodReccomendationViewModel extends ChangeNotifier {
           return 'Bir hata oluştu';
       }
     } else {
-      switch (results.first['label']) {
+      switch (ageResults.first['label']) {
         case 'baby':
           return '0-4 Yaş Aralığı';
         case 'child':
@@ -87,6 +123,26 @@ class FoodReccomendationViewModel extends ChangeNotifier {
         default:
           return 'Bir hata oluştu';
       }
+    }
+  }
+
+  String get getGenderEstimation {
+    switch (genderResults.first['label']) {
+      case 'female':
+        return 'Bayan';
+      case 'male':
+        return 'Bay';
+      default:
+        return 'Bir hata oluştu';
+    }
+  }
+
+  bool get isGender {
+    String gender = getGenderEstimation;
+    if (gender == 'Bayan') {
+      return false;
+    } else {
+      return true;
     }
   }
 }

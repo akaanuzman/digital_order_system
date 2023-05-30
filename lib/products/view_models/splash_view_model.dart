@@ -8,6 +8,7 @@ import 'package:digital_order_system/products/utility/service/collections_servic
 import 'package:digital_order_system/products/utility/managers/version_manager.dart';
 import 'package:digital_order_system/products/utility/service/firestore_service.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
+import 'package:digital_order_system/products/view_models/customer_view_model.dart';
 import 'package:digital_order_system/views/auth/profile/profile_complete_view.dart';
 import 'package:digital_order_system/views/common/navbar/navbar_view.dart';
 import 'package:flutter/foundation.dart';
@@ -23,7 +24,6 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
   bool isRequiredForceUpdate = false;
   bool? isLogin;
   bool? isComplate;
-  CustomerModel customer = CustomerModel();
 
   Future<bool> get initPage async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -39,10 +39,15 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
       isComplate = await localeServices.readIsComplate();
       if (isComplate!) {
         isLogin = true;
-        customer = await FireStoreService().getCustomerInfo(id: uid) ??
-            CustomerModel();
       } else {
         isLogin = false;
+      }
+      if (pv.isCustomer) {
+        final pv = Provider.of<CustomerViewModel>(
+          NavigationService.navigatorKey.currentContext!,
+          listen: false,
+        );
+        await pv.getCustomerInformation(uid);
       }
     }
 

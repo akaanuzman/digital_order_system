@@ -2,6 +2,7 @@
 
 import 'package:digital_order_system/products/utility/service/firestore_service.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
+import 'package:digital_order_system/products/view_models/customer_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -36,17 +37,24 @@ class LoginViewModel extends ChangeNotifier with BaseSingleton {
       UserCredential? userCredential = await AuthService()
           .signInWithEmail(emailController.text, passwordController.text);
       if (userCredential != null) {
+        String uid = userCredential.user!.uid;
+        final pv = Provider.of<UserSelectionViewModel>(context, listen: false);
+        if (pv.isCustomer) {
+          final customerVM =
+              Provider.of<CustomerViewModel>(context, listen: false);
+          await customerVM.getCustomerInformation(uid);
+        }
         if (isRememberMe) {
-          final pv = Provider.of<UserSelectionViewModel>(context, listen: false);
-          localeServices.saveAccount(userCredential.user!.uid);
+          localeServices.saveAccount(uid);
           localeServices.saveIsCustomer(pv.isCustomer);
           localeServices.saveProfileComplate(true);
         }
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
             builder: (context) => NavbarView(),
           ),
+          (route) => false,
         );
       }
       await EasyLoading.dismiss();

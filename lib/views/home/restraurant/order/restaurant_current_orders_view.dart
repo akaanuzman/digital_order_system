@@ -1,18 +1,18 @@
 import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/products/components/row/row_icon_text.dart';
-import 'package:digital_order_system/products/enums/custom_button_enum.dart';
-import 'package:digital_order_system/views/home/order/restaurant_past_order_detail_view.dart';
 
-import '../../../products/components/button/custom_button.dart';
+import '../../../../products/components/button/custom_button.dart';
+import '../../../../products/components/row/row_icon_text.dart';
+import '../../../../products/enums/custom_button_enum.dart';
+import 'restaurant_order_detail_view.dart';
 
-class RestaurantPastOrdersView extends StatelessWidget with BaseSingleton {
-  const RestaurantPastOrdersView({super.key});
+class RestaurantCurrentOrdersView extends StatelessWidget with BaseSingleton {
+  const RestaurantCurrentOrdersView({super.key});
 
   void goToDetailPage(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const RestaurantPastOrderDetailView(),
+        builder: (context) => const RestaurantOrderDetailView(),
       ),
     );
   }
@@ -56,6 +56,8 @@ class RestaurantPastOrdersView extends StatelessWidget with BaseSingleton {
             context.emptySizedHeightBox1x,
             orderCount(),
             context.emptySizedHeightBox1x,
+            orderTableNumber(),
+            context.emptySizedHeightBox2x,
             orderDetailBtn(context),
             context.emptySizedHeightBox1x,
           ],
@@ -104,6 +106,13 @@ class RestaurantPastOrdersView extends StatelessWidget with BaseSingleton {
     return const RowIconText(
       icon: Icons.shopping_bag_outlined,
       text: "2",
+    );
+  }
+
+  RowIconText orderTableNumber() {
+    return const RowIconText(
+      icon: Icons.table_bar,
+      text: "10 Numaralı Masa",
     );
   }
 

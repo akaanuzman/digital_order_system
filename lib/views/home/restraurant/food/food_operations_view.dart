@@ -1,12 +1,12 @@
-import 'package:digital_order_system/_export_ui.dart';
-import '../../../products/components/appbar/restaurant_appbar.dart';
-import '../../../products/components/button/custom_button.dart';
-import '../../../products/components/text_field/special_text_field.dart';
-import '../../../products/enums/custom_button_enum.dart';
+import '../../../../_export_ui.dart';
+import '../../../../products/components/appbar/restaurant_appbar.dart';
+import '../../../../products/components/button/custom_button.dart';
+import '../../../../products/components/text_field/special_text_field.dart';
+import '../../../../products/enums/custom_button_enum.dart';
 
-class DrinkOperationsView extends StatelessWidget with BaseSingleton {
+class FoodOperationsView extends StatelessWidget with BaseSingleton {
   final bool isEdit;
-  const DrinkOperationsView({
+  const FoodOperationsView({
     super.key,
     this.isEdit = false,
   });
@@ -15,7 +15,7 @@ class DrinkOperationsView extends StatelessWidget with BaseSingleton {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: RestaurantAppBar(
-        title: isEdit ? "İçeceği Düzenle" : "İçecek Ekle",
+        title: isEdit ? "Yemeği Düzenle" : "Yemek Ekle",
       ),
       body: FadeInUp(
         child: ListView(
@@ -25,6 +25,8 @@ class DrinkOperationsView extends StatelessWidget with BaseSingleton {
             foodNameField(),
             context.emptySizedHeightBox2x,
             priceField(),
+            context.emptySizedHeightBox2x,
+            chooseKitchenField(),
             context.emptySizedHeightBox4x,
             imageSectionCard(context),
             context.emptySizedHeightBox4x,
@@ -38,7 +40,7 @@ class DrinkOperationsView extends StatelessWidget with BaseSingleton {
   SpecialTextField foodNameField() {
     return SpecialTextField(
       controller: TextEditingController(),
-      labelText: "İçecek Adı",
+      labelText: "Yemek Adı",
       suffixIcon: const Icon(Icons.food_bank_outlined),
     );
   }
@@ -49,6 +51,15 @@ class DrinkOperationsView extends StatelessWidget with BaseSingleton {
       labelText: "Ücret",
       suffixIcon: const Icon(Icons.attach_money),
       keyboardType: TextInputType.number,
+    );
+  }
+
+  SpecialTextField chooseKitchenField() {
+    return SpecialTextField(
+      controller: TextEditingController(),
+      labelText: "Mutfak Seçiniz",
+      readOnly: true,
+      suffixIcon: const Icon(Icons.chevron_right),
     );
   }
 
@@ -111,7 +122,7 @@ class DrinkOperationsView extends StatelessWidget with BaseSingleton {
       child: Column(
         children: [
           Text(
-            "İçecek Resmi Yükle",
+            "Yemek Resmi Yükle",
             style: context.textTheme.labelMedium!.copyWith(
               color: Colors.white,
               fontWeight: context.fw700,
@@ -132,7 +143,7 @@ class DrinkOperationsView extends StatelessWidget with BaseSingleton {
     return CustomButton(
       context: context,
       buttonType: CustomButtonEnum.medium,
-      label: isEdit ? "Değişikleri Kaydet" : "İçeceği Ekle",
+      label: isEdit ? "Değişikleri Kaydet" : "Yemeği Ekle",
     );
   }
 }

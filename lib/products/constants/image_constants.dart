@@ -11,7 +11,8 @@ enum ImageConstants {
   signup('signup'),
   loginRestaurant('login_restaurant'),
   loginUser('login_user'),
-  mainDishes('main_dishes')
+  mainDishes('main_dishes'),
+  ai('ai')
   ;
   
   
@@ -19,5 +20,7 @@ enum ImageConstants {
   const ImageConstants(this.value);
 
   String get toPng => 'assets/images/$value.png';
+  String get toJpg => 'assets/images/$value.jpg';
+  String get toJpeg => 'assets/images/$value.jpeg';
   Image get toImage => Image.asset(toPng);
 }

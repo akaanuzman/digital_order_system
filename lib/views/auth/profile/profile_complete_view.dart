@@ -1,16 +1,17 @@
+import 'package:digital_order_system/products/components/radio/custom_radio_text.dart';
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/view_models/image_view_model.dart';
 import 'package:digital_order_system/products/view_models/register_view_model.dart';
+import 'package:flutter/services.dart';
 
 import '../../../_export_ui.dart';
 import '../../../products/components/text_field/profile_text_field.dart';
 import '../../../products/enums/custom_button_enum.dart';
-import '../../common/navbar/navbar_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../products/components/button/custom_button.dart';
 
 class ProfileCompleteView extends StatelessWidget with BaseSingleton {
-  final pv = Provider.of<UserSelectionViewModel>(
+  final userPv = Provider.of<UserSelectionViewModel>(
     NavigationService.navigatorKey.currentContext!,
     listen: false,
   );
@@ -19,16 +20,26 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
     listen: false,
   );
 
-  ProfileCompleteView({
-    super.key,
-  });
+  ProfileCompleteView({super.key});
 
-  void goToNavbarView(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => NavbarView(),
-      ),
+  Future complateProfile(BuildContext context) async {
+    final pv = Provider.of<ImageViewModel>(context, listen: false);
+    if (userPv.isCustomer && pv.selectedImage == null) {
+      await showInfoAlert(
+        context,
+        "Yapay zeka destekli yemek önerme sistemimizden yararlanabilmeniz için kişisel resminizi koymanız gerekmektedir.",
+      );
+    }
+    await registerViewModel.profileComplate();
+  }
+
+  Future showInfoAlert(BuildContext context, String subtitle) async {
+    await uiUtils.showAlertDialog(
+      context: context,
+      alertEnum: AlertEnum.INFO,
+      contentTitle: "UYARI",
+      contentSubtitle: subtitle,
+      buttonLabel: "KAPAT",
     );
   }
 
@@ -55,21 +66,54 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
         ),
       ),
       body: FadeInUp(
-        child: ListView(
-          padding: context.padding10x,
-          children: [
-            userNameTextField(context),
-            context.emptySizedHeightBox2x,
-            firstNameTextField(context),
-            context.emptySizedHeightBox2x,
-            lastNameTextField(context),
-            context.emptySizedHeightBox2x,
-            dateOfBirthTextField(context),
-            context.emptySizedHeightBox2x,
-            phoneTextFiled(context),
-            context.emptySizedHeightBox4x,
-            complateButton(context)
-          ],
+        child: Consumer<UserSelectionViewModel>(
+          builder: (context, pv, _) {
+            return ListView(
+              padding: context.padding10x,
+              children: [
+                nameField(context),
+                context.emptySizedHeightBox2x,
+                userPv.isCustomer
+                    ? Column(
+                        children: [
+                          lastNameTextField(context),
+                          context.emptySizedHeightBox2x,
+                          dateOfBirthTextField(context),
+                          context.emptySizedHeightBox2x,
+                        ],
+                      )
+                    : Column(
+                        children: [
+                          openingTime(context),
+                          context.emptySizedHeightBox2x,
+                          closingTime(context),
+                          context.emptySizedHeightBox2x,
+                        ],
+                      ),
+                phoneTextFiled(context),
+                pv.isCustomer
+                    ? Column(
+                        children: [
+                          context.emptySizedHeightBox2x,
+                          Consumer<RegisterViewModel>(
+                            builder: (context, pv, _) {
+                              return Row(
+                                children: [
+                                  maleRadio(pv),
+                                  context.emptySizedWidthBox4x,
+                                  femaleRadio(pv),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      )
+                    : Container(),
+                context.emptySizedHeightBox4x,
+                complateButton(context)
+              ],
+            );
+          },
         ),
       ),
     );
@@ -113,7 +157,9 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
 
   GestureDetector selectImage(ImageViewModel pv, BuildContext context) {
     return GestureDetector(
-      onTap: () => pv.selectImage,
+      onTap: () async {
+        await pv.selectImage;
+      },
       child: Container(
         decoration: imageDecoration(context, pv),
         height: context.val5x * 4,
@@ -160,19 +206,16 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
     );
   }
 
-  ProfileTextField userNameTextField(BuildContext context) {
+  ProfileTextField nameField(BuildContext context) {
     return ProfileTextField(
-      labelText: AppLocalizations.of(context)!.usernameLabelText,
-      hintText: AppLocalizations.of(context)!.usernameHintText,
+      labelText: userPv.isCustomer
+          ? AppLocalizations.of(context)!.firstNameLabelText
+          : "Restaurant Adı",
+      hintText: userPv.isCustomer
+          ? AppLocalizations.of(context)!.firstNameHintText
+          : "Lütfen Restaurant Adı Girin",
       textInputAction: TextInputAction.next,
-    );
-  }
-
-  ProfileTextField firstNameTextField(BuildContext context) {
-    return ProfileTextField(
-      labelText: AppLocalizations.of(context)!.firstNameLabelText,
-      hintText: AppLocalizations.of(context)!.firstNameHintText,
-      textInputAction: TextInputAction.next,
+      controller: registerViewModel.nameController,
     );
   }
 
@@ -181,6 +224,7 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
       labelText: AppLocalizations.of(context)!.lastNameLabelText,
       hintText: AppLocalizations.of(context)!.lastNameHintText,
       textInputAction: TextInputAction.next,
+      controller: registerViewModel.surnameController,
     );
   }
 
@@ -191,22 +235,46 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
       hintText: AppLocalizations.of(context)!.dateOfBirthHintText,
       readOnly: true,
       suffixIcon: IconButton(
-        onPressed: () {
-          uiUtils.showAlertDialog(
-            context: context,
-            alertEnum: AlertEnum.INFO,
-            contentTitle: "UYARI",
-            contentSubtitle:
-                "Yemek öneri sisteminden faydalanmak için doğum tarihini girmeniz önemle rica olunur.",
-            buttonLabel: "KAPAT",
-          );
-        },
+        onPressed: () => showInfoAlert(
+          context,
+          "Yemek öneri sisteminden faydalanmak için doğum tarihini girmeniz önemle rica olunur.",
+        ),
         icon: const Icon(Icons.info),
       ),
       onTap: () {
-        uiUtils.getDateTimePicker(
+        registerViewModel.getDateTimePicker(
           context: context,
           controller: registerViewModel.dateController,
+        );
+      },
+    );
+  }
+
+  ProfileTextField openingTime(BuildContext context) {
+    return ProfileTextField(
+      controller: registerViewModel.openingTimeController,
+      labelText: "Açılış Saati",
+      hintText: "Açılış Saati Seçiniz",
+      readOnly: true,
+      onTap: () {
+        registerViewModel.getTimePicker(
+          context: context,
+          controller: registerViewModel.openingTimeController,
+        );
+      },
+    );
+  }
+
+  ProfileTextField closingTime(BuildContext context) {
+    return ProfileTextField(
+      controller: registerViewModel.closingTimeController,
+      labelText: "Kapanış Saati",
+      hintText: "Kapanış Saati Seçiniz",
+      readOnly: true,
+      onTap: () {
+        registerViewModel.getTimePicker(
+          context: context,
+          controller: registerViewModel.closingTimeController,
         );
       },
     );
@@ -215,9 +283,32 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
   ProfileTextField phoneTextFiled(BuildContext context) {
     return ProfileTextField(
       labelText: "Telefon Numarası",
-      hintText: "05XXX XXX XXX",
+      hintText: "5XXX XXX XXX",
       textInputAction: TextInputAction.next,
       keyboardType: TextInputType.phone,
+      controller: registerViewModel.phoneController,
+      inputFormatters: [
+        FilteringTextInputFormatter(RegExp("[0-9]*"), allow: true),
+        LengthLimitingTextInputFormatter(10),
+      ],
+    );
+  }
+
+  CustomRadioText<dynamic> maleRadio(RegisterViewModel pv) {
+    return CustomRadioText(
+      value: pv.male,
+      groupValue: pv.gender,
+      onChanged: pv.selectGender,
+      text: "Erkek",
+    );
+  }
+
+  CustomRadioText<dynamic> femaleRadio(RegisterViewModel pv) {
+    return CustomRadioText(
+      value: pv.female,
+      groupValue: pv.gender,
+      onChanged: pv.selectGender,
+      text: "Bayan",
     );
   }
 
@@ -226,7 +317,7 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
       context: context,
       buttonType: CustomButtonEnum.large,
       label: AppLocalizations.of(context)!.complateBtn,
-      onTap: () => goToNavbarView(context),
+      onTap: () => complateProfile(context),
     );
   }
 }

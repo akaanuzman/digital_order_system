@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+
 import '../../../_export_ui.dart';
 
 class ProfileTextField extends StatelessWidget {
@@ -9,6 +11,7 @@ class ProfileTextField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final Widget? suffixIcon;
+  final List<TextInputFormatter>? inputFormatters;
   const ProfileTextField({
     super.key,
     required this.labelText,
@@ -19,6 +22,7 @@ class ProfileTextField extends StatelessWidget {
     this.readOnly = false,
     this.onTap,
     this.suffixIcon,
+    this.inputFormatters,
   });
 
   @override
@@ -29,6 +33,7 @@ class ProfileTextField extends StatelessWidget {
       readOnly: readOnly,
       controller: controller,
       onTap: onTap,
+      inputFormatters: inputFormatters,
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: context.textTheme.bodyLarge,

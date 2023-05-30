@@ -3,13 +3,19 @@ import 'package:digital_order_system/_export_ui.dart';
 class InformationContainer extends StatelessWidget with BaseSingleton {
   final IconData icon;
   final String information;
+  final Color? bgColor;
+  final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry? margin;
+  final BorderRadiusGeometry? borderRadius;
 
   const InformationContainer({
     super.key,
     required this.icon,
     required this.information,
+    this.padding,
+    this.bgColor,
     this.margin,
+    this.borderRadius,
   });
 
   @override
@@ -20,10 +26,10 @@ class InformationContainer extends StatelessWidget with BaseSingleton {
   Container infoContainer(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: colors.redSavinaPepper,
-        borderRadius: context.borderRadius8x,
+        color: bgColor ?? colors.redSavinaPepper,
+        borderRadius: borderRadius ?? context.borderRadius8x,
       ),
-      padding: context.padding6x,
+      padding: padding ?? context.padding6x,
       margin: margin ?? context.padding3x,
       child: Row(
         children: [

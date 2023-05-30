@@ -1,16 +1,17 @@
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/constants/image_constants.dart';
-import 'package:digital_order_system/views/home/user_home_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class UserSelectMealTypeView extends StatelessWidget with BaseSingleton {
-  const UserSelectMealTypeView({super.key});
+import '../customer_home_view.dart';
 
-  void goToUserHomeView(BuildContext context) {
+class CustomerSelectMealTypeView extends StatelessWidget with BaseSingleton {
+  const CustomerSelectMealTypeView({super.key});
+
+  void goToCustomerHomeView(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const UserHomeView(),
+        builder: (context) => const CustomerHomeView(),
       ),
     );
   }
@@ -39,7 +40,7 @@ class UserSelectMealTypeView extends StatelessWidget with BaseSingleton {
 
   Widget homePageStack(BuildContext context, String imageLabel) {
     return GestureDetector(
-      onTap: () => goToUserHomeView(context),
+      onTap: () => goToCustomerHomeView(context),
       child: Stack(
         alignment: Alignment.center,
         children: [

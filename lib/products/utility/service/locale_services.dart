@@ -1,23 +1,41 @@
 import 'package:get_storage/get_storage.dart';
 
 class LocaleServices {
-  final box = GetStorage();
+  final _box = GetStorage();
 
   void saveOnboard(bool isOnboard) {
-    box.write("openOnboard", isOnboard);
+    _box.write("openOnboard", isOnboard);
   }
 
   Future<bool> readOnboard() async {
-    final bool result = await box.read("openOnboard");
+    final bool result = await _box.read("openOnboard");
     return result;
   }
 
-  void saveAccount(Map<String,dynamic> user) {
-    box.write("account", user);
+  void saveAccount(String id) {
+    _box.write("account", id);
   }
 
-  Future<Map<String,dynamic>?> readAccount() async {
-    final Map<String,dynamic>? result = await box.read("account");
+  Future<String?> readAccount() async {
+    final String? result = _box.read("account");
+    return result;
+  }
+
+  void saveIsCustomer(bool isCustomer) {
+    _box.write("isCustomer", isCustomer);
+  }
+
+  Future<bool> readIsCustomer() async {
+    final bool result = _box.read("isCustomer");
+    return result;
+  }
+
+  void saveProfileComplate(bool isComplate) {
+    _box.write("isComplate", isComplate);
+  }
+
+  Future<bool> readIsComplate() async {
+    final bool result = _box.read("isComplate");
     return result;
   }
 }

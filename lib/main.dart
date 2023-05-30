@@ -15,10 +15,11 @@ void main() async {
   runApp(
     MultiProvider(
       providers: AppConstants.instance.providers,
-      child: DevicePreview(
-        enabled: !kReleaseMode,
-        builder: (context) => const MyApp(),
-      ),
+      child: const MyApp(),
+      // child: DevicePreview(
+      //   enabled: !kReleaseMode,
+      //   builder: (context) => const MyApp(),
+      // ),
     ),
   );
 }
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget with BaseSingleton {
   Widget build(BuildContext context) {
     return MaterialApp(
       // Device preview parameters...
-      useInheritedMediaQuery: true,
+      // useInheritedMediaQuery: true,
       builder: EasyLoading.init(),
       // Device preview parameters...
 

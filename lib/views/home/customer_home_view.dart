@@ -1,16 +1,26 @@
-import 'package:digital_order_system/views/home/food_detail_card_view.dart';
+import 'package:digital_order_system/views/home/customer/food_detail_card_view.dart';
+import 'package:digital_order_system/views/home/customer/food_reccomendation_system_view.dart';
 
 import '../../../_export_ui.dart';
 import '../../products/constants/image_constants.dart';
 
-class UserHomeView extends StatelessWidget with BaseSingleton {
-  const UserHomeView({super.key});
+class CustomerHomeView extends StatelessWidget with BaseSingleton {
+  const CustomerHomeView({super.key});
 
   void goToFoodDetaislCard(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => const FoodDetailCardView(),
+      ),
+    );
+  }
+
+  void goToFoodReccomendationSystem(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => FoodReccomendationSystemView(),
       ),
     );
   }
@@ -83,9 +93,9 @@ class UserHomeView extends StatelessWidget with BaseSingleton {
     return FadeInDown(
       child: Padding(
         padding: EdgeInsets.only(right: context.val4x),
-        child: Icon(
-          Icons.notifications_outlined,
-          size: context.val8x,
+        child: TextButton(
+          onPressed: () => goToFoodReccomendationSystem(context),
+          child: const Text("Yemek Önerme"),
         ),
       ),
     );

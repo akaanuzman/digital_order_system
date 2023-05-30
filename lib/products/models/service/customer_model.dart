@@ -13,6 +13,7 @@ class CustomerModel extends Equatable
   String? surname;
   String? fullName;
   String? phone;
+  bool? gender;
   bool? isActive;
   Timestamp? birthDate;
   int? age;
@@ -30,6 +31,7 @@ class CustomerModel extends Equatable
     this.surname,
     this.fullName,
     this.phone,
+    this.gender,
     this.isActive,
     this.birthDate,
     this.age,
@@ -49,6 +51,7 @@ class CustomerModel extends Equatable
         surname,
         fullName,
         phone,
+        gender,
         isActive,
         birthDate,
         age,
@@ -67,6 +70,7 @@ class CustomerModel extends Equatable
   String? surname,
   String? fullName,
   String? phone,
+  bool? gender,
   bool? isActive,
   Timestamp? birthDate,
   int? age,
@@ -84,6 +88,7 @@ class CustomerModel extends Equatable
       surname: surname ?? this.surname,
       fullName: fullName ?? this.fullName,
       phone: phone ?? this.phone,
+      gender: gender ?? this.gender,
       isActive: isActive ?? this.isActive,
       birthDate: birthDate ?? this.birthDate,
       age: age ?? this.age,
@@ -104,6 +109,7 @@ class CustomerModel extends Equatable
       'surname': surname,
       'fullName': fullName,
       'phone': phone,
+      'gender': gender,
       'isActive': isActive,
       'birthDate': birthDate,
       'age': age,
@@ -122,10 +128,12 @@ class CustomerModel extends Equatable
     return CustomerModel(
       customerId: json['customerId'] as String?,
       createdDate: json['createdDate'] as Timestamp?,
+      mail: json['mail'] as String?,
       name: json['name'] as String?,
       surname: json['surname'] as String?,
       fullName: json['fullName'] as String?,
       phone: json['phone'] as String?,
+      gender: json['gender'] as bool?,
       isActive: json['isActive'] as bool?,
       birthDate: json['birthDate'] as Timestamp?,
       age: json['age'] as int?,

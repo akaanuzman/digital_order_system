@@ -2,8 +2,8 @@ import 'package:digital_order_system/products/components/appbar/restaurant_appba
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/components/row/row_icon_text_for_order_and_user_information.dart';
 
-class RestaurantPastOrderDetailView extends StatelessWidget with BaseSingleton {
-  const RestaurantPastOrderDetailView({super.key});
+class RestaurantOrderDetailView extends StatelessWidget with BaseSingleton {
+  const RestaurantOrderDetailView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +115,8 @@ class RestaurantPastOrderDetailView extends StatelessWidget with BaseSingleton {
           orderPrice(context),
           context.emptySizedHeightBox3x,
           orderDate(context),
+          context.emptySizedHeightBox3x,
+          orderTableNumber(context),
         ],
       ),
     );
@@ -211,6 +213,14 @@ class RestaurantPastOrderDetailView extends StatelessWidget with BaseSingleton {
       context: context,
       icon: Icons.schedule,
       text: "Sipariş Tarihi: 20 Nis 2023 19.00",
+    );
+  }
+
+  RowIconTextForOrderAndUserInformation orderTableNumber(BuildContext context) {
+    return RowIconTextForOrderAndUserInformation(
+      context: context,
+      icon: Icons.table_bar,
+      text: "Masa Numarası: 10 Numaralı Masa",
     );
   }
 }

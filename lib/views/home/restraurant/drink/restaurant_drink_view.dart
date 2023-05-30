@@ -1,19 +1,19 @@
 import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/views/home/food/food_operations_view.dart';
+import 'package:digital_order_system/views/home/restraurant/drink/drink_operations_view.dart';
 
-import '../../../products/components/appbar/restaurant_appbar.dart';
-import '../../../products/components/information_container/informantion_container.dart';
-import '../../../products/enums/alert_enum.dart';
+import '../../../../products/components/appbar/restaurant_appbar.dart';
+import '../../../../products/components/information_container/informantion_container.dart';
+import '../../../../products/enums/alert_enum.dart';
 
-class RestaurnatFoodView extends StatelessWidget with BaseSingleton {
-  const RestaurnatFoodView({super.key});
+class RestaurantDrinkView extends StatelessWidget with BaseSingleton {
+  const RestaurantDrinkView({super.key});
 
-  Future goToFoodOperationsPage(BuildContext context,
+  Future goToDrinkOperationsPage(BuildContext context,
       {bool isEdit = false}) async {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => FoodOperationsView(isEdit: isEdit),
+        builder: (context) => DrinkOperationsView(isEdit: isEdit),
       ),
     );
   }
@@ -38,17 +38,17 @@ class RestaurnatFoodView extends StatelessWidget with BaseSingleton {
     return const InformationContainer(
       icon: Icons.thumb_up,
       information:
-          "Yemek yönetiminizi sağda bulunan üç noktaya tıklayarak hızlı ve kolay bir şekilde yönetibilirsiniz.",
+          "İçecek yönetiminizi sağda bulunan üç noktaya tıklayarak hızlı ve kolay bir şekilde yönetibilirsiniz.",
       margin: EdgeInsets.zero,
     );
   }
 
   AppBar appBar(BuildContext context) {
     return RestaurantAppBar(
-      title: "Yemek Yönetimi",
+      title: "İçecek Yönetimi",
       actions: [
         IconButton(
-          onPressed: () => goToFoodOperationsPage(context),
+          onPressed: () => goToDrinkOperationsPage(context),
           icon: const Icon(Icons.add),
         )
       ],
@@ -60,26 +60,27 @@ class RestaurnatFoodView extends StatelessWidget with BaseSingleton {
       padding: EdgeInsets.only(top: context.val4x),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => foodItem(context),
+      itemBuilder: (context, index) => drinkItem(context),
       separatorBuilder: (context, index) => context.emptySizedHeightBox2x,
       itemCount: 10,
     );
   }
 
-  Card foodItem(BuildContext context) {
+  // TODO: MAKE A COMPONENT
+  Card drinkItem(BuildContext context) {
     return Card(
       child: Container(
         decoration: decoration(context),
         margin: context.padding4x,
         padding: context.padding2x,
         child: ListTile(
-          leading: const Icon(Icons.fastfood),
-          title: const Text("Yemek İsmi"),
+          leading: const Icon(Icons.local_cafe),
+          title: const Text("İçecek İsmi"),
           subtitle: subtitle(context),
           trailing: IconButton(
             onPressed: () => uiUtils.showEditAndDeleteAction(
               context: context,
-              editOnTap: (context) async => goToFoodOperationsPage(
+              editOnTap: (context) async => goToDrinkOperationsPage(
                 context,
                 isEdit: true,
               ).then(
@@ -89,7 +90,7 @@ class RestaurnatFoodView extends StatelessWidget with BaseSingleton {
                 context: context,
                 alertEnum: AlertEnum.AREUSURE,
                 contentTitle: "Emin misiniz?",
-                contentSubtitle: "Kayıtlı olan yemek silinecektir.",
+                contentSubtitle: "Kayıtlı olan içecek silinecektir.",
                 buttonLabel: "Evet",
                 secondButtonLabel: "Hayır",
               ),

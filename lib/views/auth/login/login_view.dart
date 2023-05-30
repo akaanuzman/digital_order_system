@@ -26,7 +26,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
   LoginView({super.key});
 
   Future loginOperation(BuildContext context) async {
-    await loginVM.signIn;
+    await loginVM.signIn();
   }
 
   void goToRegisterView(BuildContext context) {
@@ -36,6 +36,7 @@ class LoginView extends StatelessWidget with BaseSingleton {
         builder: (context) => RegisterView(),
       ),
     );
+    loginVM.dispose();
   }
 
   @override

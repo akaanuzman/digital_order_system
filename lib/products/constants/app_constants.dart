@@ -1,9 +1,13 @@
+import 'package:digital_order_system/products/view_models/customer_view_model.dart';
+import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
 import 'package:digital_order_system/products/view_models/image_view_model.dart';
+
+import 'package:digital_order_system/views/home/restraurant/order/restaurant_current_orders_view.dart';
+import 'package:digital_order_system/views/home/restraurant/order/restaurant_orders_view.dart';
+import 'package:digital_order_system/views/home/restraurant/order/restaurant_past_orders_view.dart';
+import 'package:digital_order_system/views/home/customer_home_view.dart';
 import 'package:digital_order_system/products/view_models/my_basket_view_model.dart';
-import 'package:digital_order_system/views/home/order/restaurant_current_orders_view.dart';
-import 'package:digital_order_system/views/home/order/restaurant_orders_view.dart';
-import 'package:digital_order_system/views/home/order/restaurant_past_orders_view.dart';
-import 'package:digital_order_system/views/home/user_home_view.dart';
+
 import 'package:digital_order_system/views/test.dart';
 
 import '../view_models/login_view_model.dart';
@@ -11,6 +15,7 @@ import '../view_models/register_view_model.dart';
 import '../../views/home/restaurant_home_view.dart';
 
 import '../../_export_ui.dart';
+import '../view_models/restaurant_view_model.dart';
 import '../view_models/splash_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/single_child_widget.dart';
@@ -59,6 +64,15 @@ class AppConstants {
       create: (_) => ImageViewModel(),
     ),
     ChangeNotifierProvider(
+      create: (_) => FoodReccomendationViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => CustomerViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => RestaurantViewModel(),
+    ),
+    ChangeNotifierProvider(
       create: (_) => MyBasketViewModel(),
     ),
   ];
@@ -66,7 +80,7 @@ class AppConstants {
   List<SingleChildWidget> get providers => _providers;
 
   List<Widget> userNavbarViews = [
-    const UserHomeView(),
+    const CustomerHomeView(),
     const Test(),
     const Scaffold(),
   ];

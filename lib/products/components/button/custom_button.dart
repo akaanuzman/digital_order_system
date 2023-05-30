@@ -12,6 +12,7 @@ class CustomButton extends Container {
   final String label;
   final VoidCallback? onTap;
   final EdgeInsets? padding;
+  final Color? bgColor;
 
   CustomButton({
     super.key,
@@ -21,6 +22,7 @@ class CustomButton extends Container {
     this.onTap,
     this.padding,
     this.textStyle,
+    this.bgColor,
   }) : super(
           height: _height(buttonType, context),
           width: context.maxFinite,
@@ -28,7 +30,12 @@ class CustomButton extends Container {
           decoration: _decoration(buttonType, context),
           child: ElevatedButton(
             onPressed: onTap ?? () {},
-            style: _buttonStyle(context, buttonType, textStyle),
+            style: _buttonStyle(
+              context,
+              buttonType,
+              textStyle,
+              bgColor,
+            ),
             child: Text(label),
           ),
         );
@@ -42,13 +49,19 @@ class CustomButton extends Container {
     this.onTap,
     this.padding,
     this.textStyle,
+    this.bgColor,
   }) : super(
           height: _height(buttonType, context),
           decoration: _decoration(buttonType, context),
           padding: padding,
           child: ElevatedButton(
             onPressed: onTap ?? () {},
-            style: _buttonStyle(context, buttonType, textStyle),
+            style: _buttonStyle(
+              context,
+              buttonType,
+              textStyle,
+              bgColor,
+            ),
             child: Padding(
               padding: padding ?? context.padding1x,
               child: Row(
@@ -95,14 +108,14 @@ class CustomButton extends Container {
             : context.borderRadius10x;
   }
 
-  static ButtonStyle _buttonStyle(
-      BuildContext context, CustomButtonEnum buttonType, TextStyle? textStyle) {
-        
+  static ButtonStyle _buttonStyle(BuildContext context,
+      CustomButtonEnum buttonType, TextStyle? textStyle, Color? bgColor) {
     return ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(
         borderRadius: _borderRadius(buttonType, context),
       ),
       textStyle: textStyle,
+      backgroundColor: bgColor,
     );
   }
 }

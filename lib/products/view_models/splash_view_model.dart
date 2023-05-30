@@ -6,6 +6,7 @@ import 'package:digital_order_system/products/models/service/verison_model.dart'
 import 'package:digital_order_system/products/utility/service/collections_service.dart';
 import 'package:digital_order_system/products/utility/managers/version_manager.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
+import 'package:digital_order_system/products/view_models/customer_view_model.dart';
 import 'package:digital_order_system/views/auth/profile/profile_complete_view.dart';
 import 'package:digital_order_system/views/common/navbar/navbar_view.dart';
 import 'package:flutter/foundation.dart';
@@ -19,21 +20,35 @@ import '../../views/common/onboard/onboard_view.dart';
 class SplashViewModel extends ChangeNotifier with BaseSingleton {
   final LocaleServices localeServices = LocaleServices();
   bool isRequiredForceUpdate = false;
-  bool isLogin = false;
-  bool isDontComplateProfile = true;
+  bool? isLogin;
+  bool? isComplate;
 
   Future<bool> get initPage async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     bool isRedirectHome = await localeServices.readOnboard();
-    Map<String, dynamic>? user = await localeServices.readAccount();
-    if (user != null) {
-      isLogin = true;
-      if (user['companyName'] != null || user['name'] != null) {
-        isDontComplateProfile = false;
+    String? uid = await localeServices.readAccount();
+
+    if (uid != null) {
+      final pv = Provider.of<UserSelectionViewModel>(
+        NavigationService.navigatorKey.currentContext!,
+        listen: false,
+      );
+      pv.isCustomer = await localeServices.readIsCustomer();
+      isComplate = await localeServices.readIsComplate();
+      if (isComplate!) {
+        isLogin = true;
       } else {
-        isDontComplateProfile = true;
+        isLogin = false;
+      }
+      if (pv.isCustomer) {
+        final pv = Provider.of<CustomerViewModel>(
+          NavigationService.navigatorKey.currentContext!,
+          listen: false,
+        );
+        await pv.getCustomerInformation(uid);
       }
     }
+
     checkAppLicationVersion(packageInfo.version);
     return isRedirectHome;
   }
@@ -67,9 +82,15 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
               hasRequiredForceUpdate(context);
               return !snapshot.data!
                   ? OnboardView()
-                  : isLogin && isDontComplateProfile
+                  : isComplate != null &&
+                          isLogin != null &&
+                          !isComplate! &&
+                          !isLogin!
                       ? ProfileCompleteView()
-                      : isLogin && !isDontComplateProfile
+                      : isComplate != null &&
+                              isLogin != null &&
+                              isComplate! &&
+                              isLogin!
                           ? NavbarView()
                           : const UserSelectionView();
             },
@@ -109,7 +130,7 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
     final response = await CollectionsService.Version.reference
         .withConverter<VersionModel>(
           fromFirestore: (snapshot, options) =>
-              VersionModel().fromFirebase(snapshot),
+              VersionModel().fromFirebase(snapshot) ?? VersionModel(),
           toFirestore: (value, options) => value.toJson(),
         )
         .doc(PlatformEnum.versionName)

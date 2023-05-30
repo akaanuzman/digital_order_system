@@ -6,6 +6,7 @@ class RowIconText extends StatelessWidget {
   final TextStyle? textStyle;
   final double? iconSize;
   final Color? iconColor;
+  final Widget? sizedWidthBox;
   const RowIconText({
     super.key,
     required this.icon,
@@ -13,6 +14,7 @@ class RowIconText extends StatelessWidget {
     this.textStyle,
     this.iconSize,
     this.iconColor,
+    this.sizedWidthBox,
   });
 
   @override
@@ -24,7 +26,7 @@ class RowIconText extends StatelessWidget {
           size: iconSize,
           color: iconColor,
         ),
-        context.emptySizedWidthBox1x,
+        sizedWidthBox ?? context.emptySizedWidthBox1x,
         Text(
           text,
           style: textStyle,

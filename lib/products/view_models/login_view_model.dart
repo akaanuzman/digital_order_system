@@ -1,8 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:digital_order_system/products/utility/service/firestore_service.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
 import 'package:digital_order_system/products/view_models/customer_view_model.dart';
+import 'package:digital_order_system/products/view_models/restaurant_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -43,6 +46,29 @@ class LoginViewModel extends ChangeNotifier with BaseSingleton {
           final customerVM =
               Provider.of<CustomerViewModel>(context, listen: false);
           await customerVM.getCustomerInformation(uid);
+          if (customerVM.currentCustomer.customerId == null) {
+            uiUtils.showSnackbar(
+              context: context,
+              text: "Hesap bulunamadı",
+              isFail: true,
+            );
+            await EasyLoading.dismiss();
+            return;
+          }
+        } else {
+          log("object");
+          final restaurantVM =
+              Provider.of<RestaurantViewModel>(context, listen: false);
+          await restaurantVM.getRestaurantInformation(uid);
+          if (restaurantVM.currentRestaurant.restaurantId == null) {
+            uiUtils.showSnackbar(
+              context: context,
+              text: "Hesap bulunamadı",
+              isFail: true,
+            );
+            await EasyLoading.dismiss();
+            return;
+          }
         }
         if (isRememberMe) {
           localeServices.saveAccount(uid);

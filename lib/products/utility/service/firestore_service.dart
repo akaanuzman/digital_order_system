@@ -5,6 +5,7 @@ import 'dart:developer';
 
 import 'package:digital_order_system/products/utility/service/collections_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class FireStoreService {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -72,23 +73,26 @@ class FireStoreService {
     try {
       var response =
           await firebaseFirestore.collection("Customers").doc(id).get();
-      CustomerModel customerModel = CustomerModel().fromFirebase(response);
+      CustomerModel customerModel =
+          CustomerModel().fromFirebase(response) ?? CustomerModel();
       return customerModel;
     } catch (e) {
       log(e.toString());
+      await EasyLoading.dismiss();
       return null;
     }
   }
 
-  Future<RestaurantModel?> getRestaurantInfoInfo({required String id}) async {
+  Future<RestaurantModel?> getRestaurantInfo({required String id}) async {
     try {
       var response =
           await firebaseFirestore.collection("Restaurants").doc(id).get();
       RestaurantModel restaurantModel =
-          RestaurantModel().fromFirebase(response);
+          RestaurantModel().fromFirebase(response) ?? RestaurantModel();
       return restaurantModel;
     } catch (e) {
       log(e.toString());
+      await EasyLoading.dismiss();
       return null;
     }
   }

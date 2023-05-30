@@ -12,6 +12,7 @@ import '../view_models/register_view_model.dart';
 import '../../views/home/restaurant_home_view.dart';
 
 import '../../_export_ui.dart';
+import '../view_models/restaurant_view_model.dart';
 import '../view_models/splash_view_model.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/single_child_widget.dart';
@@ -64,6 +65,9 @@ class AppConstants {
     ),
     ChangeNotifierProvider(
       create: (_) => CustomerViewModel(),
+    ),
+    ChangeNotifierProvider(
+      create: (_) => RestaurantViewModel(),
     ),
   ];
 

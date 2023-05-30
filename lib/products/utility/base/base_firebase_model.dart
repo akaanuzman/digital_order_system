@@ -8,13 +8,13 @@ abstract class IdModel {
 abstract class BaseFirebaseModel<T extends IdModel> {
   T fromJson(Map<String, dynamic> json);
 
-  T fromFirebase(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+  T? fromFirebase(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final Map<String, dynamic>? response = snapshot.data();
-    if (response == null) {
-      throw FirebaseCustomException('$snapshot data is null!');
+    if (response != null) {
+      //TODO: fix later
+      response.addEntries([MapEntry('id', snapshot.id)]);
+      return fromJson(response);
     }
-    //TODO: fix later
-    response.addEntries([MapEntry('id', snapshot.id)]);
-    return fromJson(response);
+    return null;
   }
 }

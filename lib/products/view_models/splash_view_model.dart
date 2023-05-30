@@ -132,7 +132,7 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
     final response = await CollectionsService.Version.reference
         .withConverter<VersionModel>(
           fromFirestore: (snapshot, options) =>
-              VersionModel().fromFirebase(snapshot),
+              VersionModel().fromFirebase(snapshot) ?? VersionModel(),
           toFirestore: (value, options) => value.toJson(),
         )
         .doc(PlatformEnum.versionName)

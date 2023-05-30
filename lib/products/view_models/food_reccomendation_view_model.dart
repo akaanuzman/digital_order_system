@@ -2,6 +2,8 @@
 import 'dart:io';
 import 'dart:math' hide log;
 
+import 'package:digital_order_system/core/utils/navigator_service.dart';
+import 'package:digital_order_system/products/utility/base/base_singleton.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tflite/tflite.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-class FoodReccomendationViewModel extends ChangeNotifier {
+class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   late String? response;
   List ageResults = [];
   List genderResults = [];
@@ -31,7 +33,9 @@ class FoodReccomendationViewModel extends ChangeNotifier {
           : "assets/ai/gender_labels.txt",
       numThreads: 2,
     );
-    log("Model loaded: $response");
+    log(isAgeModel
+        ? "Age model loaded: $response"
+        : "Gender model loaded: $response");
   }
 
   Future disposeModel() async {
@@ -56,6 +60,10 @@ class FoodReccomendationViewModel extends ChangeNotifier {
       }
     }
     await EasyLoading.dismiss();
+    uiUtils.showSnackbar(
+      context: NavigationService.navigatorKey.currentContext!,
+      text: "Önerme başarıyla tamamlandı!",
+    );
   }
 
   Future estimation({
@@ -67,6 +75,8 @@ class FoodReccomendationViewModel extends ChangeNotifier {
     try {
       var recognitions = await Tflite.runModelOnImage(
         path: file.path,
+        imageMean: 128,
+        imageStd: 128,
       );
       isAgeEstimation
           ? ageResults = recognitions ?? []
@@ -80,6 +90,11 @@ class FoodReccomendationViewModel extends ChangeNotifier {
     } catch (e) {
       log(e.toString());
       await EasyLoading.dismiss();
+      uiUtils.showSnackbar(
+        context: NavigationService.navigatorKey.currentContext!,
+        text: "Bir hata oluştu!",
+        isFail: true,
+      );
     }
   }
 
@@ -131,7 +146,7 @@ class FoodReccomendationViewModel extends ChangeNotifier {
       case 'female':
         return 'Bayan';
       case 'male':
-        return 'Bay';
+        return 'Erkek';
       default:
         return 'Bir hata oluştu';
     }
@@ -143,6 +158,17 @@ class FoodReccomendationViewModel extends ChangeNotifier {
       return false;
     } else {
       return true;
+    }
+  }
+
+  String getConfidence({bool isAgeEstimation = true}) {
+    double confidence = isAgeEstimation
+        ? ageResults.first['confidence']
+        : genderResults.first['confidence'];
+    if (confidence == 1.0) {
+      return (confidence * 100).toString();
+    } else {
+      return (confidence * 100).toStringAsFixed(1);
     }
   }
 }

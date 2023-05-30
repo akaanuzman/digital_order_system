@@ -41,6 +41,7 @@ class _FoodReccomendationSystemViewState
   @override
   void dispose() {
     foodReccomendationVM.disposeModel();
+    foodReccomendationVM.isComplateRecommendation = false;
     super.dispose();
   }
 
@@ -52,6 +53,25 @@ class _FoodReccomendationSystemViewState
       contentSubtitle:
           "Lütfen kişisel resminizi yüklediğinizden veya kişisel resminiz olduğunuzdan emin olun.\nAksi halde yemek önerme sistemimiz çalışmayacaktır.",
       buttonLabel: "KAPAT",
+    );
+  }
+
+  void doEstimation() {
+    uiUtils.showAlertDialog(
+      context: context,
+      alertEnum: AlertEnum.INFO,
+      contentTitle: "UYARI",
+      contentSubtitle: foodReccomendationVM.isComplateRecommendation
+          ? "Lütfen tekrar önerme almak için sayfadan çıkıp tekrar giriniz."
+          : "Yüzünüzün tam olarak gözüktüğü fotoğraf yüklemeye özen gösterin aksi takdirde sistem doğru sonuç vermemektedir.",
+      buttonLabel: "KAPAT",
+      onTap: foodReccomendationVM.isComplateRecommendation
+          ? null
+          : () async {
+              Navigator.pop(context);
+              await foodReccomendationVM
+                  .imageClassification(pv.currentCustomer.imageUrl ?? "");
+            },
     );
   }
 
@@ -78,47 +98,7 @@ class _FoodReccomendationSystemViewState
               Consumer<FoodReccomendationViewModel>(
                 builder: (context, pv, _) {
                   return pv.isComplateRecommendation
-                      ? Column(
-                          children: [
-                            context.emptySizedHeightBox4x,
-                            Row(
-                              children: [
-                                FoodReccomendationContainer(
-                                  child: Icon(
-                                    Icons.insights,
-                                    color: Colors.white,
-                                    size: context.val13x,
-                                  ),
-                                ),
-                                context.emptySizedWidthBox4x,
-                                Column(
-                                  crossAxisAlignment: context.crossAxisAStart,
-                                  children: [
-                                    context.emptySizedHeightBox4x,
-                                    const Text("Tahmin Sonuçları"),
-                                    context.emptySizedHeightBox1x,
-                                    FoodReccomendationPersonelInfo(
-                                      icon: Icons.group,
-                                      text: pv.getAgeEstimation(isGroup: true),
-                                    ),
-                                    context.emptySizedHeightBox1x,
-                                    FoodReccomendationPersonelInfo(
-                                      icon: Icons.cake,
-                                      text: pv.getAgeEstimation(),
-                                    ),
-                                    context.emptySizedHeightBox1x,
-                                    FoodReccomendationPersonelInfo(
-                                      icon: pv.isGender
-                                          ? Icons.male
-                                          : Icons.female,
-                                      text: pv.getGenderEstimation,
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        )
+                      ? estimationSection(context, pv)
                       : estimateInformationContainer(context);
                 },
               ),
@@ -129,6 +109,72 @@ class _FoodReccomendationSystemViewState
           ),
         ),
       ),
+    );
+  }
+
+  Column estimationSection(
+      BuildContext context, FoodReccomendationViewModel pv) {
+    return Column(
+      children: [
+        context.emptySizedHeightBox4x,
+        Row(
+          children: [
+            estimationImage(context),
+            context.emptySizedWidthBox4x,
+            estimationDatas(context, pv)
+          ],
+        ),
+      ],
+    );
+  }
+
+  FoodReccomendationContainer estimationImage(BuildContext context) {
+    return FoodReccomendationContainer(
+      child: Icon(
+        Icons.insights,
+        color: Colors.white,
+        size: context.val13x,
+      ),
+    );
+  }
+
+  Column estimationDatas(BuildContext context, FoodReccomendationViewModel pv) {
+    return Column(
+      crossAxisAlignment: context.crossAxisAStart,
+      children: [
+        context.emptySizedHeightBox4x,
+        const Text("Tahmin Sonuçları"),
+        context.emptySizedHeightBox1x,
+        estimationAgeGroup(pv),
+        context.emptySizedHeightBox1x,
+        estimationAge(pv),
+        context.emptySizedHeightBox1x,
+        estimationGender(pv),
+      ],
+    );
+  }
+
+  FoodReccomendationPersonelInfo estimationAgeGroup(
+      FoodReccomendationViewModel pv) {
+    return FoodReccomendationPersonelInfo(
+      icon: Icons.group,
+      text: "%${pv.getConfidence()} ${pv.getAgeEstimation(isGroup: true)}",
+    );
+  }
+
+  FoodReccomendationPersonelInfo estimationAge(FoodReccomendationViewModel pv) {
+    return FoodReccomendationPersonelInfo(
+      icon: Icons.cake,
+      text: "%${pv.getConfidence()} ${pv.getAgeEstimation()}",
+    );
+  }
+
+  FoodReccomendationPersonelInfo estimationGender(
+      FoodReccomendationViewModel pv) {
+    return FoodReccomendationPersonelInfo(
+      icon: pv.isGender ? Icons.male : Icons.female,
+      text:
+          "%${pv.getConfidence(isAgeEstimation: false)} ${pv.getGenderEstimation}",
     );
   }
 
@@ -277,15 +323,18 @@ class _FoodReccomendationSystemViewState
     );
   }
 
-  CustomButton reccomendationBtn(BuildContext context) {
-    return CustomButton(
-      context: context,
-      buttonType: CustomButtonEnum.small,
-      label: "Yemek Öner!",
-      bgColor: colors.charismaticRed,
-      onTap: () async {
-        await foodReccomendationVM
-            .imageClassification(pv.currentCustomer.imageUrl ?? "");
+  Widget reccomendationBtn(BuildContext context) {
+    return Consumer<FoodReccomendationViewModel>(
+      builder: (context, foodReccomendationVM, _) {
+        return CustomButton(
+          context: context,
+          buttonType: CustomButtonEnum.small,
+          label: foodReccomendationVM.isComplateRecommendation
+              ? "Önerme tamamlandı!"
+              : "Yemek Öner!",
+          bgColor: colors.charismaticRed,
+          onTap: () => doEstimation(),
+        );
       },
     );
   }

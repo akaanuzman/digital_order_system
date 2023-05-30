@@ -23,6 +23,13 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
   ProfileCompleteView({super.key});
 
   Future complateProfile(BuildContext context) async {
+    final pv = Provider.of<ImageViewModel>(context, listen: false);
+    if (userPv.isCustomer && pv.selectedImage == null) {
+      await showInfoAlert(
+        context,
+        "Yapay zeka destekli yemek önerme sistemimizden yararlanabilmeniz için kişisel resminizi koymanız gerekmektedir.",
+      );
+    }
     await registerViewModel.profileComplate();
   }
 
@@ -151,12 +158,6 @@ class ProfileCompleteView extends StatelessWidget with BaseSingleton {
   GestureDetector selectImage(ImageViewModel pv, BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (userPv.isCustomer) {
-          await showInfoAlert(
-            context,
-            "Yapay zeka destekli yemek önerme sistemimizden yararlanabilmeniz için kişisel resminizi koymanız gerekmektedir.",
-          );
-        }
         await pv.selectImage;
       },
       child: Container(

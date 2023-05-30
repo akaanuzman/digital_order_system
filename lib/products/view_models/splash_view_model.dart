@@ -2,11 +2,9 @@
 
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/enums/platform_enum.dart';
-import 'package:digital_order_system/products/models/service/customer_model.dart';
 import 'package:digital_order_system/products/models/service/verison_model.dart';
 import 'package:digital_order_system/products/utility/service/collections_service.dart';
 import 'package:digital_order_system/products/utility/managers/version_manager.dart';
-import 'package:digital_order_system/products/utility/service/firestore_service.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
 import 'package:digital_order_system/products/view_models/customer_view_model.dart';
 import 'package:digital_order_system/views/auth/profile/profile_complete_view.dart';

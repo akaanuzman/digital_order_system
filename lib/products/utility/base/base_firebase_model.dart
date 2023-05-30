@@ -1,6 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:digital_order_system/products/utility/exception/firebase_custom_exception.dart';
-
 abstract class IdModel {
   String? id;
 }

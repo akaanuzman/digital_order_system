@@ -1,34 +1,26 @@
-import '../../../../_export_ui.dart';
+import '../../../../../_export_ui.dart';
 
-class MyFavouritesViewPage extends StatelessWidget {
-  const MyFavouritesViewPage({super.key});
+class CustomerFavoritesView extends StatelessWidget {
+  const CustomerFavoritesView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () => Navigator.of(context).pop(),
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            color: Colors.black,
+        title: FadeInDown(
+          child: Text(
+            "Favorilerim",
+            // TODO:Default olarka appbar title'e özel texttheme var kaldırılmalı
+            style: TextStyle(
+              fontSize: context.val6x,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        title: Text(
-          "Favorilerim",
-          style: TextStyle(
-            fontSize: context.val6x,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          Icon(
-            Icons.notifications_none_outlined,
-            size: context.val8x,
-          ),
-        ],
       ),
-      body: specialListViewSeperated(context, "Burger & Fries", "30"),
+      body: FadeInUp(
+        child: specialListViewSeperated(context, "Burger & Fries", "30"),
+      ),
     );
   }
 
@@ -50,6 +42,8 @@ class MyFavouritesViewPage extends StatelessWidget {
             backgroundColor: Colors.red.shade100,
             child: const Icon(
               Icons.favorite,
+              // TODO: colors. diyerek ColorConstants sınıfından color'u çekelim
+              // TODO: eğer ColorConstants sınıfında böyle bir renk yoksa ekleyelim.
               color: Color(
                 0xffF10027,
               ),
@@ -62,9 +56,12 @@ class MyFavouritesViewPage extends StatelessWidget {
           children: [
             context.emptySizedHeightBox2x,
             Container(
+              // TODO: Yorum satırlarınız temizleyelim.
               // padding: context.paddingHorizontal10x,
               height: context.val1x / 5,
               // width: context.val24x * 3.7,
+              // TODO: colors. diyerek ColorConstants sınıfından color'u çekelim
+              // TODO: eğer ColorConstants sınıfında böyle bir renk yoksa ekleyelim.
               color: const Color(0xffD6D6D6),
             ),
             context.emptySizedHeightBox2x,

@@ -1,3 +1,5 @@
+import 'package:digital_order_system/views/home/customer_basket_view.dart';
+
 import '../../../_export_ui.dart';
 import '../../../products/view_models/navbar_view_model.dart';
 
@@ -8,6 +10,15 @@ class NavbarView extends StatelessWidget with BaseSingleton {
   );
   NavbarView({super.key});
 
+  void goToCartView(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const CustomerBasketView(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<NavbarViewModel>(
@@ -15,6 +26,9 @@ class NavbarView extends StatelessWidget with BaseSingleton {
         return Scaffold(
           body: provider.views(pv.isCustomer).elementAt(provider.currentIndex),
           bottomNavigationBar: _navbarItems(context, provider),
+          floatingActionButton: fabButton(context),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
         );
       },
     );
@@ -32,6 +46,16 @@ class NavbarView extends StatelessWidget with BaseSingleton {
           currentIndex: provider.currentIndex,
           onTap: (index) => provider.onItemTapped(index),
         ),
+      ),
+    );
+  }
+
+  FloatingActionButton fabButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () => goToCartView(context),
+      child: Icon(
+        Icons.shopping_cart,
+        color: colors.redSavinaPepper,
       ),
     );
   }

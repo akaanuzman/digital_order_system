@@ -1,14 +1,14 @@
 import 'package:digital_order_system/products/view_models/customer_view_model.dart';
 import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
 import 'package:digital_order_system/products/view_models/image_view_model.dart';
+import 'package:digital_order_system/views/home/customer/customer_favorites_view.dart';
+import 'package:digital_order_system/views/home/profile_view.dart';
 
 import 'package:digital_order_system/views/home/restraurant/order/restaurant_current_orders_view.dart';
 import 'package:digital_order_system/views/home/restraurant/order/restaurant_orders_view.dart';
 import 'package:digital_order_system/views/home/restraurant/order/restaurant_past_orders_view.dart';
 import 'package:digital_order_system/views/home/customer_home_view.dart';
-import 'package:digital_order_system/products/view_models/my_basket_view_model.dart';
-
-import 'package:digital_order_system/views/test.dart';
+import 'package:digital_order_system/products/view_models/customer_basket_view_model.dart';
 
 import '../view_models/login_view_model.dart';
 import '../view_models/register_view_model.dart';
@@ -73,7 +73,7 @@ class AppConstants {
       create: (_) => RestaurantViewModel(),
     ),
     ChangeNotifierProvider(
-      create: (_) => MyBasketViewModel(),
+      create: (_) => CustomerBasketViewModel(),
     ),
   ];
 
@@ -81,14 +81,14 @@ class AppConstants {
 
   List<Widget> userNavbarViews = [
     const CustomerHomeView(),
-    const Test(),
-    const Scaffold(),
+    const CustomerFavoritesView(),
+    const ProfilePageView(),
   ];
 
   List<Widget> restaurantNavbarViews = [
     const RestaurantHomeView(),
     const RestaurantOrdersView(),
-    const Scaffold(),
+    const ProfilePageView(),
   ];
 
   List<Widget> restaurantOrderTabBarViews = [

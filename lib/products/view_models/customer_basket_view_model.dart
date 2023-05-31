@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 
-class MyBasketViewModel extends ChangeNotifier {
+class CustomerBasketViewModel extends ChangeNotifier {
   int counter = 0;
   String title = "0";
 
   void get increaseCounter {
     counter++;
-    print(counter);
     notifyListeners();
   }
 
@@ -15,6 +14,5 @@ class MyBasketViewModel extends ChangeNotifier {
       counter--;
       notifyListeners();
     }
-    print(counter);
   }
 }

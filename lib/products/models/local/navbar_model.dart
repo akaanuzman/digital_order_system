@@ -6,7 +6,7 @@ class NavbarModel extends BottomNavigationBarItem {
     required IconData icon,
   }) : super(
           icon: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding: const EdgeInsets.only(top: 24.0),
             child: Icon(icon),
           ),
           label: "",

@@ -1,11 +1,11 @@
 import '../../../_export_ui.dart';
-import '../../view_models/my_basket_view_model.dart';
+import '../../view_models/customer_basket_view_model.dart';
 
 class CustomListView extends StatelessWidget with BaseSingleton {
   final String title;
   final String price;
   final String time;
-  final MyBasketViewModel hpv;
+  final CustomerBasketViewModel hpv;
   CustomListView({
     super.key,
     required this.title,
@@ -16,7 +16,7 @@ class CustomListView extends StatelessWidget with BaseSingleton {
 
   @override
   Widget build(BuildContext context) {
-    final hpv = Provider.of<MyBasketViewModel>(context, listen: false);
+    final hpv = Provider.of<CustomerBasketViewModel>(context, listen: false);
     return Card(
       color: Colors.white,
       child: Padding(
@@ -61,7 +61,7 @@ class CustomListView extends StatelessWidget with BaseSingleton {
                       },
                     ),
                     context.emptySizedWidthBox2x,
-                    Consumer<MyBasketViewModel>(
+                    Consumer<CustomerBasketViewModel>(
                       builder: (context, hpv, _) => Text(
                         "${hpv.counter}",
                         style: const TextStyle(

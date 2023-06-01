@@ -7,6 +7,7 @@ import 'package:digital_order_system/products/utility/service/collections_servic
 import 'package:digital_order_system/products/utility/managers/version_manager.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
 import 'package:digital_order_system/products/view_models/customer_view_model.dart';
+import 'package:digital_order_system/products/view_models/restaurant_view_model.dart';
 import 'package:digital_order_system/views/auth/profile/profile_complete_view.dart';
 import 'package:digital_order_system/views/common/navbar/navbar_view.dart';
 import 'package:flutter/foundation.dart';
@@ -22,12 +23,19 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
   bool isRequiredForceUpdate = false;
   bool? isLogin;
   bool? isComplate;
+  String? uid;
 
   Future<bool> get initPage async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     bool isRedirectHome = await localeServices.readOnboard();
-    String? uid = await localeServices.readAccount();
+    uid = await localeServices.readAccount();
+    await isLoginOrProfileComplate();
 
+    checkAppLicationVersion(packageInfo.version);
+    return isRedirectHome;
+  }
+
+  Future isLoginOrProfileComplate() async {
     if (uid != null) {
       final pv = Provider.of<UserSelectionViewModel>(
         NavigationService.navigatorKey.currentContext!,
@@ -41,35 +49,50 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
         isLogin = false;
       }
       if (pv.isCustomer) {
-        final pv = Provider.of<CustomerViewModel>(
-          NavigationService.navigatorKey.currentContext!,
-          listen: false,
-        );
-        await pv.getCustomerInformation(uid);
+        await getCustomerInformation;
+      } else {
+        await getRestaurantInformation;
       }
     }
+  }
 
-    checkAppLicationVersion(packageInfo.version);
-    return isRedirectHome;
+  Future get getCustomerInformation async {
+    final pv = Provider.of<CustomerViewModel>(
+      NavigationService.navigatorKey.currentContext!,
+      listen: false,
+    );
+    await pv.getCustomerInformation(uid!);
+  }
+
+  Future get getRestaurantInformation async {
+    final pv = Provider.of<RestaurantViewModel>(
+      NavigationService.navigatorKey.currentContext!,
+      listen: false,
+    );
+    await pv.getRestaurantInformation(uid!);
   }
 
   void hasRequiredForceUpdate(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      if (isRequiredForceUpdate) {
-        uiUtils.showAlertDialog(
-            context: context,
-            alertEnum: AlertEnum.INFO,
-            contentTitle: "Yeni güncelleme var!",
-            contentSubtitle:
-                "Lütfen hatasız bir hizmet almak için en güncel versiyonunu indir.",
-            buttonLabel: "TAMAM",
-            onTap: () => launchUrlString(PlatformEnum.getMarketUrl));
-      }
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        if (isRequiredForceUpdate) {
+          uiUtils.showAlertDialog(
+              context: context,
+              alertEnum: AlertEnum.INFO,
+              contentTitle: "Yeni güncelleme var!",
+              contentSubtitle:
+                  "Lütfen hatasız bir hizmet almak için en güncel versiyonunu indir.",
+              buttonLabel: "TAMAM",
+              onTap: () => launchUrlString(PlatformEnum.getMarketUrl));
+        }
+      },
+    );
   }
 
-  Widget screenSelectionByStorage(
-      BuildContext context, AsyncSnapshot<bool> snapshot) {
+  Widget screenRoutingByStorage(
+    BuildContext context,
+    AsyncSnapshot<bool> snapshot,
+  ) {
     Widget splashBody = SplashView().body(context);
 
     switch (snapshot.connectionState) {

@@ -16,11 +16,11 @@ enum PlatformEnum {
   }
 
   static String get getMarketUrl {
-        if (Platform.isAndroid) {
-      return "https://play.google.com/store/apps/details?id=com.singularitysoftware.anytime";
+    if (Platform.isAndroid) {
+      return "";
     }
     if (Platform.isIOS) {
-      return "https://apps.apple.com/tr/app/anytime/id1615656130?l=tr";
+      return "";
     }
 
     throw Exception('Platform unused please check your platform!');

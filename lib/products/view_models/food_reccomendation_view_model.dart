@@ -4,6 +4,7 @@ import 'dart:math' hide log;
 
 import 'package:digital_order_system/core/utils/navigator_service.dart';
 import 'package:digital_order_system/products/utility/base/base_singleton.dart';
+import 'package:digital_order_system/products/utility/service/csv_service.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tflite/tflite.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,6 @@ import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-
 class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   late String? response;
   List ageResults = [];
@@ -56,6 +56,7 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
       );
       if (genderResults.isNotEmpty) {
         isComplateRecommendation = true;
+        await CsvService().loadCsvDataset();
         notifyListeners();
       }
     }

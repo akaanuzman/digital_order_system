@@ -29,10 +29,10 @@ class CsvService {
         } else if (counter == 4) {
           items.add(
             ReccomendationModel(
-              populationGroup: populationGroup,
-              food: food,
-              gender: gender,
-              preferenceCount: preferenceCount,
+              populationGroup: populationGroup.trim(),
+              food: food.trim(),
+              gender: gender.trim(),
+              preferenceCount: int.parse(preferenceCount),
             ),
           );
           counter = 0;
@@ -41,10 +41,10 @@ class CsvService {
         }
       }
     }
-    for (var element in items) {
-      log("${element.populationGroup} ${element.food} ${element.gender} ${element.preferenceCount}");
-    }
-    log(items.length.toString());
+    // for (var element in items) {
+    //   log("${element.populationGroup} ${element.food} ${element.gender} ${element.preferenceCount}");
+    // }
+    // log(items.length.toString());
     return items;
   }
 }

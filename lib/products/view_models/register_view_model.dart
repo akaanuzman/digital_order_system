@@ -17,7 +17,7 @@ import 'package:intl/intl.dart';
 import '../../views/auth/profile/profile_complete_view.dart';
 import '../../views/common/navbar/navbar_view.dart';
 import '../utility/service/auth_service.dart';
-import '../utility/service/storage_service.dart';
+import '../utility/service/file_service.dart';
 
 class RegisterViewModel extends ChangeNotifier with BaseSingleton {
   final TextEditingController mailController = TextEditingController();
@@ -336,7 +336,7 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
     if (model is CustomerModel || model is RestaurantModel) {
       if (pv.selectedImage != null) {
         var imagePath = isCustomer ? "Customers/" : "Restaurants/";
-        List<String> response = await StorageService()
+        List<String> response = await FileService()
             .uploadImage(pv.selectedImage!.path, imagePath);
         model.imageUrl = response[0];
         model.imageStoragePath = response[1];

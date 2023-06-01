@@ -1,22 +1,25 @@
 // ignore_for_file: depend_on_referenced_packages
 import 'dart:io';
-import 'dart:math' hide log;
 
 import 'package:digital_order_system/core/utils/navigator_service.dart';
+import 'package:digital_order_system/products/models/local/reccomendation_model.dart';
 import 'package:digital_order_system/products/utility/base/base_singleton.dart';
 import 'package:digital_order_system/products/utility/service/csv_service.dart';
+import 'package:digital_order_system/products/utils/food_reccomendation_utils.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:tflite/tflite.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
-import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+
+import '../utility/service/file_service.dart';
+
 class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   late String? response;
   List ageResults = [];
   List genderResults = [];
   bool isComplateRecommendation = false;
+  List<ReccomendationModel> dataset = [];
+  FoodReccomendationUtils foodReccomendationUtils = FoodReccomendationUtils();
 
   Future loadAIModelFromAsset() async {
     await loadModel();
@@ -55,8 +58,9 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
         isAgeEstimation: false,
       );
       if (genderResults.isNotEmpty) {
+        dataset = await CsvService().loadCsvDataset();
+        reccomendation();
         isComplateRecommendation = true;
-        await CsvService().loadCsvDataset();
         notifyListeners();
       }
     }
@@ -71,7 +75,7 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
     required String imageUrl,
     bool isAgeEstimation = true,
   }) async {
-    File file = await _fileFromImageUrl(imageUrl);
+    File file = await FileService().fileFromImageUrl(imageUrl);
     log(file.path);
     try {
       var recognitions = await Tflite.runModelOnImage(
@@ -99,77 +103,84 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
     }
   }
 
-  Future<File> _fileFromImageUrl(String imageUrl) async {
-    final response = await http.get(Uri.parse(imageUrl));
-    final documentDirectory = await getApplicationDocumentsDirectory();
-    String randomNumber = (Random().nextInt(899999) + 100000).toString();
-    final file = File(join(documentDirectory.path, '$randomNumber.jpg'));
-    file.writeAsBytesSync(response.bodyBytes);
-    return file;
+  void reccomendation() {
+    String ageLabel = ageResults.first['label'];
+    String genderLabel = genderResults.first['label'];
+
+    if (ageLabel == 'baby') {
+      if (genderLabel == 'male') {
+        filterReccomendation('Baby', 'Male');
+      } else if (genderLabel == 'female') {
+        filterReccomendation('Baby', 'Female');
+      }
+    } else if (ageLabel == 'child') {
+      if (genderLabel == 'male') {
+        filterReccomendation('Child', 'Male');
+      } else if (genderLabel == 'female') {
+        filterReccomendation('Child', 'Female');
+      }
+    } else if (ageLabel == 'youth') {
+      if (genderLabel == 'male') {
+        filterReccomendation('Youth', 'Male');
+      } else if (genderLabel == 'female') {
+        filterReccomendation('Youth', 'Female');
+      }
+    } else if (ageLabel == 'adult') {
+      if (genderLabel == 'male') {
+        filterReccomendation('Adult', 'Male');
+      } else if (genderLabel == 'female') {
+        filterReccomendation('Adult', 'Female');
+      }
+    } else if (ageLabel == 'old') {
+      if (genderLabel == 'male') {
+        filterReccomendation('Old', 'Male');
+      } else if (genderLabel == 'female') {
+        filterReccomendation('Old', 'Female');
+      }
+    }
+  }
+
+  void filterReccomendation(String ageGroup, String gender) {
+    List<ReccomendationModel> filteredModel = dataset;
+    filteredModel = filteredModel
+        .where((e) => e.populationGroup == ageGroup && e.gender == gender)
+        .toList();
+    filteredModel.sort(
+      (a, b) => b.preferenceCount.compareTo(
+        a.preferenceCount,
+      ),
+    );
+    log(filteredModel.length.toString());
+    for (var element in filteredModel) {
+      log("****\n");
+      log("${element.populationGroup} ${element.food} ${element.gender} ${element.preferenceCount}");
+    }
   }
 
   String getAgeEstimation({bool isGroup = false}) {
-    if (isGroup) {
-      switch (ageResults.first['label']) {
-        case 'baby':
-          return 'Bebek';
-        case 'child':
-          return 'Çocuk';
-        case 'youth':
-          return 'Genç';
-        case 'adult':
-          return 'Orta Yaşlı';
-        case 'old':
-          return 'Yaşlı';
-        default:
-          return 'Bir hata oluştu';
-      }
-    } else {
-      switch (ageResults.first['label']) {
-        case 'baby':
-          return '0-4 Yaş Aralığı';
-        case 'child':
-          return '5-17 Yaş Aralığı';
-        case 'youth':
-          return '18-35 Yaş Aralığı';
-        case 'adult':
-          return '36-60 Yaş Aralığı';
-        case 'old':
-          return '61-100 Yaş Aralığı';
-        default:
-          return 'Bir hata oluştu';
-      }
-    }
+    return foodReccomendationUtils.getAgeEstimation(
+      ageResults: ageResults,
+      isGroup: isGroup,
+    );
   }
 
   String get getGenderEstimation {
-    switch (genderResults.first['label']) {
-      case 'female':
-        return 'Bayan';
-      case 'male':
-        return 'Erkek';
-      default:
-        return 'Bir hata oluştu';
-    }
+    return foodReccomendationUtils.getGenderEstimation(
+      genderResults: genderResults,
+    );
   }
 
   bool get isGender {
-    String gender = getGenderEstimation;
-    if (gender == 'Bayan') {
-      return false;
-    } else {
-      return true;
-    }
+    return foodReccomendationUtils.isGender(
+      genderResults: genderResults,
+    );
   }
 
   String getConfidence({bool isAgeEstimation = true}) {
-    double confidence = isAgeEstimation
-        ? ageResults.first['confidence']
-        : genderResults.first['confidence'];
-    if (confidence == 1.0) {
-      return (confidence * 100).toString();
-    } else {
-      return (confidence * 100).toStringAsFixed(1);
-    }
+    return foodReccomendationUtils.getConfidence(
+      ageResults: ageResults,
+      genderResults: genderResults,
+      isAgeEstimation: isAgeEstimation,
+    );
   }
 }

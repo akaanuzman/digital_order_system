@@ -1,10 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/enums/platform_enum.dart';
+import 'package:digital_order_system/products/models/service/reccomendation_foods_model.dart';
 import 'package:digital_order_system/products/models/service/verison_model.dart';
 import 'package:digital_order_system/products/utility/service/collections_service.dart';
 import 'package:digital_order_system/products/utility/managers/version_manager.dart';
+import 'package:digital_order_system/products/utility/service/firestore_service.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
 import 'package:digital_order_system/products/view_models/customer_view_model.dart';
 import 'package:digital_order_system/products/view_models/restaurant_view_model.dart';
@@ -30,7 +34,6 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
     bool isRedirectHome = await localeServices.readOnboard();
     uid = await localeServices.readAccount();
     await isLoginOrProfileComplate();
-
     checkAppLicationVersion(packageInfo.version);
     return isRedirectHome;
   }

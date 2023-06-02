@@ -20,6 +20,7 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   bool isComplateRecommendation = false;
   List<ReccomendationModel> dataset = [];
   FoodReccomendationUtils foodReccomendationUtils = FoodReccomendationUtils();
+  int selectedFavFoodIndex = 3;
 
   Future loadAIModelFromAsset() async {
     await loadModel();
@@ -150,10 +151,10 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
         a.preferenceCount,
       ),
     );
-    log(filteredModel.length.toString());
-    for (var element in filteredModel) {
-      log("****\n");
-      log("${element.populationGroup} ${element.food} ${element.gender} ${element.preferenceCount}");
+    List<ReccomendationModel> getModelCategory = [];
+    for (var i = 0; i < selectedFavFoodIndex; i++) {
+      getModelCategory.add(filteredModel[i]);
+      log("${getModelCategory[i].populationGroup} ${getModelCategory[i].food} ${getModelCategory[i].gender} ${getModelCategory[i].preferenceCount}");
     }
   }
 

@@ -41,10 +41,6 @@ class CsvService {
         }
       }
     }
-    // for (var element in items) {
-    //   log("${element.populationGroup} ${element.food} ${element.gender} ${element.preferenceCount}");
-    // }
-    // log(items.length.toString());
     return items;
   }
 }

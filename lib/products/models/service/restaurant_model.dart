@@ -5,7 +5,7 @@ import 'package:digital_order_system/products/utility/base/base_firebase_model.d
 import 'package:equatable/equatable.dart';
 
 class RestaurantModel extends Equatable
-    with IdModel, BaseFirebaseModel<RestaurantModel> {
+    with BaseFirebaseModel<RestaurantModel> {
   String? restaurantId;
   Timestamp? createdDate;
   String? companyName;

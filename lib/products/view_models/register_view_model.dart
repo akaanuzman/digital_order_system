@@ -343,7 +343,7 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
       }
       Map<String, dynamic> json = model.toJson();
       await fireStoreService.updateUser(
-        userModel: json,
+        jsonData: json,
         isCustomer: isCustomer,
       );
       await EasyLoading.dismiss();

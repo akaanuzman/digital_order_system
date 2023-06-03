@@ -19,6 +19,7 @@ dependencies:
   shimmer_animation: ^2.1.0+1
   adaptive_action_sheet: ^2.0.2
   flutter_easyloading: ^3.0.5
+  cached_network_image: ^3.2.3
 
   # Firebase
   firebase_core: ^2.9.0
@@ -34,8 +35,8 @@ dependencies:
   package_info_plus: ^3.1.2
   url_launcher: ^6.1.10
   image_picker: ^0.8.7+5
-  cached_network_image: ^3.2.3
   http: ^0.13.6
+  path_provider: ^2.0.15
 
   # Food Reccomendation
   tflite: ^1.1.2

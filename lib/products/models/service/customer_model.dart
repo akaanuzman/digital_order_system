@@ -5,7 +5,7 @@ import 'package:digital_order_system/products/utility/base/base_firebase_model.d
 import 'package:equatable/equatable.dart';
 
 class CustomerModel extends Equatable
-    with IdModel, BaseFirebaseModel<CustomerModel> {
+    with BaseFirebaseModel<CustomerModel> {
   String? customerId;
   Timestamp? createdDate;
   String? mail;

@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import '../../utility/base/base_firebase_model.dart';
 
 class ReccomendationFoodsModel extends Equatable
-    with IdModel, BaseFirebaseModel<ReccomendationFoodsModel> {
+    with BaseFirebaseModel<ReccomendationFoodsModel> {
   String? categoryId;
   String? categoryName;
   String? foodId;

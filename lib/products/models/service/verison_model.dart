@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import '../../utility/base/base_firebase_model.dart';
 
 class VersionModel extends Equatable
-    with IdModel, BaseFirebaseModel<VersionModel> {
+    with BaseFirebaseModel<VersionModel> {
   String? versionNumber;
 
   VersionModel({

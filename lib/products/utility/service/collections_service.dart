@@ -5,8 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 enum CollectionsService {
   Restaurants,
   Customers,
-  Version;
+  Version,
+  ReccomendationFoods;
 
-  CollectionReference get reference =>
-      FirebaseFirestore.instance.collection(name);  
+  CollectionReference<Map<String, dynamic>> get reference =>
+      FirebaseFirestore.instance.collection(name);
 }

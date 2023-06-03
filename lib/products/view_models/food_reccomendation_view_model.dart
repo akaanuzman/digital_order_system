@@ -2,7 +2,9 @@
 import 'dart:io';
 
 import 'package:digital_order_system/core/utils/navigator_service.dart';
+import 'package:digital_order_system/products/constants/_export_constants.dart';
 import 'package:digital_order_system/products/models/local/reccomendation_model.dart';
+import 'package:digital_order_system/products/models/service/reccomendation_foods_model.dart';
 import 'package:digital_order_system/products/utility/base/base_singleton.dart';
 import 'package:digital_order_system/products/utility/service/csv_service.dart';
 import 'package:digital_order_system/products/utils/food_reccomendation_utils.dart';
@@ -12,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'dart:developer';
 
 import '../utility/service/file_service.dart';
+import '../utility/service/firestore_service.dart';
 
 class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   late String? response;
@@ -19,8 +22,13 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   List genderResults = [];
   bool isComplateRecommendation = false;
   List<ReccomendationModel> dataset = [];
-  FoodReccomendationUtils foodReccomendationUtils = FoodReccomendationUtils();
+  List<ReccomendationFoodsModel> reccomendationFoods = [];
   int selectedFavFoodIndex = 3;
+
+  Future get getReccomendationFoods async {
+    reccomendationFoods = await FireStoreService().getReccomendationFoods ?? [];
+    log(reccomendationFoods.length.toString());
+  }
 
   Future loadAIModelFromAsset() async {
     await loadModel();
@@ -30,16 +38,17 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
     Tflite.close();
     response = await Tflite.loadModel(
       model: isAgeModel
-          ? "assets/ai/age_model.tflite"
-          : "assets/ai/gender_model.tflite",
+          ? PathConstants.ageModel.toTflite
+          : PathConstants.genderModel.toTflite,
       labels: isAgeModel
-          ? "assets/ai/age_labels.txt"
-          : "assets/ai/gender_labels.txt",
+          ? PathConstants.ageLabels.toLabels
+          : PathConstants.genderLabels.toLabels,
       numThreads: 2,
     );
-    log(isAgeModel
+    String logMessage = isAgeModel
         ? "Age model loaded: $response"
-        : "Gender model loaded: $response");
+        : "Gender model loaded: $response";
+    log(logMessage);
   }
 
   Future disposeModel() async {
@@ -59,7 +68,7 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
         isAgeEstimation: false,
       );
       if (genderResults.isNotEmpty) {
-        dataset = await CsvService().loadCsvDataset();
+        dataset = await CsvService.loadCsvDataset();
         reccomendation();
         isComplateRecommendation = true;
         notifyListeners();
@@ -93,6 +102,7 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
       log(isAgeEstimation
           ? "Age Recognitions is: $recognitions"
           : "Gender Recognitions is: $recognitions");
+      await file.delete();
     } catch (e) {
       log(e.toString());
       await EasyLoading.dismiss();
@@ -105,40 +115,10 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   }
 
   void reccomendation() {
-    String ageLabel = ageResults.first['label'];
-    String genderLabel = genderResults.first['label'];
+    String ageLabel = getAgeLabel;
+    String genderLabel = getGenderLabel;
 
-    if (ageLabel == 'baby') {
-      if (genderLabel == 'male') {
-        filterReccomendation('Baby', 'Male');
-      } else if (genderLabel == 'female') {
-        filterReccomendation('Baby', 'Female');
-      }
-    } else if (ageLabel == 'child') {
-      if (genderLabel == 'male') {
-        filterReccomendation('Child', 'Male');
-      } else if (genderLabel == 'female') {
-        filterReccomendation('Child', 'Female');
-      }
-    } else if (ageLabel == 'youth') {
-      if (genderLabel == 'male') {
-        filterReccomendation('Youth', 'Male');
-      } else if (genderLabel == 'female') {
-        filterReccomendation('Youth', 'Female');
-      }
-    } else if (ageLabel == 'adult') {
-      if (genderLabel == 'male') {
-        filterReccomendation('Adult', 'Male');
-      } else if (genderLabel == 'female') {
-        filterReccomendation('Adult', 'Female');
-      }
-    } else if (ageLabel == 'old') {
-      if (genderLabel == 'male') {
-        filterReccomendation('Old', 'Male');
-      } else if (genderLabel == 'female') {
-        filterReccomendation('Old', 'Female');
-      }
-    }
+    filterReccomendation(ageLabel, genderLabel);
   }
 
   void filterReccomendation(String ageGroup, String gender) {
@@ -159,29 +139,37 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   }
 
   String getAgeEstimation({bool isGroup = false}) {
-    return foodReccomendationUtils.getAgeEstimation(
+    return FoodReccomendationUtils.getAgeEstimation(
       ageResults: ageResults,
       isGroup: isGroup,
     );
   }
 
   String get getGenderEstimation {
-    return foodReccomendationUtils.getGenderEstimation(
+    return FoodReccomendationUtils.getGenderEstimation(
       genderResults: genderResults,
     );
   }
 
   bool get isGender {
-    return foodReccomendationUtils.isGender(
+    return FoodReccomendationUtils.isGender(
       genderResults: genderResults,
     );
   }
 
   String getConfidence({bool isAgeEstimation = true}) {
-    return foodReccomendationUtils.getConfidence(
+    return FoodReccomendationUtils.getConfidence(
       ageResults: ageResults,
       genderResults: genderResults,
       isAgeEstimation: isAgeEstimation,
     );
+  }
+
+  String get getAgeLabel {
+    return FoodReccomendationUtils.getAgeLabel(ageResults: ageResults);
+  }
+
+  String get getGenderLabel {
+    return FoodReccomendationUtils.getGenderLabel(genderResults: genderResults);
   }
 }

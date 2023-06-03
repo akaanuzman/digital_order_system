@@ -97,4 +97,23 @@ class FireStoreService {
       return null;
     }
   }
+
+  Future<List<ReccomendationFoodsModel>?> get getReccomendationFoods async {
+    try {
+      var response =
+          await firebaseFirestore.collection("ReccomendationFoods").get();
+      List<ReccomendationFoodsModel> foods = [];
+      for (var food in response.docs) {
+        ReccomendationFoodsModel reccomendationFood =
+            ReccomendationFoodsModel().fromFirebase(food) ??
+                ReccomendationFoodsModel();
+        foods.add(reccomendationFood);
+      }
+      return foods;
+    } catch (e) {
+      log(e.toString());
+      await EasyLoading.dismiss();
+      return null;
+    }
+  }
 }

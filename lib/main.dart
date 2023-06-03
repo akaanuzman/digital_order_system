@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import '_export_ui.dart';
 
 void main() async {
-  await ApplicationInitialize.init();
+  await ApplicationInitialize.init;
   runApp(
     MultiProvider(
       providers: AppConstants.instance.providers,

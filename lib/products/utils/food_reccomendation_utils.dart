@@ -1,5 +1,10 @@
+import 'package:flutter/material.dart';
+
+@immutable
 class FoodReccomendationUtils {
-  String getAgeEstimation({
+  const FoodReccomendationUtils._();
+
+  static String getAgeEstimation({
     required List ageResults,
     bool isGroup = false,
   }) {
@@ -16,7 +21,7 @@ class FoodReccomendationUtils {
         case 'old':
           return 'Yaşlı';
         default:
-          return 'Bir hata oluştu';
+          return 'Something went wrong';
       }
     } else {
       switch (ageResults.first['label']) {
@@ -31,23 +36,23 @@ class FoodReccomendationUtils {
         case 'old':
           return '61-100 Yaş Aralığı';
         default:
-          return 'Bir hata oluştu';
+          return 'Something went wrong';
       }
     }
   }
 
-  String getGenderEstimation({required List genderResults}) {
+  static String getGenderEstimation({required List genderResults}) {
     switch (genderResults.first['label']) {
       case 'female':
         return 'Bayan';
       case 'male':
         return 'Erkek';
       default:
-        return 'Bir hata oluştu';
+        return 'Something went wrong';
     }
   }
 
-  bool isGender({required List genderResults}) {
+  static bool isGender({required List genderResults}) {
     String gender = getGenderEstimation(genderResults: genderResults);
     if (gender == 'Bayan') {
       return false;
@@ -56,7 +61,7 @@ class FoodReccomendationUtils {
     }
   }
 
-  String getConfidence({
+  static String getConfidence({
     bool isAgeEstimation = true,
     required List ageResults,
     required List genderResults,
@@ -68,6 +73,38 @@ class FoodReccomendationUtils {
       return (confidence * 100).toString();
     } else {
       return (confidence * 100).toStringAsFixed(1);
+    }
+  }
+
+  static String getAgeLabel({
+    required List ageResults,
+  }) {
+    switch (ageResults.first['label']) {
+      case 'baby':
+        return 'Baby';
+      case 'child':
+        return 'Child';
+      case 'youth':
+        return 'Youth';
+      case 'adult':
+        return 'Adult';
+      case 'old':
+        return 'Old';
+      default:
+        return 'Something went wrong';
+    }
+  }
+
+  static String getGenderLabel({
+    required List genderResults,
+  }) {
+    switch (genderResults.first['label']) {
+      case 'female':
+        return 'Female';
+      case 'male':
+        return 'Male';
+      default:
+        return 'Something went wrong';
     }
   }
 }

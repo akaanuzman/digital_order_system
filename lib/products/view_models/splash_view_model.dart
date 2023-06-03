@@ -1,16 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/enums/platform_enum.dart';
 import 'package:digital_order_system/products/models/service/reccomendation_foods_model.dart';
 import 'package:digital_order_system/products/models/service/verison_model.dart';
 import 'package:digital_order_system/products/utility/service/collections_service.dart';
 import 'package:digital_order_system/products/utility/managers/version_manager.dart';
-import 'package:digital_order_system/products/utility/service/firestore_service.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
 import 'package:digital_order_system/products/view_models/customer_view_model.dart';
+import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
 import 'package:digital_order_system/products/view_models/restaurant_view_model.dart';
 import 'package:digital_order_system/views/auth/profile/profile_complete_view.dart';
 import 'package:digital_order_system/views/common/navbar/navbar_view.dart';
@@ -28,6 +26,7 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
   bool? isLogin;
   bool? isComplate;
   String? uid;
+  List<ReccomendationFoodsModel> reccomendationFoods = [];
 
   Future<bool> get initPage async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -53,6 +52,7 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
       }
       if (pv.isCustomer) {
         await getCustomerInformation;
+        await getReccomendationFoods;
       } else {
         await getRestaurantInformation;
       }
@@ -65,6 +65,14 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
       listen: false,
     );
     await pv.getCustomerInformation(uid!);
+  }
+
+  Future get getReccomendationFoods async {
+    final pv = Provider.of<FoodReccomendationViewModel>(
+      NavigationService.navigatorKey.currentContext!,
+      listen: false,
+    );
+    await pv.getReccomendationFoods;
   }
 
   Future get getRestaurantInformation async {

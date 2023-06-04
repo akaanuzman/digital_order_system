@@ -8,6 +8,7 @@ import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/enums/custom_button_enum.dart';
 import 'package:digital_order_system/products/view_models/customer_view_model.dart';
 import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
+import 'package:digital_order_system/views/home/customer/customer_food_selection_view.dart';
 import 'package:intl/intl.dart';
 
 import '../../../products/components/information_container/informantion_container.dart';
@@ -75,6 +76,15 @@ class _FoodReccomendationSystemViewState
     );
   }
 
+  void goToFoodSelectionPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CustomerFoodSelectionView(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,6 +113,14 @@ class _FoodReccomendationSystemViewState
                 },
               ),
               const Spacer(),
+              CustomButton(
+                context: context,
+                buttonType: CustomButtonEnum.small,
+                label: "Favori yemeğini seç!",
+                bgColor: colors.charismaticRed,
+                onTap: () => goToFoodSelectionPage(context),
+              ),
+              context.emptySizedHeightBox2x,
               reccomendationBtn(context),
               context.emptySizedHeightBox1x,
             ],
@@ -121,7 +139,7 @@ class _FoodReccomendationSystemViewState
           children: [
             estimationImage(context),
             context.emptySizedWidthBox4x,
-            estimationDatas(context, pv)
+            estimationDatas(context, pv),
           ],
         ),
       ],
@@ -314,10 +332,7 @@ class _FoodReccomendationSystemViewState
           margin: EdgeInsets.zero,
           bgColor: colors.charismaticRed,
           borderRadius: context.borderRadius4x,
-          padding: EdgeInsets.symmetric(
-            horizontal: context.val12x,
-            vertical: context.val12x * 1.2,
-          ),
+          padding: context.padding12x,
         ),
       ],
     );

@@ -23,11 +23,59 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   bool isComplateRecommendation = false;
   List<ReccomendationModel> dataset = [];
   List<ReccomendationFoodsModel> reccomendationFoods = [];
+  List<ReccomendationFoodsModel> searchReccomendationFoodsList = [];
+  List<ReccomendationFoodsModel> selectedReccomendationFood = [];
+
+  TextEditingController searchController = TextEditingController();
   int selectedFavFoodIndex = 3;
 
   Future get getReccomendationFoods async {
     reccomendationFoods = await FireStoreService().getReccomendationFoods ?? [];
     log(reccomendationFoods.length.toString());
+  }
+
+  void searchReccomendationFoods(String query) {
+    if (query.isNotEmpty) {
+      final suggestions = reccomendationFoods.where((foods) {
+        final String foodName = foods.foodName?.toLowerCase() ?? "";
+        final String categoryName = foods.categoryName?.toLowerCase() ?? "";
+        final String input = query.toLowerCase();
+        return foodName.contains(input) || categoryName.contains(input);
+      }).toList();
+      searchReccomendationFoodsList = suggestions;
+    }
+    notifyListeners();
+  }
+
+  void selectReccomendationFood(ReccomendationFoodsModel food) {
+    food.isSelectedDTO = !food.isSelectedDTO;
+    if (food.isSelectedDTO) {
+      selectedReccomendationFood.add(food);
+    } else {
+      selectedReccomendationFood.remove(food);
+    }
+    for (var element in selectedReccomendationFood) {
+      log(element.foodName ?? "");
+      log("******");
+    }
+    notifyListeners();
+  }
+
+  void get chooseReccomendationFoodsValidator {
+    BuildContext context = NavigationService.navigatorKey.currentContext!;
+    if (selectedReccomendationFood.isEmpty) {
+      uiUtils.showSnackbar(
+        context: context,
+        text: "Lütfen en az 1 adet yemek seçiniz.",
+        isFail: true,
+      );
+    } else if (selectedReccomendationFood.length >= 4) {
+      uiUtils.showSnackbar(
+        context: context,
+        text: "Maksimum 3 adet yemek seçebilirsiniz.",
+        isFail: true,
+      );
+    }
   }
 
   Future loadAIModelFromAsset() async {
@@ -171,5 +219,14 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
 
   String get getGenderLabel {
     return FoodReccomendationUtils.getGenderLabel(genderResults: genderResults);
+  }
+
+  void onDispose() {
+    searchController.clear();
+    selectedReccomendationFood = [];
+    searchReccomendationFoodsList = [];
+    for (var element in reccomendationFoods) {
+      element.isSelectedDTO = false;
+    }
   }
 }

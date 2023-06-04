@@ -10,27 +10,32 @@ class ReccomendationFoodsModel extends Equatable
   String? categoryName;
   String? foodId;
   String? foodName;
+  bool isSelectedDTO;
 
   ReccomendationFoodsModel({
     this.categoryId,
     this.categoryName,
     this.foodId,
     this.foodName,
+    this.isSelectedDTO = false,
   });
 
   @override
   String? id = '';
 
-  ReccomendationFoodsModel copyWith(
-      {String? categoryId,
-      String? categoryName,
-      String? foodId,
-      String? foodName}) {
+  ReccomendationFoodsModel copyWith({
+    String? categoryId,
+    String? categoryName,
+    String? foodId,
+    String? foodName,
+    bool isSelectedDTO = false,
+  }) {
     return ReccomendationFoodsModel(
       categoryId: categoryId ?? this.categoryId,
       categoryName: categoryName ?? this.categoryName,
       foodId: foodId ?? this.foodId,
       foodName: foodName ?? this.foodName,
+      isSelectedDTO: isSelectedDTO
     );
   }
 

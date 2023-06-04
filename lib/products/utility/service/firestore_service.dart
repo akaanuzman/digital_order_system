@@ -15,11 +15,14 @@ class FireStoreService {
   Future<List<T>?> genericFetchCollection<T extends BaseFirebaseModel>({
     required T model,
     required CollectionsService collection,
+    String? orderByField,
   }) async {
     try {
       CollectionReference<Map<String, dynamic>> reference =
           collection.reference;
-      var response = await reference.get();
+      var response = orderByField != null
+          ? await reference.orderBy(orderByField).get()
+          : await reference.get();
       List<T> items = [];
       for (var item in response.docs) {
         T newModel = model.fromFirebase(item) ?? model;
@@ -116,6 +119,7 @@ class FireStoreService {
         await genericFetchCollection<ReccomendationFoodsModel>(
       model: reccomendationFoodsModel,
       collection: CollectionsService.ReccomendationFoods,
+      orderByField: 'foodName',
     );
     return foods;
   }

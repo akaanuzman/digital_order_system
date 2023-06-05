@@ -103,7 +103,13 @@ class _FoodReccomendationSystemViewState
           child: Column(
             crossAxisAlignment: context.crossAxisAStart,
             children: [
-              welcomeSection(context),
+              Consumer<FoodReccomendationViewModel>(
+                builder: (context, pv, _) {
+                  return pv.isComplateRecommendation
+                      ? const SizedBox()
+                      : welcomeSection(context);
+                },
+              ),
               personelInformationSection(context),
               Consumer<FoodReccomendationViewModel>(
                 builder: (context, pv, _) {
@@ -113,13 +119,7 @@ class _FoodReccomendationSystemViewState
                 },
               ),
               const Spacer(),
-              CustomButton(
-                context: context,
-                buttonType: CustomButtonEnum.small,
-                label: "Favori yemeğini seç!",
-                bgColor: colors.charismaticRed,
-                onTap: () => goToFoodSelectionPage(context),
-              ),
+              chooseFavFoodBtn(),
               context.emptySizedHeightBox2x,
               reccomendationBtn(context),
               context.emptySizedHeightBox1x,
@@ -136,10 +136,76 @@ class _FoodReccomendationSystemViewState
       children: [
         context.emptySizedHeightBox4x,
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             estimationImage(context),
             context.emptySizedWidthBox4x,
             estimationDatas(context, pv),
+          ],
+        ),
+        context.emptySizedHeightBox4x,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FoodReccomendationContainer(
+              child: Icon(
+                Icons.bar_chart,
+                color: Colors.white,
+                size: context.val13x,
+              ),
+            ),
+            context.emptySizedWidthBox4x,
+            Column(
+              crossAxisAlignment: context.crossAxisAStart,
+              children: [
+                const Text("Önerme Sonuçları"),
+                context.emptySizedHeightBox1x,
+                Column(
+                  crossAxisAlignment: context.crossAxisAStart,
+                  children: List.generate(
+                    foodReccomendationVM.recommendedFoods.length,
+                    (index) {
+                      String categoryName = foodReccomendationVM
+                              .recommendedFoods[index][index].categoryName ??
+                          "null_category";
+                      String rate =
+                          foodReccomendationVM.reccomendationRate.toString();
+                      return Padding(
+                        padding: EdgeInsets.only(bottom: context.val1x),
+                        child: FoodReccomendationPersonelInfo(
+                          icon: Icons.psychology_alt,
+                          text: "%$rate $categoryName",
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: context.crossAxisAStart,
+                  children: List.generate(
+                    foodReccomendationVM.recommendedFoods.length,
+                    (index) {
+                      return Column(
+                        crossAxisAlignment: context.crossAxisAStart,
+                        children: List.generate(
+                            foodReccomendationVM.recommendedFoods[index].length,
+                            (idx) {
+                          var item =
+                              foodReccomendationVM.recommendedFoods[index][idx];
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: context.val1x),
+                            child: FoodReccomendationPersonelInfo(
+                              icon: Icons.fastfood,
+                              text: item.foodName ?? "null_name",
+                            ),
+                          );
+                        }),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ],
@@ -160,7 +226,6 @@ class _FoodReccomendationSystemViewState
     return Column(
       crossAxisAlignment: context.crossAxisAStart,
       children: [
-        context.emptySizedHeightBox4x,
         const Text("Tahmin Sonuçları"),
         context.emptySizedHeightBox1x,
         estimationAgeGroup(pv),
@@ -168,6 +233,7 @@ class _FoodReccomendationSystemViewState
         estimationAge(pv),
         context.emptySizedHeightBox1x,
         estimationGender(pv),
+        context.emptySizedHeightBox1x,
       ],
     );
   }
@@ -209,14 +275,19 @@ class _FoodReccomendationSystemViewState
     );
   }
 
-  Row welcomeSection(BuildContext context) {
-    return Row(
+  Widget welcomeSection(BuildContext context) {
+    return Column(
       children: [
-        aiImage(),
-        context.emptySizedWidthBox4x,
-        Expanded(
-          child: welcomeText(),
+        Row(
+          children: [
+            aiImage(),
+            context.emptySizedWidthBox4x,
+            Expanded(
+              child: welcomeText(),
+            ),
+          ],
         ),
+        context.emptySizedHeightBox4x,
       ],
     );
   }
@@ -238,6 +309,7 @@ class _FoodReccomendationSystemViewState
 
   Row personelInformationSection(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         userProfilePhoto(context),
         context.emptySizedWidthBox4x,
@@ -248,31 +320,37 @@ class _FoodReccomendationSystemViewState
 
   Widget userProfilePhoto(BuildContext context) {
     return pv.currentCustomer.imageUrl != null
-        ? CachedNetworkImage(
-            imageUrl: pv.currentCustomer.imageUrl!,
-            placeholder: (context, url) => const CircularProgressIndicator(),
-            imageBuilder: (context, imageProvider) =>
-                FoodReccomendationContainer(
-              image: DecorationImage(
-                image: imageProvider,
-                fit: BoxFit.cover,
-              ),
-            ),
-          )
-        : FoodReccomendationContainer(
-            child: Icon(
-              Icons.person,
-              color: Colors.white,
-              size: context.val13x,
-            ),
-          );
+        ? profilePhoto()
+        : emptyPhoto(context);
   }
 
-  Column personelInformation(BuildContext context) {
+  CachedNetworkImage profilePhoto() {
+    return CachedNetworkImage(
+      imageUrl: pv.currentCustomer.imageUrl!,
+      placeholder: (context, url) => const CircularProgressIndicator(),
+      imageBuilder: (context, imageProvider) => FoodReccomendationContainer(
+        image: DecorationImage(
+          image: imageProvider,
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  FoodReccomendationContainer emptyPhoto(BuildContext context) {
+    return FoodReccomendationContainer(
+      child: Icon(
+        Icons.person,
+        color: Colors.white,
+        size: context.val13x,
+      ),
+    );
+  }
+
+  Widget personelInformation(BuildContext context) {
     return Column(
       crossAxisAlignment: context.crossAxisAStart,
       children: [
-        context.emptySizedHeightBox8x,
         const Text("Kişisel Bilgileriniz"),
         context.emptySizedHeightBox1x,
         fullNameInfo(),
@@ -335,6 +413,23 @@ class _FoodReccomendationSystemViewState
           padding: context.padding12x,
         ),
       ],
+    );
+  }
+
+  Consumer<FoodReccomendationViewModel> chooseFavFoodBtn() {
+    return Consumer<FoodReccomendationViewModel>(
+      builder: (context, pv, _) {
+        return Visibility(
+          visible: pv.isComplateRecommendation ? false : true,
+          child: CustomButton(
+            context: context,
+            buttonType: CustomButtonEnum.small,
+            label: "Favori yemeğini seç!",
+            bgColor: colors.charismaticRed,
+            onTap: () => goToFoodSelectionPage(context),
+          ),
+        );
+      },
     );
   }
 

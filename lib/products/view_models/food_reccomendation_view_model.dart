@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
 import 'dart:io';
 
 import 'package:digital_order_system/core/utils/navigator_service.dart';
@@ -25,13 +25,14 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   List<ReccomendationFoodsModel> reccomendationFoods = [];
   List<ReccomendationFoodsModel> searchReccomendationFoodsList = [];
   List<ReccomendationFoodsModel> selectedReccomendationFood = [];
+  List<List<ReccomendationFoodsModel>> recommendedFoods = [];
 
   TextEditingController searchController = TextEditingController();
-  int selectedFavFoodIndex = 3;
+  int selectedFavFoodIndex = 0;
+  double reccomendationRate = 0;
 
   Future get getReccomendationFoods async {
     reccomendationFoods = await FireStoreService().getReccomendationFoods ?? [];
-    log(reccomendationFoods.length.toString());
   }
 
   void searchReccomendationFoods(String query) {
@@ -75,6 +76,15 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
         text: "Maksimum 3 adet yemek seçebilirsiniz.",
         isFail: true,
       );
+    } else {
+      selectedFavFoodIndex = selectedReccomendationFood.length;
+      Navigator.pop(context);
+      searchReccomendationFoodsList = [];
+      searchController.clear();
+      uiUtils.showSnackbar(
+        context: context,
+        text: "Değişiklikler kaydedildi",
+      );
     }
   }
 
@@ -104,6 +114,23 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   }
 
   Future imageClassification(String imageUrl) async {
+    BuildContext context = NavigationService.navigatorKey.currentContext!;
+    if (selectedFavFoodIndex == 0) {
+      uiUtils.showSnackbar(
+        context: context,
+        text: "Lütfen önce favori yemeğinizi seçin!",
+        isFail: true,
+      );
+      return;
+    }
+    if (imageUrl == "") {
+      uiUtils.showSnackbar(
+        context: context,
+        text: "Lütfen önce profil resmi ekleyin",
+        isFail: true,
+      );
+      return;
+    }
     await EasyLoading.show(
       maskType: EasyLoadingMaskType.black,
     );
@@ -124,9 +151,10 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
     }
     await EasyLoading.dismiss();
     uiUtils.showSnackbar(
-      context: NavigationService.navigatorKey.currentContext!,
+      context: context,
       text: "Önerme başarıyla tamamlandı!",
     );
+    onDispose();
   }
 
   Future estimation({
@@ -180,10 +208,45 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
       ),
     );
     List<ReccomendationModel> getModelCategory = [];
+    List<String> foodCategory = [];
     for (var i = 0; i < selectedFavFoodIndex; i++) {
       getModelCategory.add(filteredModel[i]);
       log("${getModelCategory[i].populationGroup} ${getModelCategory[i].food} ${getModelCategory[i].gender} ${getModelCategory[i].preferenceCount}");
+      foodCategory.add(getModelCategory[i].food);
     }
+    List<ReccomendationFoodsModel> temp = [];
+
+    for (var i = 0; i < selectedFavFoodIndex; i++) {
+      ReccomendationFoodsModel item = selectedReccomendationFood[i];
+      if (foodCategory.contains(item.categoryName)) {
+        selectedFavFoodIndex == 1
+            ? reccomendationRate = 100
+            : selectedFavFoodIndex == 2
+                ? reccomendationRate += 50
+                : reccomendationRate += 33.3;
+        temp = reccomendationFoods
+            .where((element) =>
+                element.categoryName == item.categoryName &&
+                element.foodName != item.foodName)
+            .toList();
+        recommendedFoods.add(temp);
+        log(temp.length.toString());
+      } else {
+        selectedFavFoodIndex == 1
+            ? reccomendationRate = 100
+            : selectedFavFoodIndex == 2
+                ? reccomendationRate += 25
+                : reccomendationRate += 16.5;
+      }
+    }
+
+    for (var element in recommendedFoods) {
+      for (var e in element) {
+        log(e.foodName ?? "");
+      }
+    }
+
+    log("Reccomendation Rate: $reccomendationRate");
   }
 
   String getAgeEstimation({bool isGroup = false}) {
@@ -225,6 +288,10 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
     searchController.clear();
     selectedReccomendationFood = [];
     searchReccomendationFoodsList = [];
+    reccomendationRate = 0;
+    recommendedFoods = [];
+    isComplateRecommendation = false;
+    selectedFavFoodIndex = 0;
     for (var element in reccomendationFoods) {
       element.isSelectedDTO = false;
     }

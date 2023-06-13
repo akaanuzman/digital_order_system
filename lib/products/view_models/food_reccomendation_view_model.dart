@@ -25,11 +25,11 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
   List<ReccomendationFoodsModel> reccomendationFoods = [];
   List<ReccomendationFoodsModel> searchReccomendationFoodsList = [];
   List<ReccomendationFoodsModel> selectedReccomendationFood = [];
-  List<List<ReccomendationFoodsModel>> recommendedFoods = [];
-
+  List<String> selectedFavFoods = [];
+  List<String> suggestions = [];
   TextEditingController searchController = TextEditingController();
   int selectedFavFoodIndex = 0;
-  double reccomendationRate = 0;
+  double matchRate = 0;
 
   Future get getReccomendationFoods async {
     reccomendationFoods = await FireStoreService().getReccomendationFoods ?? [];
@@ -52,8 +52,10 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
     food.isSelectedDTO = !food.isSelectedDTO;
     if (food.isSelectedDTO) {
       selectedReccomendationFood.add(food);
+      selectedFavFoods.add(food.foodName ?? "");
     } else {
       selectedReccomendationFood.remove(food);
+      selectedFavFoods.remove(food.foodName ?? "");
     }
     for (var element in selectedReccomendationFood) {
       log(element.foodName ?? "");
@@ -131,9 +133,7 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
       );
       return;
     }
-    await EasyLoading.show(
-      maskType: EasyLoadingMaskType.black,
-    );
+    await EasyLoading.show(maskType: EasyLoadingMaskType.black);
     await estimation(imageUrl: imageUrl);
     if (ageResults.isNotEmpty) {
       await disposeModel();
@@ -211,42 +211,55 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
     List<String> foodCategory = [];
     for (var i = 0; i < selectedFavFoodIndex; i++) {
       getModelCategory.add(filteredModel[i]);
-      log("${getModelCategory[i].populationGroup} ${getModelCategory[i].food} ${getModelCategory[i].gender} ${getModelCategory[i].preferenceCount}");
+      ReccomendationModel item = getModelCategory[i];
+      log("${item.populationGroup} ${item.food} ${item.gender} ${item.preferenceCount}");
       foodCategory.add(getModelCategory[i].food);
     }
-    List<ReccomendationFoodsModel> temp = [];
+    matchDatasFromDatasetAndUserSelection(foodCategory);
+  }
 
+  void matchDatasFromDatasetAndUserSelection(List<String> foodCategory) {
+    int matchCount = 0;
     for (var i = 0; i < selectedFavFoodIndex; i++) {
       ReccomendationFoodsModel item = selectedReccomendationFood[i];
       if (foodCategory.contains(item.categoryName)) {
+        matchCount++;
         selectedFavFoodIndex == 1
-            ? reccomendationRate = 100
+            ? matchRate = 100
             : selectedFavFoodIndex == 2
-                ? reccomendationRate += 50
-                : reccomendationRate += 33.3;
-        temp = reccomendationFoods
-            .where((element) =>
-                element.categoryName == item.categoryName &&
-                element.foodName != item.foodName)
-            .toList();
-        recommendedFoods.add(temp);
-        log(temp.length.toString());
+                ? matchRate += 50
+                : matchRate += 33.3;
+        getRecommendedFoods(item);
       } else {
         selectedFavFoodIndex == 1
-            ? reccomendationRate = 100
+            ? matchRate = 50
             : selectedFavFoodIndex == 2
-                ? reccomendationRate += 25
-                : reccomendationRate += 16.5;
+                ? matchRate += 25
+                : matchRate += 16.5;
+        if (matchCount == 0) {
+          getRecommendedFoods(item);
+        }
       }
     }
+    log("Reccomendation Rate: $matchRate");
+  }
 
-    for (var element in recommendedFoods) {
-      for (var e in element) {
-        log(e.foodName ?? "");
+  void getRecommendedFoods(ReccomendationFoodsModel item) {
+    List<ReccomendationFoodsModel> temp = [];
+    temp = reccomendationFoods
+        .where((element) =>
+            element.categoryName == item.categoryName &&
+            element.foodName != item.foodName)
+        .toList();
+    for (var element in temp) {
+      if (!selectedFavFoods.contains(element.foodName)) {
+        suggestions.add(element.foodName ?? "null");
       }
     }
-
-    log("Reccomendation Rate: $reccomendationRate");
+    suggestions = suggestions.toSet().toList();
+    for (var element in suggestions) {
+      log(element);
+    }
   }
 
   String getAgeEstimation({bool isGroup = false}) {
@@ -288,8 +301,7 @@ class FoodReccomendationViewModel extends ChangeNotifier with BaseSingleton {
     searchController.clear();
     selectedReccomendationFood = [];
     searchReccomendationFoodsList = [];
-    reccomendationRate = 0;
-    recommendedFoods = [];
+    matchRate = 0;
     isComplateRecommendation = false;
     selectedFavFoodIndex = 0;
     for (var element in reccomendationFoods) {

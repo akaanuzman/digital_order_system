@@ -98,33 +98,51 @@ class _FoodReccomendationSystemViewState
         ],
       ),
       body: FadeInUp(
-        child: Padding(
-          padding: context.padding6x,
-          child: Column(
-            crossAxisAlignment: context.crossAxisAStart,
-            children: [
-              Consumer<FoodReccomendationViewModel>(
-                builder: (context, pv, _) {
-                  return pv.isComplateRecommendation
-                      ? const SizedBox()
-                      : welcomeSection(context);
-                },
-              ),
-              personelInformationSection(context),
-              Consumer<FoodReccomendationViewModel>(
-                builder: (context, pv, _) {
-                  return pv.isComplateRecommendation
-                      ? estimationSection(context, pv)
-                      : estimateInformationContainer(context);
-                },
-              ),
-              const Spacer(),
-              chooseFavFoodBtn(),
-              context.emptySizedHeightBox2x,
-              reccomendationBtn(context),
-              context.emptySizedHeightBox1x,
-            ],
-          ),
+        child: ListView(
+        padding: context.padding6x,
+          children: [
+            welcomeControl(),
+            personelInformationSection(context),
+            estimationControl(),
+            context.emptySizedHeightBox4x,
+            chooseFavFoodBtn(),
+            context.emptySizedHeightBox2x,
+            reccomendationBtn(context),
+            context.emptySizedHeightBox1x,
+          ],
+        ),
+      ),
+    );
+  }
+
+  Consumer<FoodReccomendationViewModel> welcomeControl() {
+    return Consumer<FoodReccomendationViewModel>(
+      builder: (context, pv, _) {
+        return pv.isComplateRecommendation
+            ? const SizedBox()
+            : welcomeSection(context);
+      },
+    );
+  }
+
+  Consumer<FoodReccomendationViewModel> estimationControl() {
+    return Consumer<FoodReccomendationViewModel>(
+      builder: (context, pv, _) {
+        return pv.isComplateRecommendation
+            ? estimationSection(context, pv)
+            : estimateInformationContainer(context);
+      },
+    );
+  }
+
+  Widget infoBtn(BuildContext context) {
+    return FadeInDown(
+      child: IconButton(
+        onPressed: () => showInfoDialog(context),
+        icon: Icon(
+          Icons.info,
+          color: Colors.black,
+          size: context.val7x,
         ),
       ),
     );
@@ -160,49 +178,12 @@ class _FoodReccomendationSystemViewState
               children: [
                 const Text("Önerme Sonuçları"),
                 context.emptySizedHeightBox1x,
+                Text(
+                    "Eşleşme Skoru: %${foodReccomendationVM.matchRate.toStringAsFixed(1)}"),
+                context.emptySizedHeightBox1x,
                 Column(
                   crossAxisAlignment: context.crossAxisAStart,
-                  children: List.generate(
-                    foodReccomendationVM.recommendedFoods.length,
-                    (index) {
-                      String categoryName = foodReccomendationVM
-                              .recommendedFoods[index][index].categoryName ??
-                          "null_category";
-                      String rate =
-                          foodReccomendationVM.reccomendationRate.toString();
-                      return Padding(
-                        padding: EdgeInsets.only(bottom: context.val1x),
-                        child: FoodReccomendationPersonelInfo(
-                          icon: Icons.psychology_alt,
-                          text: "%$rate $categoryName",
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: context.crossAxisAStart,
-                  children: List.generate(
-                    foodReccomendationVM.recommendedFoods.length,
-                    (index) {
-                      return Column(
-                        crossAxisAlignment: context.crossAxisAStart,
-                        children: List.generate(
-                            foodReccomendationVM.recommendedFoods[index].length,
-                            (idx) {
-                          var item =
-                              foodReccomendationVM.recommendedFoods[index][idx];
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: context.val1x),
-                            child: FoodReccomendationPersonelInfo(
-                              icon: Icons.fastfood,
-                              text: item.foodName ?? "null_name",
-                            ),
-                          );
-                        }),
-                      );
-                    },
-                  ),
+                  children: recommendedFoods(context),
                 ),
               ],
             ),
@@ -262,16 +243,19 @@ class _FoodReccomendationSystemViewState
     );
   }
 
-  Widget infoBtn(BuildContext context) {
-    return FadeInDown(
-      child: IconButton(
-        onPressed: () => showInfoDialog(context),
-        icon: Icon(
-          Icons.info,
-          color: Colors.black,
-          size: context.val7x,
-        ),
-      ),
+  List<Widget> recommendedFoods(BuildContext context) {
+    return List.generate(
+      foodReccomendationVM.suggestions.length,
+      (index) {
+        var item = foodReccomendationVM.suggestions[index];
+        return Padding(
+          padding: EdgeInsets.only(bottom: context.val1x),
+          child: FoodReccomendationPersonelInfo(
+            icon: Icons.fastfood,
+            text: item,
+          ),
+        );
+      },
     );
   }
 

@@ -6,10 +6,11 @@ class FoodReccomendationPersonelInfo extends RowIconText {
     super.key,
     required IconData icon,
     required String text,
+    TextStyle? textStyle,
   }) : super(
           icon: icon,
           text: text,
-          textStyle: NavigationService
+          textStyle: textStyle ?? NavigationService
               .navigatorKey.currentContext!.textTheme.titleSmall,
           sizedWidthBox: NavigationService
               .navigatorKey.currentContext!.emptySizedWidthBox3x,

@@ -1,4 +1,4 @@
-import 'package:digital_order_system/products/models/service/customer_model.dart';
+import 'package:digital_order_system/products/models/service/customer/customer_model.dart';
 import 'package:flutter/material.dart';
 
 import '../utility/service/firestore_service.dart';

@@ -20,7 +20,7 @@ class CustomerHomeView extends StatelessWidget with BaseSingleton {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => FoodReccomendationSystemView(),
+        builder: (context) => const FoodReccomendationSystemView(),
       ),
     );
   }
@@ -29,7 +29,9 @@ class CustomerHomeView extends StatelessWidget with BaseSingleton {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: FadeInDown(child: const Text("Ana Sayfa")),
+        title: FadeInDown(
+          child: const Text("Ana Sayfa"),
+        ),
         actions: [
           appBarActionsIcon(context),
         ],

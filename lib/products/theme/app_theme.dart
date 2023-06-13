@@ -33,6 +33,7 @@ class AppTheme extends ITheme {
         listTileTheme: listTileTheme,
         tabBarTheme: tabbarTheme,
         radioTheme: radioTheme,
+        floatingActionButtonTheme: fabButtonTheme,
       );
 
   ColorScheme get colorScheme {
@@ -142,6 +143,13 @@ class AppTheme extends ITheme {
         }
         return null;
       },
+    );
+  }
+
+  FloatingActionButtonThemeData get fabButtonTheme {
+    return const FloatingActionButtonThemeData(
+      backgroundColor: Colors.white,
+      elevation: 5,
     );
   }
 }

@@ -1,13 +1,16 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_order_system/products/utility/base/base_firebase_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'restaurant_model.g.dart';
+
+@JsonSerializable()
 class RestaurantModel extends Equatable
-    with IdModel, BaseFirebaseModel<RestaurantModel> {
+    with BaseFirebaseModel<RestaurantModel> {
   String? restaurantId;
-  Timestamp? createdDate;
+  DateTime? createdDate;
   String? companyName;
   String? companyMail;
   String? companyNumber;
@@ -55,7 +58,7 @@ class RestaurantModel extends Equatable
 
   RestaurantModel copyWith({
     String? restaurantId,
-    Timestamp? createdDate,
+    DateTime? createdDate,
     String? companyName,
     String? companyMail,
     String? companyNumber,
@@ -88,43 +91,12 @@ class RestaurantModel extends Equatable
   }
 
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {
-      'restaurantId': restaurantId,
-      'createdDate': createdDate,
-      'companyName': companyName,
-      'companyMail': companyMail,
-      'companyNumber': companyNumber,
-      'openingTime': openingTime,
-      'closingTime': closingTime,
-      'isActive': isActive,
-      'location': location,
-      'locationName': locationName,
-      'imageUrl': imageUrl,
-      'imageStoragePath': imageStoragePath,
-      'fcmToken': fcmToken,
-    };
+    Map<String, dynamic> json = _$RestaurantModelToJson(this);
     json.removeWhere((key, value) => value == null);
     return json;
   }
 
   @override
-  RestaurantModel fromJson(Map<String, dynamic> json) {
-    return RestaurantModel(
-      restaurantId: json['restaurantId'] as String?,
-      createdDate: json['createdDate'] as Timestamp?,
-      companyName: json['companyName'] as String?,
-      companyMail: json['companyMail'] as String?,
-      companyNumber: json['companyNumber'] as String?,
-      openingTime: json['openingTime'] as String?,
-      closingTime: json['closingTime'] as String?,
-      isActive: json['isActive'] as bool?,
-      location: json['location'] as String?,
-      locationName: json['locationName'] as String?,
-      imageUrl: json['imageUrl'] as String?,
-      imageStoragePath: json['imageStoragePath'] as String?,
-      fcmToken: (json['fcmToken'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-    );
-  }
+  RestaurantModel fromJson(Map<String, dynamic> json) =>
+      _$RestaurantModelFromJson(json);
 }

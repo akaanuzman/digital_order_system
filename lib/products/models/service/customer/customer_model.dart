@@ -3,11 +3,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_order_system/products/utility/base/base_firebase_model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+part 'customer_model.g.dart';
 
-class CustomerModel extends Equatable
-    with IdModel, BaseFirebaseModel<CustomerModel> {
+@JsonSerializable()
+class CustomerModel extends Equatable with BaseFirebaseModel<CustomerModel> {
   String? customerId;
-  Timestamp? createdDate;
+  DateTime? createdDate;
   String? mail;
   String? name;
   String? surname;
@@ -15,7 +17,7 @@ class CustomerModel extends Equatable
   String? phone;
   bool? gender;
   bool? isActive;
-  Timestamp? birthDate;
+  DateTime? birthDate;
   int? age;
   String? location;
   String? locationName;
@@ -63,22 +65,22 @@ class CustomerModel extends Equatable
       ];
 
   CustomerModel copyWith({
-  String? customerId,
-  Timestamp? createdDate,
-  String? mail,
-  String? name,
-  String? surname,
-  String? fullName,
-  String? phone,
-  bool? gender,
-  bool? isActive,
-  Timestamp? birthDate,
-  int? age,
-  String? location,
-  String? locationName,
-  String? imageUrl,
-  String? imageStoragePath,
-  List<String>? fcmToken,
+    String? customerId,
+    DateTime? createdDate,
+    String? mail,
+    String? name,
+    String? surname,
+    String? fullName,
+    String? phone,
+    bool? gender,
+    bool? isActive,
+    DateTime? birthDate,
+    int? age,
+    String? location,
+    String? locationName,
+    String? imageUrl,
+    String? imageStoragePath,
+    List<String>? fcmToken,
   }) {
     return CustomerModel(
       customerId: customerId ?? this.customerId,
@@ -101,49 +103,12 @@ class CustomerModel extends Equatable
   }
 
   Map<String, dynamic> toJson() {
-    Map<String,dynamic> json = {
-      'customerId': customerId,
-      'createdDate': createdDate,
-      'mail': mail,
-      'name': name,
-      'surname': surname,
-      'fullName': fullName,
-      'phone': phone,
-      'gender': gender,
-      'isActive': isActive,
-      'birthDate': birthDate,
-      'age': age,
-      'location': location,
-      'locationName': locationName,
-      'imageUrl': imageUrl,
-      'imageStoragePath': imageStoragePath,
-      'fcmToken': fcmToken,
-    };
+    Map<String, dynamic> json = _$CustomerModelToJson(this);
     json.removeWhere((key, value) => value == null);
     return json;
   }
 
   @override
-  CustomerModel fromJson(Map<String, dynamic> json) {
-    return CustomerModel(
-      customerId: json['customerId'] as String?,
-      createdDate: json['createdDate'] as Timestamp?,
-      mail: json['mail'] as String?,
-      name: json['name'] as String?,
-      surname: json['surname'] as String?,
-      fullName: json['fullName'] as String?,
-      phone: json['phone'] as String?,
-      gender: json['gender'] as bool?,
-      isActive: json['isActive'] as bool?,
-      birthDate: json['birthDate'] as Timestamp?,
-      age: json['age'] as int?,
-      location: json['location'] as String?,
-      locationName: json['locationName'] as String?,
-      imageUrl: json['imageUrl'] as String?,
-      imageStoragePath: json['imageStoragePath'] as String?,
-      fcmToken: (json['fcmToken'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-    );
-  }
+  CustomerModel fromJson(Map<String, dynamic> json) =>
+      _$CustomerModelFromJson(json);
 }

@@ -14,7 +14,7 @@ class SplashView extends StatelessWidget with BaseSingleton {
       backgroundColor: colors.charismaticRed,
       body: FutureBuilder(
         future: pv.initPage,
-        builder: (_, snapshot) => pv.screenSelectionByStorage(_, snapshot),
+        builder: (_, snapshot) => pv.screenRoutingByStorage(_, snapshot),
       ),
     );
   }

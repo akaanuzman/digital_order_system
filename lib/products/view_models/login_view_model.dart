@@ -5,10 +5,9 @@ import 'dart:developer';
 import 'package:digital_order_system/products/utility/service/firestore_service.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
 import 'package:digital_order_system/products/view_models/customer_view_model.dart';
+import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
 import 'package:digital_order_system/products/view_models/restaurant_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import '../../_export_ui.dart';
 import '../../views/common/navbar/navbar_view.dart';
 import '../utility/service/auth_service.dart';
@@ -45,6 +44,9 @@ class LoginViewModel extends ChangeNotifier with BaseSingleton {
         if (pv.isCustomer) {
           final customerVM =
               Provider.of<CustomerViewModel>(context, listen: false);
+          final foodPv =
+              Provider.of<FoodReccomendationViewModel>(context, listen: false);
+          await foodPv.getReccomendationFoods;
           await customerVM.getCustomerInformation(uid);
           if (customerVM.currentCustomer.customerId == null) {
             uiUtils.showSnackbar(

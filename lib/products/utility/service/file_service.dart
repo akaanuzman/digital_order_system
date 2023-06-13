@@ -1,12 +1,17 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:io';
 import 'dart:developer' as dev;
 import 'dart:math';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
-class StorageService {
+class FileService {
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
-  Future uploadImage(String filePath,String imagePath) async {
+  Future uploadImage(String filePath, String imagePath) async {
     try {
       var imageRef = firebaseStorage.ref();
       String randomNumber = (Random().nextInt(899999) + 100000).toString();
@@ -31,5 +36,14 @@ class StorageService {
       dev.log(e.toString());
       return false;
     }
+  }
+
+  Future<File> fileFromImageUrl(String imageUrl) async {
+    final response = await http.get(Uri.parse(imageUrl));
+    final documentDirectory = await getApplicationDocumentsDirectory();
+    String randomNumber = (Random().nextInt(899999) + 100000).toString();
+    final file = File(join(documentDirectory.path, '$randomNumber.jpg'));
+    file.writeAsBytesSync(response.bodyBytes);
+    return file;
   }
 }

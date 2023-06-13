@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 class ApplicationInitialize {
   const ApplicationInitialize._();
 
-  static Future<void> init() async {
+  static Future<void> get init async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,

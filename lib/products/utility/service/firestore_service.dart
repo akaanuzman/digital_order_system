@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:digital_order_system/products/models/service/customer_model.dart';
-import 'package:digital_order_system/products/models/service/restaurant_model.dart';
+import 'package:digital_order_system/products/models/service/customer/customer_model.dart';
+import 'package:digital_order_system/products/models/service/food/reccomendation_foods_model.dart';
+import 'package:digital_order_system/products/models/service/restaurant/restaurant_model.dart';
+import 'package:digital_order_system/products/utility/base/base_firebase_model.dart';
 import 'dart:developer';
 
 import 'package:digital_order_system/products/utility/service/collections_service.dart';
@@ -9,6 +11,47 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class FireStoreService {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+  Future<List<T>?> genericFetchCollection<T extends BaseFirebaseModel>({
+    required T model,
+    required CollectionsService collection,
+    String? orderByField,
+  }) async {
+    try {
+      CollectionReference<Map<String, dynamic>> reference =
+          collection.reference;
+      var response = orderByField != null
+          ? await reference.orderBy(orderByField).get()
+          : await reference.get();
+      List<T> items = [];
+      for (var item in response.docs) {
+        T newModel = model.fromFirebase(item) ?? model;
+        items.add(newModel);
+      }
+      return items;
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
+  }
+
+  Future<T?> genericFetchDocument<T extends BaseFirebaseModel>({
+    required T model,
+    required String docId,
+    required CollectionsService collection,
+  }) async {
+    try {
+      CollectionReference<Map<String, dynamic>> reference =
+          collection.reference;
+      var response = await reference.doc(docId).get();
+      model = model.fromFirebase(response) ?? model;
+      return model;
+    } catch (e) {
+      log(e.toString());
+      await EasyLoading.dismiss();
+      return null;
+    }
+  }
 
   Future signUp({
     required Map<String, dynamic> userModel,
@@ -31,69 +74,53 @@ class FireStoreService {
   }
 
   Future updateUser({
-    required Map<String, dynamic> userModel,
+    required Map<String, dynamic> jsonData,
     required bool isCustomer,
   }) async {
-    String uid = FirebaseAuth.instance.currentUser!.uid;
-    Map<String, dynamic> data = userModel;
     try {
+      String docId = FirebaseAuth.instance.currentUser!.uid;
       if (isCustomer) {
         CollectionReference customers = CollectionsService.Customers.reference;
-        await customers.doc(uid).update(data);
+        await customers.doc(docId).update(jsonData);
       } else {
         CollectionReference restaurants =
             CollectionsService.Restaurants.reference;
-        await restaurants.doc(uid).update(data);
+        await restaurants.doc(docId).update(jsonData);
       }
     } catch (e) {
       log(e.toString());
     }
-  }
-
-  Future<bool> hasUserDb({
-    required String id,
-    required bool isCustomer,
-  }) async {
-    try {
-      var response = await firebaseFirestore
-          .collection(isCustomer ? "Customers" : "Restaurants")
-          .doc(id)
-          .get();
-      if (response.data() != null) {
-        return true;
-      }
-    } catch (e) {
-      log(e.toString());
-      return false;
-    }
-    return false;
   }
 
   Future<CustomerModel?> getCustomerInfo({required String id}) async {
-    try {
-      var response =
-          await firebaseFirestore.collection("Customers").doc(id).get();
-      CustomerModel customerModel =
-          CustomerModel().fromFirebase(response) ?? CustomerModel();
-      return customerModel;
-    } catch (e) {
-      log(e.toString());
-      await EasyLoading.dismiss();
-      return null;
-    }
+    CustomerModel? customerModel = CustomerModel();
+    customerModel = await genericFetchDocument(
+      model: customerModel,
+      docId: id,
+      collection: CollectionsService.Customers,
+    );
+    return customerModel;
   }
 
   Future<RestaurantModel?> getRestaurantInfo({required String id}) async {
-    try {
-      var response =
-          await firebaseFirestore.collection("Restaurants").doc(id).get();
-      RestaurantModel restaurantModel =
-          RestaurantModel().fromFirebase(response) ?? RestaurantModel();
-      return restaurantModel;
-    } catch (e) {
-      log(e.toString());
-      await EasyLoading.dismiss();
-      return null;
-    }
+    RestaurantModel? restaurantModel = RestaurantModel();
+    restaurantModel = await genericFetchDocument(
+      model: restaurantModel,
+      docId: id,
+      collection: CollectionsService.Restaurants,
+    );
+    return restaurantModel;
+  }
+
+  Future<List<ReccomendationFoodsModel>?> get getReccomendationFoods async {
+    ReccomendationFoodsModel reccomendationFoodsModel =
+        ReccomendationFoodsModel();
+    List<ReccomendationFoodsModel>? foods =
+        await genericFetchCollection<ReccomendationFoodsModel>(
+      model: reccomendationFoodsModel,
+      collection: CollectionsService.ReccomendationFoods,
+      orderByField: 'foodName',
+    );
+    return foods;
   }
 }

@@ -1,21 +1,14 @@
-import 'package:device_preview/device_preview.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'products/constants/app_constants.dart';
 import 'products/initialize/application_initialize.dart';
 import 'views/common/splash/splash_view.dart';
-import 'package:flutter/foundation.dart';
 import '_export_ui.dart';
 
 void main() async {
-  await ApplicationInitialize.init();
+  await ApplicationInitialize.init;
   runApp(
     MultiProvider(
       providers: AppConstants.instance.providers,
       child: const MyApp(),
-      // child: DevicePreview(
-      //   enabled: !kReleaseMode,
-      //   builder: (context) => const MyApp(),
-      // ),
     ),
   );
 }
@@ -26,11 +19,7 @@ class MyApp extends StatelessWidget with BaseSingleton {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Device preview parameters...
-      // useInheritedMediaQuery: true,
       builder: EasyLoading.init(),
-      // Device preview parameters...
-
       debugShowCheckedModeBanner: constants.debugShowCheckedModeBanner,
       supportedLocales: constants.supportedLocales,
       localizationsDelegates: constants.localizationsDelegates,

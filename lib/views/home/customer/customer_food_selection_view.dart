@@ -2,7 +2,7 @@ import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/components/button/custom_button.dart';
 import 'package:digital_order_system/products/components/text_field/special_text_field.dart';
 import 'package:digital_order_system/products/enums/custom_button_enum.dart';
-import 'package:digital_order_system/products/models/service/reccomendation_foods_model.dart';
+import 'package:digital_order_system/products/models/service/food/reccomendation_foods_model.dart';
 import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
 
 class CustomerFoodSelectionView extends StatelessWidget {

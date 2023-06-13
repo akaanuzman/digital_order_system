@@ -1,19 +1,18 @@
 // ignore_for_file: must_be_immutable, overridden_fields
 
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-import '../../utility/base/base_firebase_model.dart';
+import '../../../utility/base/base_firebase_model.dart';
+part 'version_model.g.dart';
 
-class VersionModel extends Equatable
-    with BaseFirebaseModel<VersionModel> {
+@JsonSerializable()
+class VersionModel extends Equatable with BaseFirebaseModel<VersionModel> {
   String? versionNumber;
 
   VersionModel({
     this.versionNumber,
   });
-
-  @override
-  String? id = '';
 
   VersionModel copyWith({
     String? versionNumber,
@@ -23,18 +22,11 @@ class VersionModel extends Equatable
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'versionNumber': versionNumber,
-    };
-  }
+  Map<String, dynamic> toJson() => _$VersionModelToJson(this);
 
   @override
-  VersionModel fromJson(Map<String, dynamic> json) {
-    return VersionModel(
-      versionNumber: json['versionNumber'] as String?,
-    );
-  }
+  VersionModel fromJson(Map<String, dynamic> json) =>
+      _$VersionModelFromJson(json);
 
   @override
   List<Object?> get props => [versionNumber];

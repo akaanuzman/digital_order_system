@@ -11,12 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  device_preview: ^1.1.0
-
   # Visual Elements
   cupertino_icons: ^1.0.2
   animate_do: ^3.0.2
-  shimmer_animation: ^2.1.0+1
   adaptive_action_sheet: ^2.0.2
   flutter_easyloading: ^3.0.5
   cached_network_image: ^3.2.3
@@ -37,8 +34,11 @@ dependencies:
   image_picker: ^0.8.7+5
   http: ^0.13.6
   path_provider: ^2.0.15
+  json_serializable: ^6.6.2
+  json_annotation: ^4.8.1
+  build_runner: ^2.3.3
 
-  # Food Reccomendation
+  # AI and Data analysis
   tflite: ^1.1.2
   csv: ^5.0.2
 

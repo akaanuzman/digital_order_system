@@ -8,8 +8,6 @@ import 'package:digital_order_system/products/view_models/customer_view_model.da
 import 'package:digital_order_system/products/view_models/food_reccomendation_view_model.dart';
 import 'package:digital_order_system/products/view_models/restaurant_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-
 import '../../_export_ui.dart';
 import '../../views/common/navbar/navbar_view.dart';
 import '../utility/service/auth_service.dart';

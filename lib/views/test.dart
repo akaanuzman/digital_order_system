@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_order_system/_export_ui.dart';
-import 'package:digital_order_system/products/models/service/restaurant_model.dart';
+import 'package:digital_order_system/products/models/service/restaurant/restaurant_model.dart';
 import 'package:digital_order_system/products/utility/exception/firebase_custom_exception.dart';
 
 import '../products/utility/service/collections_service.dart';
@@ -53,7 +53,7 @@ class Test extends StatelessWidget with BaseSingleton {
                         children: [
                           Text("${restraurant.companyMail}"),
                           Text(
-                            restraurant.createdDate?.toDate().toString() ?? "",
+                            restraurant.createdDate?.toString() ?? "",
                           )
                         ],
                       ),

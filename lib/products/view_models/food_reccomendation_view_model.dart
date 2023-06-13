@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:digital_order_system/core/utils/navigator_service.dart';
 import 'package:digital_order_system/products/constants/_export_constants.dart';
 import 'package:digital_order_system/products/models/local/reccomendation_model.dart';
-import 'package:digital_order_system/products/models/service/reccomendation_foods_model.dart';
+import 'package:digital_order_system/products/models/service/food/reccomendation_foods_model.dart';
 import 'package:digital_order_system/products/utility/base/base_singleton.dart';
 import 'package:digital_order_system/products/utility/service/csv_service.dart';
 import 'package:digital_order_system/products/utils/food_reccomendation_utils.dart';

@@ -1,23 +1,22 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:async';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:digital_order_system/_export_ui.dart';
 import 'package:digital_order_system/products/enums/gender_enum.dart';
-import 'package:digital_order_system/products/models/service/customer_model.dart';
-import 'package:digital_order_system/products/models/service/restaurant_model.dart';
+import 'package:digital_order_system/products/models/service/customer/customer_model.dart';
+import 'package:digital_order_system/products/models/service/restaurant/restaurant_model.dart';
 import 'package:digital_order_system/products/utility/service/firestore_service.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
 import 'package:digital_order_system/products/view_models/image_view_model.dart';
+import 'package:digital_order_system/products/view_models/restaurant_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 
 import '../../views/auth/profile/profile_complete_view.dart';
 import '../../views/common/navbar/navbar_view.dart';
 import '../utility/service/auth_service.dart';
 import '../utility/service/file_service.dart';
+import 'customer_view_model.dart';
 
 class RegisterViewModel extends ChangeNotifier with BaseSingleton {
   final TextEditingController mailController = TextEditingController();
@@ -165,7 +164,7 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
   // Write firestore db for customer register information
   Future customerRegister(String userId, bool isCustomer) async {
     CustomerModel customer = CustomerModel();
-    customer.createdDate = Timestamp.fromDate(DateTime.now());
+    customer.createdDate = DateTime.now();
     customer.mail = mailController.text;
     customer.isActive = true;
     customer.customerId = userId;
@@ -180,7 +179,7 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
   // Write firestore db for restaurant register information
   Future restaurantRegister(String userId, bool isCustomer) async {
     RestaurantModel restaurant = RestaurantModel();
-    restaurant.createdDate = Timestamp.fromDate(DateTime.now());
+    restaurant.createdDate = DateTime.now();
     restaurant.companyMail = mailController.text;
     restaurant.isActive = true;
     restaurant.restaurantId = userId;
@@ -302,7 +301,7 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
     customer.surname = surnameController.text;
     customer.fullName = "${nameController.text} ${surnameController.text}";
     customer.phone = phoneController.text;
-    customer.birthDate = Timestamp.fromDate(selectedBirthdate!);
+    customer.birthDate = selectedBirthdate!;
     customer.age = DateTime.now().year - selectedBirthdate!.year;
     gender == GenderEnum.male
         ? customer.gender = true
@@ -336,8 +335,8 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
     if (model is CustomerModel || model is RestaurantModel) {
       if (pv.selectedImage != null) {
         var imagePath = isCustomer ? "Customers/" : "Restaurants/";
-        List<String> response = await FileService()
-            .uploadImage(pv.selectedImage!.path, imagePath);
+        List<String> response =
+            await FileService().uploadImage(pv.selectedImage!.path, imagePath);
         model.imageUrl = response[0];
         model.imageStoragePath = response[1];
       }
@@ -346,6 +345,12 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
         jsonData: json,
         isCustomer: isCustomer,
       );
+      String? uid = await localeServices.readAccount();
+      if (uid != null) {
+        isCustomer
+            ? await getCustomerInformation(uid)
+            : await getRestaurantInformation(uid);
+      }
       await EasyLoading.dismiss();
       uiUtils.showSnackbar(
         context: context,
@@ -359,5 +364,21 @@ class RegisterViewModel extends ChangeNotifier with BaseSingleton {
         ),
       );
     }
+  }
+
+  Future getCustomerInformation(String uid) async {
+    final pv = Provider.of<CustomerViewModel>(
+      NavigationService.navigatorKey.currentContext!,
+      listen: false,
+    );
+    await pv.getCustomerInformation(uid);
+  }
+
+  Future getRestaurantInformation(String uid) async {
+    final pv = Provider.of<RestaurantViewModel>(
+      NavigationService.navigatorKey.currentContext!,
+      listen: false,
+    );
+    await pv.getRestaurantInformation(uid);
   }
 }

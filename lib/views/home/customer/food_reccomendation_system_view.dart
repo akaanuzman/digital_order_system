@@ -360,7 +360,7 @@ class _FoodReccomendationSystemViewState
     DateTime birthDate = DateTime.now();
     String formattedDate = "Bilgi Yok";
     if (pv.currentCustomer.birthDate != null) {
-      birthDate = pv.currentCustomer.birthDate!.toDate();
+      birthDate = pv.currentCustomer.birthDate!;
       formattedDate = dateFormat.format(birthDate);
     }
     return FoodReccomendationPersonelInfo(

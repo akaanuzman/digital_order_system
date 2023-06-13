@@ -2,8 +2,8 @@
 
 import 'package:digital_order_system/products/enums/alert_enum.dart';
 import 'package:digital_order_system/products/enums/platform_enum.dart';
-import 'package:digital_order_system/products/models/service/reccomendation_foods_model.dart';
-import 'package:digital_order_system/products/models/service/verison_model.dart';
+import 'package:digital_order_system/products/models/service/food/reccomendation_foods_model.dart';
+import 'package:digital_order_system/products/models/service/version/version_model.dart';
 import 'package:digital_order_system/products/utility/service/collections_service.dart';
 import 'package:digital_order_system/products/utility/managers/version_manager.dart';
 import 'package:digital_order_system/products/utility/service/locale_services.dart';
@@ -67,14 +67,6 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
     await pv.getCustomerInformation(uid!);
   }
 
-  Future get getReccomendationFoods async {
-    final pv = Provider.of<FoodReccomendationViewModel>(
-      NavigationService.navigatorKey.currentContext!,
-      listen: false,
-    );
-    await pv.getReccomendationFoods;
-  }
-
   Future get getRestaurantInformation async {
     final pv = Provider.of<RestaurantViewModel>(
       NavigationService.navigatorKey.currentContext!,
@@ -82,6 +74,15 @@ class SplashViewModel extends ChangeNotifier with BaseSingleton {
     );
     await pv.getRestaurantInformation(uid!);
   }
+
+    Future get getReccomendationFoods async {
+    final pv = Provider.of<FoodReccomendationViewModel>(
+      NavigationService.navigatorKey.currentContext!,
+      listen: false,
+    );
+    await pv.getReccomendationFoods;
+  }
+
 
   void hasRequiredForceUpdate(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback(

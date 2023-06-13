@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:digital_order_system/products/models/service/customer_model.dart';
-import 'package:digital_order_system/products/models/service/reccomendation_foods_model.dart';
-import 'package:digital_order_system/products/models/service/restaurant_model.dart';
+import 'package:digital_order_system/products/models/service/customer/customer_model.dart';
+import 'package:digital_order_system/products/models/service/food/reccomendation_foods_model.dart';
+import 'package:digital_order_system/products/models/service/restaurant/restaurant_model.dart';
 import 'package:digital_order_system/products/utility/base/base_firebase_model.dart';
 import 'dart:developer';
 
